@@ -28,14 +28,14 @@ module ApplicationHelper
     
   # check which browser the author is using and get ready to warn if it's a crappy one
   def check_browser
-  	@bad_browser = false
-  	agent = request.env['HTTP_USER_AGENT']
-  	if (agent =~ /windows/i) and (agent =~ /msie/i)
-  	  @bad_browser = true
-  		if (agent =~ /opera/i)
-  			@is_opera = true
-  		end
-  	end
+    @bad_browser = false
+    agent = request.env['HTTP_USER_AGENT']
+    if (agent =~ /windows/i) and (agent =~ /msie/i)
+      @bad_browser = true
+      if (agent =~ /opera/i)
+        @is_opera = true
+      end
+    end
   end
   
   # uses the enkoder plugin to create a safe email link
@@ -150,36 +150,36 @@ module ApplicationHelper
   
   # creates select options for an html select form element based on the collection
   def create_author_select_options(collection, current_id = nil, add_blank = true, id = 'id', name = 'name')
-  	if add_blank
-  		options = '<option value="">Select one...</option>'
-  	else
-  		options = ''
-  	end
-  	if collection
-  		for item in collection
-  			options += '<option value="' + item[id].to_s + '"'
-  			if ((current_id and author_finder(current_id)) or (current_id == 0 and collection.length < 2))
-  			  options += (((current_id == item[id]) or (collection.length < 2)) ? ' selected="selected"' : '')
-  			end
-  			options += '>' + item[name] + '</option>'
-  		end
-  	end
-  	return options
+    if add_blank
+      options = '<option value="">Select one...</option>'
+    else
+      options = ''
+    end
+    if collection
+      for item in collection
+        options += '<option value="' + item[id].to_s + '"'
+        if ((current_id and author_finder(current_id)) or (current_id == 0 and collection.length < 2))
+          options += (((current_id == item[id]) or (collection.length < 2)) ? ' selected="selected"' : '')
+        end
+        options += '>' + item[name] + '</option>'
+      end
+    end
+    return options
   end
   
   # creates select options for an html select form element based on the collection
   def create_filter_select_options(collection, current_id = nil)
-  	options = ''
-  	if collection
-  		for item in collection
-  			options += '<option value="' + item + '"'
-  			if current_id
-  			  options += (current_id == item ? ' selected="selected"' : '')
-  			end
-  			options += '>' + item.capitalize + '</option>'
-  		end
-  	end
-  	return options
+    options = ''
+    if collection
+      for item in collection
+        options += '<option value="' + item + '"'
+        if current_id
+          options += (current_id == item ? ' selected="selected"' : '')
+        end
+        options += '>' + item.capitalize + '</option>'
+      end
+    end
+    return options
   end
   
   # creates select menu for comment options
@@ -187,10 +187,10 @@ module ApplicationHelper
     output = '<select name="' + id + '" id="' + id + '">'
     possible_values.each do |key, value|
       output += '<option value="' + key.to_s + '"'
-  	  if current_value == key
-  	    output += ' selected="selected"'
+      if current_value == key
+        output += ' selected="selected"'
       end
-  	  output += '>' + value + '</option>'
+      output += '>' + value + '</option>'
     end
     return output + '</select>'
     #for v in possible_values

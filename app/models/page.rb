@@ -41,14 +41,14 @@ class Page < ActiveRecord::Base
   # validator which checks to make sure that content works... if it doesn't
   # we'll get an error anyway, so we don't need to continue doing this stuff
   def before_validation_on_create
-  	self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
-  	self.permalink = Post.to_permalink(self.permalink) if self.permalink and self.permalink != ''
+    self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
+    self.permalink = Post.to_permalink(self.permalink) if self.permalink and self.permalink != ''
   end
   
   # convert text using our filter and clean up dashes
   # see above for info on the rescue returns
   def before_validation_on_update
-  	before_validation_on_create
+    before_validation_on_create
   end
   
   # before a page is created, set its modification date to now
@@ -64,7 +64,7 @@ class Page < ActiveRecord::Base
   
   # get a page based on permalink
   def self.find_by_link(permalink)
-  	self.find(:first, :conditions => ['is_active = true and permalink = ?', permalink])
+    self.find(:first, :conditions => ['is_active = true and permalink = ?', permalink])
   end
   
   # find all pages in the db that contain string

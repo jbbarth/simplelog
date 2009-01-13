@@ -56,20 +56,20 @@ class Comment < ActiveRecord::Base
     self.name = Comment.kill_tags(self.name)
     self.email = Comment.kill_tags(self.email)
     self.url = Author.prepend_http(Comment.kill_tags(url))
-  	# create a syndication title
-  	if (Preference.get_setting('COMMENT_SUBJECTS') == 'yes' and (self.subject and self.subject != ''))
-  	# we allow subjects and there is one, use that
-  	  self.synd_title = Comment.kill_tags(self.subject)
-  	else
-  	# we either don't allow subjects or there isn't one, let's use a short version of the body
-  	  self.synd_title = Post.to_synd_title(self.body)
+    # create a syndication title
+    if (Preference.get_setting('COMMENT_SUBJECTS') == 'yes' and (self.subject and self.subject != ''))
+    # we allow subjects and there is one, use that
+      self.synd_title = Comment.kill_tags(self.subject)
+    else
+    # we either don't allow subjects or there isn't one, let's use a short version of the body
+      self.synd_title = Post.to_synd_title(self.body)
     end
   end
 
   # convert text using our filter and clean up dashes
   # see above for info on the rescue returns
   def before_validation_on_update
-  	before_validation_on_create
+    before_validation_on_create
   end
   
   # check for spam on create

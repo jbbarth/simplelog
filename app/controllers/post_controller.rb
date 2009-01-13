@@ -66,7 +66,7 @@ class PostController < ApplicationController
   # customize the date format in preferences
   helper_method :create_html_title
   def create_html_title(post, include_date = true)
-  	return post.synd_title + (include_date ? '(' + post.created_at.strftime(Preference.get_setting('DATE_FORMAT')) + ')' : '')
+    return post.synd_title + (include_date ? '(' + post.created_at.strftime(Preference.get_setting('DATE_FORMAT')) + ')' : '')
   rescue
   # just in case something goes wrong...
     return 'Untitled'
@@ -92,10 +92,10 @@ class PostController < ApplicationController
   # main page of the site
   def list
     # get all the current posts (set number in preferences)
-  	@posts = Post.find_current
-  	# set the page title
-  	$page_title = Preference.get_setting('SLOGAN')
-  	render :template => 'index'
+    @posts = Post.find_current
+    # set the page title
+    $page_title = Preference.get_setting('SLOGAN')
+    render :template => 'index'
   end
   # we should also be able to get to the list with 'index'
   def index
@@ -168,9 +168,9 @@ class PostController < ApplicationController
     end
     # create comment
     @comment = Comment.new
-  	# set the page title
-  	$page_title = (Preference.get_setting('SIMPLE_TITLES') == 'yes' ? create_html_title(@post[0]) : @post[0].title)
-  	render :template => 'posts/show'
+    # set the page title
+    $page_title = (Preference.get_setting('SIMPLE_TITLES') == 'yes' ? create_html_title(@post[0]) : @post[0].title)
+    render :template => 'posts/show'
   end
 
   # add a comment to a post, checking it against the blacklist
@@ -185,23 +185,23 @@ class PostController < ApplicationController
     # grab the user's IP
     @comment.ip = request.remote_ip
     # save it (gets checked for spam as well)
-  	if @comment.save
-  	# comment was saved successfully
-  	  if Preference.get_setting('COMMENTS_APPROVED') != 'yes'
-  	  # approval is required, notify accordingly
-  	    flash[:notice] = 'Your comment will be reviewed and will appear once it is approved.'
-  	    redirect_to params[:return_url] + "#comments"
-  	  else
-  	  # comment is posted, let's send them there
-  		  redirect_to params[:return_url] + '#c' + @comment.id.to_s
-  		end
-  	else
-  	# whoops!
-  	  @post = Post.find_individual(params[:link])
-  	  # set the page title
-  		$page_title = (Preference.get_setting('SIMPLE_TITLES') == 'yes' ? create_html_title(@post[0]) : @post[0].title)
-  		render :template => 'posts/show'
-  	end
+    if @comment.save
+    # comment was saved successfully
+      if Preference.get_setting('COMMENTS_APPROVED') != 'yes'
+      # approval is required, notify accordingly
+        flash[:notice] = 'Your comment will be reviewed and will appear once it is approved.'
+        redirect_to params[:return_url] + "#comments"
+      else
+      # comment is posted, let's send them there
+        redirect_to params[:return_url] + '#c' + @comment.id.to_s
+      end
+    else
+    # whoops!
+      @post = Post.find_individual(params[:link])
+      # set the page title
+      $page_title = (Preference.get_setting('SIMPLE_TITLES') == 'yes' ? create_html_title(@post[0]) : @post[0].title)
+      render :template => 'posts/show'
+    end
   end
   
   # author archives
@@ -221,34 +221,34 @@ class PostController < ApplicationController
   # tag archives
   def tagged
     # get all posts tagged with this tag
-  	@posts = Post.find_by_tag(params[:tag])
-  	# we didn't find any posts... send them packin'!
+    @posts = Post.find_by_tag(params[:tag])
+    # we didn't find any posts... send them packin'!
     if @posts.length < 1
       redirect_to '/'
       return
     end
-  	# set the page title
-  	$page_title = 'Tag archive: ' + params[:tag] + '.'
-  	render :template => 'archives/by_tag'
+    # set the page title
+    $page_title = 'Tag archive: ' + params[:tag] + '.'
+    render :template => 'archives/by_tag'
   end
   
   # search posts for a string and return them for ajax inclusion (set number of
   # results in preferences), customize results in the search view
   def search
     if params[:q]
-  	  # run the search and return some posts
-  	  @posts = Post.find_by_string(params[:q])
-  	  $page_title = 'Search results for: &quot;' + params[:q] + '&quot;'
-  	  render :template => 'search/results'
-  	end
+      # run the search and return some posts
+      @posts = Post.find_by_string(params[:q])
+      $page_title = 'Search results for: &quot;' + params[:q] + '&quot;'
+      render :template => 'search/results'
+    end
   end
   def search_full
     if params[:q]
-  	  # run the search and return some posts
-  	  @posts = Post.find_by_string_full(params[:q])
-  	  $page_title = 'Search results for: &quot;' + params[:q] + '&quot;'
-  	  render :template => 'search/full_results'
-  	end
+      # run the search and return some posts
+      @posts = Post.find_by_string_full(params[:q])
+      $page_title = 'Search results for: &quot;' + params[:q] + '&quot;'
+      render :template => 'search/full_results'
+    end
   end
   
   # rss feed

@@ -32,7 +32,7 @@ class Admin::PrefsController < Admin::BaseController
   
   # remove the http:// from URLs if necessary
   def strip_http(url = '')
-  	return url.gsub('http://', '')
+    return url.gsub('http://', '')
   end
   
   # get prefs list
@@ -146,7 +146,7 @@ class Admin::PrefsController < Admin::BaseController
         if !pref.save
         # there was an error
           errors = true
-    		end
+        end
       end
     end
     
@@ -166,8 +166,8 @@ class Admin::PrefsController < Admin::BaseController
       session[:was_on_tab] = params[:current_tab]
       if !errors
       # preferences saved successfully
-    		flash[:notice] = '<b>Success:</b> Preferences were saved.'
-    		redirect_to Site.full_url + '/admin/prefs'
+        flash[:notice] = '<b>Success:</b> Preferences were saved.'
+        redirect_to Site.full_url + '/admin/prefs'
       else
       # we had ACTUAL errors, as in we couldn't save data for some reason
         flash[:notice] = '<span class="red"><b>Failed:</b> Some of your preferences could not be saved. Please try again.</span>'

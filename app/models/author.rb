@@ -36,9 +36,9 @@ class Author < ActiveRecord::Base
   # prepends HTTP to a URL if necessary
   def self.prepend_http(url = '')
     if url and url != '' and not(url =~ /^http/i)
-  		url = 'http://' + url
-  	end
-  	return url
+      url = 'http://' + url
+    end
+    return url
   end
   
   # hashes a password
@@ -59,7 +59,7 @@ class Author < ActiveRecord::Base
     # check the URL
     self.url = Author.prepend_http(url)
     # before an author is created, set its modification date to now
-  	self.modified_at = Time.sl_local
+    self.modified_at = Time.sl_local
   end
   
   def before_update

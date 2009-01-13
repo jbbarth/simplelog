@@ -72,13 +72,13 @@ class Post < ActiveRecord::Base
   
   # strip html from a string, (optionally) allowing for certain tags to remain
   def self.strip_html(str, allow = [], add_space = false, replace_entities = false)
-  	if str
-  	  str = str.strip || ''
-  	  allow_arr = allow.join('|') << '|\/'
-  	  str = str.gsub(/<(\/|\s)*[^(#{allow_arr})][^>]*>/, (add_space ? ' ' : ''))
-  	  if replace_entities
-  	    str = str.
-  	      gsub('&#8211;', ' - ').   # en-dash
+    if str
+      str = str.strip || ''
+      allow_arr = allow.join('|') << '|\/'
+      str = str.gsub(/<(\/|\s)*[^(#{allow_arr})][^>]*>/, (add_space ? ' ' : ''))
+      if replace_entities
+        str = str.
+          gsub('&#8211;', ' - ').   # en-dash
           gsub('&#8212;', ' -- ').  # em-dash
           gsub('&mdash;', ' -- ').  # em-dash
           gsub('&#8216;', "'").     # open single quote
@@ -96,7 +96,7 @@ class Post < ActiveRecord::Base
       else
         return str
       end
-  	end
+    end
   end
   
   # this fixes redcloth issues because redcloth sucks and i hate it!
@@ -110,8 +110,8 @@ class Post < ActiveRecord::Base
   # cleans up text, runs filter of your choice
   def self.create_clean_content(input, text_filter = Preference.get_setting('TEXT_FILTER'))
     # decide which filter to use first
-  	if text_filter == 'markdown'
-  	  input = BlueCloth.new(input).to_html
+    if text_filter == 'markdown'
+      input = BlueCloth.new(input).to_html
     elsif text_filter == 'textile'
       input = self.fix_redcloth(RedCloth.new(input).to_html)
     elsif text_filter == 'convert line breaks'
@@ -119,21 +119,21 @@ class Post < ActiveRecord::Base
       input = input.gsub(/\n/, '<br/>')
       input = '<p>' + input + '</p>'
     end
-  	# run through rubypants if we should (pref)
-  	if Preference.get_setting('SMARTY_PANTS') == 'yes'
-  	  input = RubyPants.new(input).to_html
-  	elsif Preference.get_setting('NICE_DASHES') == 'yes'
-  	# fix mdashes if we need to (pref)
-  	  input = input.gsub(' -- ', '&mdash;')
-  	  input.gsub!('--', '&mdash;')
-  	  input.gsub!('&mdash;force', ' --force') # specific rage rule, ignore this
-  	end
-  	# are we encoding entities?
-  	if Preference.get_setting('ENCODE_ENTITIES') == 'yes'
-  	  input = HTMLEntities.encode_entities(input, :named)
+    # run through rubypants if we should (pref)
+    if Preference.get_setting('SMARTY_PANTS') == 'yes'
+      input = RubyPants.new(input).to_html
+    elsif Preference.get_setting('NICE_DASHES') == 'yes'
+    # fix mdashes if we need to (pref)
+      input = input.gsub(' -- ', '&mdash;')
+      input.gsub!('--', '&mdash;')
+      input.gsub!('&mdash;force', ' --force') # specific rage rule, ignore this
     end
-  	# all done
-  	return input
+    # are we encoding entities?
+    if Preference.get_setting('ENCODE_ENTITIES') == 'yes'
+      input = HTMLEntities.encode_entities(input, :named)
+    end
+    # all done
+    return input
   end
   
   # create a URL-safe permalink from input (body text of post)
@@ -159,84 +159,84 @@ class Post < ActiveRecord::Base
   # the default value of `word_spacer`
   def self.to_permalink(input = '', current_id = nil, number_words = 5, extra_word = 'again', previous_output = nil, loops = 0, added = 0, word_spacer = '_')
     # strip html tags and lowercase first
-  	words = Post.strip_html(input.downcase)
-  	# dump double-dashes first, cause they can cause two words to become--one...
-  	words.gsub!('--', ' ')
-  	if Preference.get_setting('TEXT_FILTER') == 'markdown'
-  	  # this gets rid of markdown-style links and images if necessary
-  	  words.gsub!(/\!\[.+?\]\(.+?\)/, '') # ![alt](url)
-  		words.gsub!(/\!\[.+?\]\[.+?\]/, '') # ![alt][id]
-  		words.gsub!(/\[\d+\]/i, '')         # [0]
-  		words.gsub!(/\]\(.+?\)/i, '')       # ](url)
-  	end
-  	if Preference.get_setting('TEXT_FILTER') == 'textile'
-  	  # this gets rid of textile-style links and images if necessary
-  	  words.gsub!(/\!\S+?\!/i, '')        # !url!
-  	  words.gsub!(/\"\:.+?\s/i, ' ')      # ":url (note: also matches space and replaces with space)
+    words = Post.strip_html(input.downcase)
+    # dump double-dashes first, cause they can cause two words to become--one...
+    words.gsub!('--', ' ')
+    if Preference.get_setting('TEXT_FILTER') == 'markdown'
+      # this gets rid of markdown-style links and images if necessary
+      words.gsub!(/\!\[.+?\]\(.+?\)/, '') # ![alt](url)
+      words.gsub!(/\!\[.+?\]\[.+?\]/, '') # ![alt][id]
+      words.gsub!(/\[\d+\]/i, '')         # [0]
+      words.gsub!(/\]\(.+?\)/i, '')       # ](url)
     end
-  	# split it up
-  	words = words.split()
-  	# empty string to build into
-  	output = ''
-  	# keep a tally on words we collect
-  	wc = 0
-  	for word in words
-  		# we should only use safe words, strip quotes and non-word chars
-  		word.gsub!(/['"]/, '')
-  		word.gsub!(/\W/, '')
-  		if word != ''
-  		# okay, we've got a word... add it to the string and count this
-  		  output += word + '_'
-  		  wc = wc+1
-  		end
-  		# are we done? (do we have all our words)
-  		break if wc == number_words
-  	end
-  	# trim extra dashes
-  	output.gsub!(/(_)$/, '')
-  	output.gsub!(/^(_)/, '')
-  	# check to see if this is the same output as last time (i.e. a short entry) and pad if necessary
-  	# but we'll keep the unaltered output to compare in the next loop (if it happens)
-  	keep_output = output
+    if Preference.get_setting('TEXT_FILTER') == 'textile'
+      # this gets rid of textile-style links and images if necessary
+      words.gsub!(/\!\S+?\!/i, '')        # !url!
+      words.gsub!(/\"\:.+?\s/i, ' ')      # ":url (note: also matches space and replaces with space)
+    end
+    # split it up
+    words = words.split()
+    # empty string to build into
+    output = ''
+    # keep a tally on words we collect
+    wc = 0
+    for word in words
+      # we should only use safe words, strip quotes and non-word chars
+      word.gsub!(/['"]/, '')
+      word.gsub!(/\W/, '')
+      if word != ''
+      # okay, we've got a word... add it to the string and count this
+        output += word + '_'
+        wc = wc+1
+      end
+      # are we done? (do we have all our words)
+      break if wc == number_words
+    end
+    # trim extra dashes
+    output.gsub!(/(_)$/, '')
+    output.gsub!(/^(_)/, '')
+    # check to see if this is the same output as last time (i.e. a short entry) and pad if necessary
+    # but we'll keep the unaltered output to compare in the next loop (if it happens)
+    keep_output = output
     do_loops = loops # number of loops to run
-  	if output == previous_output
-  	  # if we've never added the extra word before, only do this once no matter how many loops we've done
-  	  do_loops = 1 if added == 0
-  	  # if we've added some extra words before, but we've added fewer than the amount of loops, loop appropriately
-  	  do_loops = added+1 if added < loops
-  	  # now let's loop
-  	  do_loops.times do
-  	    output += '_' + extra_word
-  	  end
-  	  # we added an extra word, keep track of that
-  	  added = added+1
-  	end
-  	# let's test this to see if it's unique (note that we pass in a current_id if we have it... that's
-  	# because we don't want this very post to come up as a dup if we're editing an existing post)
-  	@test = Post.find(:all, :conditions => (current_id ? ['id != ? and permalink = ?', current_id, output] : ['permalink = ?', output]))
-  	if @test.length > 0
-  	# there was a dup, we need to run this method again
-  	  return Post.to_permalink(input, (current_id ? current_id : nil), (number_words+1), extra_word, keep_output, (loops+1), added)
+    if output == previous_output
+      # if we've never added the extra word before, only do this once no matter how many loops we've done
+      do_loops = 1 if added == 0
+      # if we've added some extra words before, but we've added fewer than the amount of loops, loop appropriately
+      do_loops = added+1 if added < loops
+      # now let's loop
+      do_loops.times do
+        output += '_' + extra_word
+      end
+      # we added an extra word, keep track of that
+      added = added+1
+    end
+    # let's test this to see if it's unique (note that we pass in a current_id if we have it... that's
+    # because we don't want this very post to come up as a dup if we're editing an existing post)
+    @test = Post.find(:all, :conditions => (current_id ? ['id != ? and permalink = ?', current_id, output] : ['permalink = ?', output]))
+    if @test.length > 0
+    # there was a dup, we need to run this method again
+      return Post.to_permalink(input, (current_id ? current_id : nil), (number_words+1), extra_word, keep_output, (loops+1), added)
     else
     # now let's just make sure we actually HAVE a permalink (could be blank)
       if output == ''
         return (Time.new.strftime('%Y%m%d%H%M%S') + Time.now.usec.to_s).gsub('_', word_spacer)
       else
-  	    return output.gsub('_', word_spacer)
-  	  end
+        return output.gsub('_', word_spacer)
+      end
     end
   end
   
   # create a `number_words`-length title for syndication purposes
   def self.to_synd_title(input, number_words = 5)
     words = HTMLEntities.decode_entities(input)
-  	words = Post.strip_html(words)
-  	words = words.split()
-  	output = ''
-  	for word in words[0..(number_words-1)]
-  		output += word + ' '
-  	end
-  	return output.rstrip + '...'
+    words = Post.strip_html(words)
+    words = words.split()
+    output = ''
+    for word in words[0..(number_words-1)]
+      output += word + ' '
+    end
+    return output.rstrip + '...'
   end
   
   # convert text using our filter and clean up dashes
@@ -244,27 +244,27 @@ class Post < ActiveRecord::Base
   # validator which checks to make sure that content works... if it doesn't
   # we'll get an error anyway, so we don't need to continue doing this stuff
   def before_validation_on_create
-  	self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
-  	self.body_searchable = Post.strip_html(self.body, [], true, true) rescue return
-  	if self.extended_raw and self.extended_raw != ''
-  	  self.extended = Post.create_clean_content(self.extended_raw, self.text_filter) rescue return
-  	  self.extended_searchable = Post.strip_html(self.extended, [], true, true) rescue return
-  	elsif self.extended_raw == ''
-  	  self.extended = ''
-  	  self.extended_searchable = ''
+    self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
+    self.body_searchable = Post.strip_html(self.body, [], true, true) rescue return
+    if self.extended_raw and self.extended_raw != ''
+      self.extended = Post.create_clean_content(self.extended_raw, self.text_filter) rescue return
+      self.extended_searchable = Post.strip_html(self.extended, [], true, true) rescue return
+    elsif self.extended_raw == ''
+      self.extended = ''
+      self.extended_searchable = ''
     end
-  	if !self.permalink or self.permalink == ''
-  	# no permalink was specified, so let's create one automatically
-  		self.permalink = Post.to_permalink((Preference.get_setting('SIMPLE_TITLES') == 'yes' ? self.body_raw : self.title))
-  	end
-  	# create a syndication title
-  	self.synd_title = (Preference.get_setting('SIMPLE_TITLES') ? Post.to_synd_title(self.body) : self.title)
+    if !self.permalink or self.permalink == ''
+    # no permalink was specified, so let's create one automatically
+      self.permalink = Post.to_permalink((Preference.get_setting('SIMPLE_TITLES') == 'yes' ? self.body_raw : self.title))
+    end
+    # create a syndication title
+    self.synd_title = (Preference.get_setting('SIMPLE_TITLES') ? Post.to_synd_title(self.body) : self.title)
   end
 
   # convert text using our filter and clean up dashes
   # see above for info on the rescue returns
   def before_validation_on_update
-  	before_validation_on_create
+    before_validation_on_create
   end
   
   # before a post is created, set its modification date to now and check comment status
@@ -337,7 +337,7 @@ class Post < ActiveRecord::Base
   
   # get a single post based on permalink
   def self.find_individual(permalink)
-  	self.find(:all, :conditions => ['is_active = ? and permalink = ? and created_at <= ?', true, permalink, Time.sl_local])
+    self.find(:all, :conditions => ['is_active = ? and permalink = ? and created_at <= ?', true, permalink, Time.sl_local])
   end
   
   # find the previous active post
