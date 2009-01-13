@@ -28,7 +28,7 @@ class Admin::CommentsController < Admin::BaseController
   # get a list of comments, paginated, with sorting
   def comment_list
     # grab the sorter
-    @sorter = SortingHelper::Sorter.new self, %w(created_at name title is_approved), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
+    @sorter = SortingHelper::Sorter.new self, %w(comments.created_at comments.name comments.title comments.is_approved), params[:sort], (params[:order] ? "comments."+params[:order] : 'DESC'), 'comments.created_at', 'ASC'
     # grab the paginator
     @comment_pages = Paginator.new self, Comment.count, 20, params[:page]
     # grab the comments (join on posts for titles)

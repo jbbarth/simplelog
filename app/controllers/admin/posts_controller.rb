@@ -30,10 +30,10 @@ class Admin::PostsController < Admin::BaseController
     # grab the sorter
     if Preference.get_setting('COMMENTING_ON') == 'yes'
     # comments are turned on, we need to include that in sorting
-      @sorter = SortingHelper::Sorter.new self, %w(created_at title is_active comments_count), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
+      @sorter = SortingHelper::Sorter.new self, %w(posts.created_at posts.title posts.is_active posts.comments_count), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'posts.created_at', 'ASC'
     else
     # comments are off
-      @sorter = SortingHelper::Sorter.new self, %w(created_at title is_active), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
+      @sorter = SortingHelper::Sorter.new self, %w(posts.created_at posts.title posts.is_active), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'posts.created_at', 'ASC'
     end
     # grab the paginator
     @post_pages = Paginator.new self, Post.count, 20, params[:page]
