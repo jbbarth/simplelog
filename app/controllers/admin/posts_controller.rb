@@ -35,6 +35,7 @@ class Admin::PostsController < Admin::BaseController
     # comments are off
       @sorter = SortingHelper::Sorter.new self, %w(posts.created_at posts.title posts.is_active), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'posts.created_at', 'ASC'
     end
+
     # grab the paginator
     @post_pages = Paginator.new self, Post.count, 20, params[:page]
     if Preference.get_setting('COMMENTING_ON') == 'yes'
@@ -67,7 +68,8 @@ class Admin::PostsController < Admin::BaseController
     @post.custom_field_2 = @post.custom_field_2 || ''
     @post.custom_field_3 = @post.custom_field_3 || ''
     # assign our tags
-    @post.tag((params[:tag_input] ? params[:tag_input].gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '') : ''), :clear => true)
+    #TODO : change line below (undefined method `tag' for #<Post:0xb6fa7fc4>)
+    #@post.tag((params[:tag_input] ? params[:tag_input].gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '') : ''), :clear => true)
     if @post.save
     # post was saved successfully
       # do the ping if necessary
@@ -112,7 +114,7 @@ class Admin::PostsController < Admin::BaseController
     @post.custom_field_2 = @post.custom_field_2 || ''
     @post.custom_field_3 = @post.custom_field_3 || ''
     # assign our tags (clearing old tags)
-    @post.tag((params[:tag_input] ? params[:tag_input].gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '') : ''), :clear => true)
+    #@post.tag((params[:tag_input] ? params[:tag_input].gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '') : ''), :clear => true)
     if @post.update_attributes(params[:post])
     # post was updated successfully
       flash[:notice] = 'Post was updated.'
