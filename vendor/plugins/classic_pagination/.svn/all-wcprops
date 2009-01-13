@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination/Rakefile
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination/init.rb
+END
+CHANGELOG
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination/CHANGELOG
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination/install.rb
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/975/trunk/vendor/plugins/classic_pagination/README
+END

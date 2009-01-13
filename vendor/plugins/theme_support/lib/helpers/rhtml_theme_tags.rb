@@ -1,37 +1,26 @@
 #
 # These are theme helper tags
 #
-
-require 'preference'
-
 module ActionView::Helpers::AssetTagHelper
 
    # returns the public path to a theme stylesheet
-   def theme_stylesheet_path(source=nil, theme=nil)
+   def theme_stylesheet_path( source=nil, theme=nil )
       theme = theme || controller.current_theme
-      addy = Site.full_url + "/themes/#{theme}/stylesheets/" + (source || "theme")
-      addy << ".css" unless source.split("/").last.include?(".")
-      return addy
-      #compute_public_path(source || "theme", "themes/#{theme}/stylesheets", 'css')
+      compute_public_path(source || "theme", "themes/#{theme}/stylesheets", 'css')
    end
 
    # returns the path to a theme image
-   def theme_image_path(source, theme=nil)
+   def theme_image_path( source, theme=nil )
       theme = theme || controller.current_theme
-      addy = Site.full_url + "/themes/#{theme}/images/#{source}"
-      addy << ".png" unless source.split("/").last.include?(".")
-      return addy
-      #compute_public_path(source, "themes/#{theme}/images", 'png')
+      compute_public_path(source, "themes/#{theme}/images", 'png')
    end
 
    # returns the path to a theme javascript
-   def theme_javascript_path( source, theme=nil )
+   def theme_javascripts_path( source, theme=nil )
       theme = theme || controller.current_theme
-      addy = Site.full_url + "/themes/#{theme}/javascripts/#{source}"
-      addy << ".js" unless source.split("/").last.include?(".")
-      return addy
-      #compute_public_path(source, Site.full_url + "/themes/#{theme}/javascripts", 'js')
+      compute_public_path(source, "themes/#{theme}/javascripts", 'js')
    end
+   
 
    # This tag it will automatially include theme specific css files
    def theme_stylesheet_link_tag(*sources)
@@ -48,6 +37,7 @@ module ActionView::Helpers::AssetTagHelper
      options.symbolize_keys
 
      options[:src] = theme_image_path(source)
+     
      options[:alt] ||= File.basename(options[:src], '.*').split('.').first.capitalize
 
      if options[:size]
@@ -61,9 +51,16 @@ module ActionView::Helpers::AssetTagHelper
    # This tag can be used to return theme-specific javscripts
    def theme_javascript_include_tag(*sources)
      options = sources.last.is_a?(Hash) ? sources.pop.stringify_keys : { }
-     sources = ['prototype', 'effects', 'controls', 'dragdrop'] if sources.first == :defaults
+     if sources.include?(:defaults)        
+       sources = sources[0..(sources.index(:defaults))] + 
+         @@javascript_default_sources.dup + 
+         sources[(sources.index(:defaults) + 1)..sources.length]
+       sources.delete(:defaults) 
+       sources << "application" if defined?(RAILS_ROOT) && File.exists?("#{RAILS_ROOT}/public/javascripts/application.js") 
+     end
      sources.collect { |source|
-       source = theme_javascript_path(source)        
+       debugger
+       source = theme_javascripts_path(source)        
        content_tag("script", "", { "type" => "text/javascript", "src" => source }.merge(options))
      }.join("\n")
    end

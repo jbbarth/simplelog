@@ -6,27 +6,21 @@ class ActionController::Routing::RouteSet
   # Overrides the default <tt>RouteSet#draw</tt> to automatically
   # include the routes needed by the <tt>ThemeController</tt>
   def draw
-    old_routes = @routes
-    @routes = []
-    
-    begin 
-      create_theme_routes
-      yield self
-    rescue
-      @routes = old_routes
-      raise
-    end
-    
-    write_generation
-    write_recognition
+    clear!
+    map = Mapper.new(self)
+
+    create_theme_routes(map)
+    yield map
+
+    named_routes.install
   end
 
   # Creates the required routes for the <tt>ThemeController</tt>...
-  def create_theme_routes
-    named_route 'theme_images', "/themes/:theme/images/:filename", :controller=>'theme', :action=>'images'
-    named_route 'theme_stylesheets', "/themes/:theme/stylesheets/:filename", :controller=>'theme', :action=>'stylesheets'
-    named_route 'theme_javascript', "/themes/:theme/javascripts/:filename", :controller=>'theme', :action=>'javascript'
-    connect "/themes/*whatever", :controller=>'theme', :action=>'error'
+  def create_theme_routes(map)
+    map.theme_images "/themes/:theme/images/*filename", :controller=>'theme', :action=>'images'
+    map.theme_stylesheets "/themes/:theme/stylesheets/*filename", :controller=>'theme', :action=>'stylesheets'
+    map.theme_javascript "/themes/:theme/javascript/*filename", :controller=>'theme', :action=>'javascript'
+    map.connect "/themes/*whatever", :controller=>'theme', :action=>'error'
   end
 
 end

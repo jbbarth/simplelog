@@ -1,20 +1,19 @@
-# $Id: theme_controller.rb 294 2007-01-29 22:24:52Z garrett $
-
 # The controller for serving/cacheing theme content...
+#
 class ThemeController < ActionController::Base
 
   after_filter :cache_theme_files
   
   def stylesheets
-    render_theme_item(:stylesheets, params[:filename], params[:theme], 'text/css')
+    render_theme_item(:stylesheets, params[:filename].join("/"), params[:theme], 'text/css')
   end
 
   def javascript
-    render_theme_item(:javascripts, params[:filename], params[:theme], 'text/javascript')
+    render_theme_item(:javascript, params[:filename].join("/"), params[:theme], 'text/javascript')
   end
 
   def images
-    render_theme_item(:images, params[:filename], params[:theme])
+    render_theme_item(:images, params[:filename].join("/"), params[:theme])
   end
 
   def error
@@ -24,7 +23,6 @@ class ThemeController < ActionController::Base
   private
   
   def render_theme_item(type, file, theme, mime = mime_for(file))
-    file = file.to_s
     render :text => "Not Found", :status => 404 and return if file.split(%r{[\\/]}).include?("..")
     send_file "#{Theme.path_to_theme(theme)}/#{type}/#{file}", :type => mime, :disposition => 'inline', :stream => false
   end
@@ -37,9 +35,10 @@ class ThemeController < ActionController::Base
       STERR.puts "Cache Exception: #{$!}"
     end
   end
+
     
   def mime_for(filename)
-    case filename.to_s.downcase
+    case filename.downcase
     when /\.js$/
       'text/javascript'
     when /\.css$/
