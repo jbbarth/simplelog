@@ -19,6 +19,8 @@
 # MA 02110-1301 USA.
 #++
 
+RAILS_GEM_VERSION="2.1.2"
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
