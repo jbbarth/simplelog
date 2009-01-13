@@ -21,7 +21,7 @@
 # Are you using Dreamhost?
   SL_CONFIG[:DREAMHOST]     = 'no'  # (yes or no) are you deploying this app on a DH server? (see DH_README for details)
 # Database type
-  SL_CONFIG[:DB_TYPE_MYSQL] = 'yes' # (yes or no) are you using mysql as the database type?
+  SL_CONFIG[:DB_TYPE_MYSQL] = 'no' # (yes or no) are you using mysql as the database type?
 
 # Set your mail configuration for comment notification (optional)
   ActionMailer::Base.smtp_settings = {
