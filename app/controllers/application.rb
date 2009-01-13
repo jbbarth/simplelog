@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     $params = request.request_uri # the requested URI
     # we're still going to build the 'about' block, so let's get that data
     @posts = Post.find_current
-    @tags = Post.tags_count(:order => 'name asc')
+    @tags = Post.tag_counts(:order => 'name asc')
     $page_title = Preference.get_setting('ERROR_PAGE_TITLE')
     @error = true # for use later
     render :template => 'errors/unknown_request'

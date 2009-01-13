@@ -374,7 +374,7 @@ class Post < ActiveRecord::Base
   
   # get a list of tags that are assigned more than once and sorts them by name ascending
   def self.get_tags
-    self.tags_count(:order => 'name asc')
+    self.tag_counts(:order => 'name asc')
   end
 
 end
