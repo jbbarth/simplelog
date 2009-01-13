@@ -26,9 +26,9 @@ class Admin::MiscController < Admin::BaseController
   #
   
   #
-	# ping
-	#
-	
+  # ping
+  #
+  
   # just set the title
   def ping
     $admin_page_title = 'Ping'
@@ -36,15 +36,15 @@ class Admin::MiscController < Admin::BaseController
     render :template => 'admin/misc/ping'
   end
   
-	# use pingomatic to ping common services
-	def do_ping
-	  # open the XMLRPC server connection
-	  server = XMLRPC::Client.new('rpc.pingomatic.com', '/')
-	  # do the ping
-	  ping = server.call('weblogUpdates.extendedPing', Preference.get_setting('SITE_NAME'), 'http://' + Preference.get_setting('DOMAIN'), 'http://' + (Preference.get_setting('RSS_URL') != '' ? Preference.get_setting('RSS_URL') : Preference.get_setting('DOMAIN')))
-	  render :nothing => true
-	rescue
-	  render :text => 'Error!'
+  # use pingomatic to ping common services
+  def do_ping
+    # open the XMLRPC server connection
+    server = XMLRPC::Client.new('rpc.pingomatic.com', '/')
+    # do the ping
+    ping = server.call('weblogUpdates.extendedPing', Preference.get_setting('SITE_NAME'), 'http://' + Preference.get_setting('DOMAIN'), 'http://' + (Preference.get_setting('RSS_URL') != '' ? Preference.get_setting('RSS_URL') : Preference.get_setting('DOMAIN')))
+    render :nothing => true
+  rescue
+    render :text => 'Error!'
   end
   
   #
@@ -58,57 +58,57 @@ class Admin::MiscController < Admin::BaseController
     render :template => 'admin/misc/updates'
   end
   
-	# check the simplelog.net server for updates
-	def do_update_check(render_msg = true)
-	  # grab the updates xml file
-	  server_version_info = Net::HTTP.get(URI.parse('http://' + SL_CONFIG[:UPDATES_URL])) rescue ''
-	  # check the server's response code
-	  server_response = Net::HTTP.get_response(URI.parse('http://' + SL_CONFIG[:UPDATES_URL])).value rescue 0
-	  if server_version_info == '' or server_response == 0
-	  # couldn't get update info from the server--return error msg if necessary
-	    if render_msg
-	      render :text => '<p><b>Error:</b> Couldn\'t reach server. Please try again later.</p>'
-	      return
-	    else
-	      return false
+  # check the simplelog.net server for updates
+  def do_update_check(render_msg = true)
+    # grab the updates xml file
+    server_version_info = Net::HTTP.get(URI.parse('http://' + SL_CONFIG[:UPDATES_URL])) rescue ''
+    # check the server's response code
+    server_response = Net::HTTP.get_response(URI.parse('http://' + SL_CONFIG[:UPDATES_URL])).value rescue 0
+    if server_version_info == '' or server_response == 0
+    # couldn't get update info from the server--return error msg if necessary
+      if render_msg
+        render :text => '<p><b>Error:</b> Couldn\'t reach server. Please try again later.</p>'
+        return
+      else
+        return false
       end
     end
-	  # break it in two
-	  server_version_info = server_version_info.split("\n")
-	  # get the version number
-	  server_version = server_version_info[0].gsub(/\<(\/*)version\>/, '').strip
-	  if server_version != '' and server_version != SL_CONFIG[:VERSION]
-	  # different version on server
-	    output = "<p><b>Update found!</b> Version #{server_version} is now available: <a href=\"http://simplelog.net\" title=\"Visit the SimpleLog website\" target=\"_blank\">Visit the SimpleLog website</a> to download.</p>"
-	    # grab the change details
-  	  version_details = server_version_info[1].gsub(/\<(\/*)changes\>/, '').strip.split('|')
-	    output += '<p><b>Changes in this version:</b></p>'
-	    output += '<ul>'
-  	  for d in version_details
-  	  # write out the change details
-  	    output += "<li>#{d}</li>"
-	    end
-	    output += '</ul>'
+    # break it in two
+    server_version_info = server_version_info.split("\n")
+    # get the version number
+    server_version = server_version_info[0].gsub(/\<(\/*)version\>/, '').strip
+    if server_version != '' and server_version != SL_CONFIG[:VERSION]
+    # different version on server
+      output = "<p><b>Update found!</b> Version #{server_version} is now available: <a href=\"http://simplelog.net\" title=\"Visit the SimpleLog website\" target=\"_blank\">Visit the SimpleLog website</a> to download.</p>"
+      # grab the change details
+      version_details = server_version_info[1].gsub(/\<(\/*)changes\>/, '').strip.split('|')
+      output += '<p><b>Changes in this version:</b></p>'
+      output += '<ul>'
+      for d in version_details
+      # write out the change details
+        output += "<li>#{d}</li>"
+      end
+      output += '</ul>'
       update_checker_info(true, server_version)
-	  else
-	  # no new version available
+    else
+    # no new version available
       output = "<p><b>Hooray!</b> You're running the newest version of SimpleLog.</p>"
       update_checker_info(false)
     end
     # let's return our output now, if necessary
-	  if render_msg
-	    render :text => output
-	    return
-	  else
-	    return true
+    if render_msg
+      render :text => output
+      return
+    else
+      return true
     end
-	rescue
-	# an error of some sort, return error or false
-	  if render_msg
-	    render :text => 'Error!'
-	    return
-	  else
-	    return false
+  rescue
+  # an error of some sort, return error or false
+    if render_msg
+      render :text => 'Error!'
+      return
+    else
+      return false
     end
   end
   
@@ -117,7 +117,7 @@ class Admin::MiscController < Admin::BaseController
     current = Preference.get_setting('check_for_updates')
     Preference.set_setting('check_for_updates', (current == 'yes' ? 'no' : 'yes'))
     # clear the stored session
-	  session[:update_check_stored] = nil
+    session[:update_check_stored] = nil
     # clear the theme cache
     FileUtils.rm_r "#{RAILS_ROOT}/public/themes", :force => true
     # unset the theme
@@ -125,14 +125,14 @@ class Admin::MiscController < Admin::BaseController
     # unset prefs hash
     Preference.clear_hash
     if session[:came_from]
-		# they came from somewhere, let's send them back there
-			temp = session[:came_from]
-			session[:came_from] = nil
-			redirect_to :back
-		else
-		# not sure where they came from, just send them to Site.full_url + /admin/updates
-			redirect_to Site.full_url + '/admin/updates'
-		end
+    # they came from somewhere, let's send them back there
+      temp = session[:came_from]
+      session[:came_from] = nil
+      redirect_to :back
+    else
+    # not sure where they came from, just send them to Site.full_url + /admin/updates
+      redirect_to Site.full_url + '/admin/updates'
+    end
   end
   
   # updates the update checker info

@@ -72,28 +72,28 @@ class Admin::BaseController < ApplicationController
       redirect_to Site.full_url + '/login' and return false
     end
   end
-	
-	# checks for updates if auto updates is turned on
-	def update_checker
-	  if Preference.get_setting('CHECK_FOR_UPDATES') == 'yes'
-	    # grab the misc class for use here
-	    misc_class = Admin::MiscController.new
-	    # track where they came from, in case they turn this off
+  
+  # checks for updates if auto updates is turned on
+  def update_checker
+    if Preference.get_setting('CHECK_FOR_UPDATES') == 'yes'
+      # grab the misc class for use here
+      misc_class = Admin::MiscController.new
+      # track where they came from, in case they turn this off
       session[:came_from] = nil
-	    session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
-	    # get the last update record
-	    last_update = Update.find(1)
-	    # how long ago was this check?
-	    difference = ((((Time.sl_local.to_i-last_update.last_checked_at.to_i)/60)/60)/24)
-	    if difference > 5
-	    # there hasn't been a check in over 5 days, let's check now
-	      # run the check
-	      worked = true
-	      worked = misc_class.do_update_check(false)
-	      # run this method again now
-	      update_checker if worked
-	      # we're done
-	      return
+      session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
+      # get the last update record
+      last_update = Update.find(1)
+      # how long ago was this check?
+      difference = ((((Time.sl_local.to_i-last_update.last_checked_at.to_i)/60)/60)/24)
+      if difference > 5
+      # there hasn't been a check in over 5 days, let's check now
+        # run the check
+        worked = true
+        worked = misc_class.do_update_check(false)
+        # run this method again now
+        update_checker if worked
+        # we're done
+        return
       else
       # there was a check relatively recently, was there an update available?
         if last_update.update_available
@@ -119,19 +119,19 @@ class Admin::BaseController < ApplicationController
       end
     end
   end
-	
-	# checks content for malformed XHTML
-	def check_for_bad_xhtml(input, content_label = 'post', text_filter = Preference.get_setting('TEXT_FILTER'))
-	  return Post.create_clean_content(input, text_filter) rescue "<p>You have malformed XHTML code in your #{content_label}...</p>"
+  
+  # checks content for malformed XHTML
+  def check_for_bad_xhtml(input, content_label = 'post', text_filter = Preference.get_setting('TEXT_FILTER'))
+    return Post.create_clean_content(input, text_filter) rescue "<p>You have malformed XHTML code in your #{content_label}...</p>"
   end
-	
-	# depending on preference, we send user to a new post form, or to the posts list
-	def index
-	  if Preference.get_setting('NEW_POST_BY_DEFAULT') == 'yes'
-	    redirect_to Site.full_url + '/admin/posts/new'
+  
+  # depending on preference, we send user to a new post form, or to the posts list
+  def index
+    if Preference.get_setting('NEW_POST_BY_DEFAULT') == 'yes'
+      redirect_to Site.full_url + '/admin/posts/new'
     else
       redirect_to Site.full_url + '/admin/posts'
     end
-	end
-	  
+  end
+    
 end

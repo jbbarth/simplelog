@@ -41,21 +41,21 @@ class Page < ActiveRecord::Base
   # validator which checks to make sure that content works... if it doesn't
   # we'll get an error anyway, so we don't need to continue doing this stuff
   def before_validation_on_create
-		self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
-		self.permalink = Post.to_permalink(self.permalink) if self.permalink and self.permalink != ''
+  	self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
+  	self.permalink = Post.to_permalink(self.permalink) if self.permalink and self.permalink != ''
   end
   
   # convert text using our filter and clean up dashes
   # see above for info on the rescue returns
-	def before_validation_on_update
-		before_validation_on_create
-	end
-	
-	# before a page is created, set its modification date to now
-	def before_create
-	  temp_time = Time.sl_local
-	  self.created_at = temp_time
-	  self.modified_at = temp_time
+  def before_validation_on_update
+  	before_validation_on_create
+  end
+  
+  # before a page is created, set its modification date to now
+  def before_create
+    temp_time = Time.sl_local
+    self.created_at = temp_time
+    self.modified_at = temp_time
   end
   
   def before_update
@@ -64,21 +64,21 @@ class Page < ActiveRecord::Base
   
   # get a page based on permalink
   def self.find_by_link(permalink)
-		self.find(:first, :conditions => ['is_active = true and permalink = ?', permalink])
-	end
-	
-	# find all pages in the db that contain string
-	def self.find_by_string(str, limit = 20, active_only = false)
-	  # use the search lib to run this search
-	  results = self.search(str, {:conditions => (active_only ? 'is_active = true' : nil), :limit => limit})
-	  if (results.length > 1) or (str.downcase.index(' and '))
-	  # if the first search returned something or there was an AND operator
-	    return results
+  	self.find(:first, :conditions => ['is_active = true and permalink = ?', permalink])
+  end
+  
+  # find all pages in the db that contain string
+  def self.find_by_string(str, limit = 20, active_only = false)
+    # use the search lib to run this search
+    results = self.search(str, {:conditions => (active_only ? 'is_active = true' : nil), :limit => limit})
+    if (results.length > 1) or (str.downcase.index(' and '))
+    # if the first search returned something or there was an AND operator
+      return results
     else
     # first search didn't find anthing, let's try it with the OR operator
       simple_str = str.gsub(' ',' OR ')
       return self.search(simple_str, {:conditions => (active_only ? 'is_active = true' : nil), :limit => limit})
     end
-	end
+  end
   
 end

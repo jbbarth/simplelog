@@ -34,7 +34,7 @@ class Blacklist < ActiveRecord::Base
   # before we create, let's set the creation date
   def before_create
     # set the time
-	  self.created_at = Time.sl_local
+    self.created_at = Time.sl_local
   end
   
   # returns the cache

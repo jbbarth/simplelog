@@ -56,28 +56,28 @@ class Comment < ActiveRecord::Base
     self.name = Comment.kill_tags(self.name)
     self.email = Comment.kill_tags(self.email)
     self.url = Author.prepend_http(Comment.kill_tags(url))
-		# create a syndication title
-		if (Preference.get_setting('COMMENT_SUBJECTS') == 'yes' and (self.subject and self.subject != ''))
-		# we allow subjects and there is one, use that
-		  self.synd_title = Comment.kill_tags(self.subject)
-		else
-		# we either don't allow subjects or there isn't one, let's use a short version of the body
-		  self.synd_title = Post.to_synd_title(self.body)
-	  end
+  	# create a syndication title
+  	if (Preference.get_setting('COMMENT_SUBJECTS') == 'yes' and (self.subject and self.subject != ''))
+  	# we allow subjects and there is one, use that
+  	  self.synd_title = Comment.kill_tags(self.subject)
+  	else
+  	# we either don't allow subjects or there isn't one, let's use a short version of the body
+  	  self.synd_title = Post.to_synd_title(self.body)
+    end
   end
 
   # convert text using our filter and clean up dashes
   # see above for info on the rescue returns
-	def before_validation_on_update
-		before_validation_on_create
-	end
-	
-	# check for spam on create
-	def validate_on_create
-	  if (!self.post_id or !self.email or !self.body_raw)
-	    return false
+  def before_validation_on_update
+  	before_validation_on_create
+  end
+  
+  # check for spam on create
+  def validate_on_create
+    if (!self.post_id or !self.email or !self.body_raw)
+      return false
     end
-	  # now let's check the blacklist
+    # now let's check the blacklist
     spam = false
     # grab the items
     blacklist_items = (Blacklist.cache.length > 0 ? Blacklist.cache : Blacklist.find(:all))
@@ -127,14 +127,14 @@ class Comment < ActiveRecord::Base
     end
   end
   
-	# before a comment is created, set its modification date to now
-	def before_create
-	  # if we approve by default, let's do that
-	  self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? true : false)
-	  # set modification date
-	  self.modified_at = Time.sl_local
-	  # set created date
-	  self.created_at = Time.sl_local
+  # before a comment is created, set its modification date to now
+  def before_create
+    # if we approve by default, let's do that
+    self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? true : false)
+    # set modification date
+    self.modified_at = Time.sl_local
+    # set created date
+    self.created_at = Time.sl_local
   end
   
   # get a list of comments for the feed
@@ -143,18 +143,18 @@ class Comment < ActiveRecord::Base
   end
   
   # find all comments in the db that contain string
-	def self.find_by_string(str, limit = Preference.get_setting('SEARCH_RESULTS'))
-	  # use the search lib to run this search
-	  results = self.search(str, :limit => limit)
-	  if (results.length > 1) or (str.downcase.index(' and '))
-	  # if the first search returned something or there was an AND operator
-	    return results
+  def self.find_by_string(str, limit = Preference.get_setting('SEARCH_RESULTS'))
+    # use the search lib to run this search
+    results = self.search(str, :limit => limit)
+    if (results.length > 1) or (str.downcase.index(' and '))
+    # if the first search returned something or there was an AND operator
+      return results
     else
     # first search didn't find anthing, let's try it with the OR operator
       simple_str = str.gsub(' ',' OR ')
       return self.search(simple_str, :limit => limit)
     end
-	end
+  end
   
   # find only unapproved comments
   def self.find_unapproved

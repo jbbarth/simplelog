@@ -36,13 +36,13 @@ class Author < ActiveRecord::Base
   # prepends HTTP to a URL if necessary
   def self.prepend_http(url = '')
     if url and url != '' and not(url =~ /^http/i)
-			url = 'http://' + url
-		end
-		return url
-	end
-	
-	# hashes a password
-	def self.do_password_hash(password = nil)
+  		url = 'http://' + url
+  	end
+  	return url
+  end
+  
+  # hashes a password
+  def self.do_password_hash(password = nil)
     Digest::SHA1.hexdigest(password) if password
   end
   

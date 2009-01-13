@@ -26,10 +26,10 @@ class Admin::BlacklistController < Admin::BaseController
   #
   
   # get a list of blacklist items, paginated, with sorting
-	def blacklist_list
-	  # grab the items
-	  @items = (Blacklist.cache.length > 0 ? Blacklist.cache : Blacklist.find(:all, :order => 'item asc'))
-	  render :template => 'admin/blacklist/blacklist_list'
+  def blacklist_list
+    # grab the items
+    @items = (Blacklist.cache.length > 0 ? Blacklist.cache : Blacklist.find(:all, :order => 'item asc'))
+    render :template => 'admin/blacklist/blacklist_list'
   end
   
   # update the blacklist with a big block of text
@@ -96,21 +96,21 @@ class Admin::BlacklistController < Admin::BaseController
   # get rules from the simplelog.net clearinghouse
   def blacklist_get_remote
     # grab the updates xml file
-	  remote_list = Net::HTTP.get(URI.parse('http://' + SL_CONFIG[:BLACKLIST_URL])) rescue ''
-	  # check the server's response code
-	  server_response = Net::HTTP.get_response(URI.parse('http://' + SL_CONFIG[:BLACKLIST_URL])).value rescue 0
-	  if remote_list == '' or server_response == 0
-	  # couldn't get update info from the server--return error msg if necessary
-	    #render :nothing => true
-	    render :nothing => true
-	    return false
+    remote_list = Net::HTTP.get(URI.parse('http://' + SL_CONFIG[:BLACKLIST_URL])) rescue ''
+    # check the server's response code
+    server_response = Net::HTTP.get_response(URI.parse('http://' + SL_CONFIG[:BLACKLIST_URL])).value rescue 0
+    if remote_list == '' or server_response == 0
+    # couldn't get update info from the server--return error msg if necessary
+      #render :nothing => true
+      render :nothing => true
+      return false
     end
-	  # break it in two
-	  render :text => remote_list
-	  return true
-	rescue
-	# an error of some sort, return error or false
-	  render :nothing => true
+    # break it in two
+    render :text => remote_list
+    return true
+  rescue
+  # an error of some sort, return error or false
+    render :nothing => true
     return false
   end
   

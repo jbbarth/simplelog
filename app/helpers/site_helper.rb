@@ -40,10 +40,10 @@ class Site
   def self.default_meta_tags
     block  = '<meta http-equiv="content-type" content="text/html; charset=' + Preference.get_setting('encoding') + '"/>' + "\n\t"
     block += '<meta name="author" content="' + Preference.get_setting('site_primary_author') + '"/>' + "\n\t"
-		block += '<meta name="description" content="' + Comment.kill_tags(Preference.get_setting('site_description')) + '"/>' + "\n\t"
-		block += '<meta name="dc.title" content="' + Preference.get_setting('site_name') + '"/>' + "\n\t"
-		block += '<link rel="start" href="' + self.full_url + '" title="' + Preference.get_setting('site_name') + '"/>'
-		return block
+  	block += '<meta name="description" content="' + Comment.kill_tags(Preference.get_setting('site_description')) + '"/>' + "\n\t"
+  	block += '<meta name="dc.title" content="' + Preference.get_setting('site_name') + '"/>' + "\n\t"
+  	block += '<link rel="start" href="' + self.full_url + '" title="' + Preference.get_setting('site_name') + '"/>'
+  	return block
   end
   
   # various identifer meta tags
@@ -68,7 +68,7 @@ class Site
   def self.list_tags_linked(tags, div_id = 'tags', title = 'Tags', archive_token = Preference.get_setting('archive_token'), separator = ', ')
     # start the output
     list  = (div_id != '' ? '<div id="' + div_id + '">' : '')
-	  list += (title != '' ? '<b>' + title + ':</b> ' : '')
+    list += (title != '' ? '<b>' + title + ':</b> ' : '')
     if tags.length == 0
     # no tags
       list += "There aren't any tags yet."

@@ -23,56 +23,56 @@ module PostHelper
   
   # build a linked-list of tags for a post
   def build_tag_list(tags, archive_token = get_pref('ARCHIVE_TOKEN'), separator = ', ')
-		url = Preference.get_setting('domain')
+  	url = Preference.get_setting('domain')
     url = (url != '' ? 'http://' + url : '')
-		list = ''
-		for tag in tags
-			list += (list != '' ? separator : '') + "<a href=\"#{url}/#{archive_token}/tags/#{tag}\" title=\"View posts tagged with &quot;#{tag}&quot;\">#{tag}</a>"
-		end
-		return list
-	rescue
-	# in case something goes wrong...
-		return ''
-	end
+  	list = ''
+  	for tag in tags
+  		list += (list != '' ? separator : '') + "<a href=\"#{url}/#{archive_token}/tags/#{tag}\" title=\"View posts tagged with &quot;#{tag}&quot;\">#{tag}</a>"
+  	end
+  	return list
+  rescue
+  # in case something goes wrong...
+  	return ''
+  end
 
   # build links to previous and next post when viewing an individual post archive, pass
   # true for show_titles and you'll get those instead of just previous and next
   # set append_left and append_right to add things like arrows to the links
-	def previous_next(current_post, div = 'item_hierarchy', title = 'Hierarchy: ', show_titles = false, prev_text = 'previous', next_text = 'next', append_left = '', append_right = '', separator = ', ')
-		links = ''
-		# run the queries
-		@previous = Post.find_previous(current_post)
-		@next = Post.find_next(current_post)
-		if @previous.length > 0 or @next.length > 0
-		# we've got something either before or after us
-		  # start building the links
-			links += (div != '' ? '<div class="' + div + '">' : '') + title
-			for post in @previous
-			  # grab the previous link if we've got one
-				links += (append_left != '' ? append_left + ' ' : '') + link_to((show_titles ? post.title : prev_text), Post.permalink(post), :title => 'Previous post')
-			end
-			for post in @next
-			  # grab the next link if we've got one
-			  # if there was a previous link, we should add a space and such first
-				links += (@previous.length > 0 ? separator : '') + link_to((show_titles ? post.title : next_text), Post.permalink(post), :title => 'Next post') + (append_right != '' ? ' ' + append_right : '')
-			end
-			# all done!
-			return links + (div != '' ? '</div>' : '')
-		else
-		# no previous or next links
-			return ''
-		end
-	rescue
-	# whoops!
-		return ''
-	end
-	
-	# use this in views to get any posts you want (say, for instance, all posts with comments)
-	# uses SQL so people can do virtually anything they want with it
-	#### DEPRECATED: Site site_helper -> get_posts
-	def get_posts(sql = "select * from posts where is_active = true order by created_at desc")
-	  logger.warn('DEPRECATED: The PostHelper method get_posts() has been deprecated. Please use Site.get_posts() instead.')
-	  return Post.find_flexible(sql)
+  def previous_next(current_post, div = 'item_hierarchy', title = 'Hierarchy: ', show_titles = false, prev_text = 'previous', next_text = 'next', append_left = '', append_right = '', separator = ', ')
+  	links = ''
+  	# run the queries
+  	@previous = Post.find_previous(current_post)
+  	@next = Post.find_next(current_post)
+  	if @previous.length > 0 or @next.length > 0
+  	# we've got something either before or after us
+  	  # start building the links
+  		links += (div != '' ? '<div class="' + div + '">' : '') + title
+  		for post in @previous
+  		  # grab the previous link if we've got one
+  			links += (append_left != '' ? append_left + ' ' : '') + link_to((show_titles ? post.title : prev_text), Post.permalink(post), :title => 'Previous post')
+  		end
+  		for post in @next
+  		  # grab the next link if we've got one
+  		  # if there was a previous link, we should add a space and such first
+  			links += (@previous.length > 0 ? separator : '') + link_to((show_titles ? post.title : next_text), Post.permalink(post), :title => 'Next post') + (append_right != '' ? ' ' + append_right : '')
+  		end
+  		# all done!
+  		return links + (div != '' ? '</div>' : '')
+  	else
+  	# no previous or next links
+  		return ''
+  	end
+  rescue
+  # whoops!
+  	return ''
+  end
+  
+  # use this in views to get any posts you want (say, for instance, all posts with comments)
+  # uses SQL so people can do virtually anything they want with it
+  #### DEPRECATED: Site site_helper -> get_posts
+  def get_posts(sql = "select * from posts where is_active = true order by created_at desc")
+    logger.warn('DEPRECATED: The PostHelper method get_posts() has been deprecated. Please use Site.get_posts() instead.')
+    return Post.find_flexible(sql)
   end
   
   # date/time of post linked, using formats from preferences
@@ -108,8 +108,8 @@ module PostHelper
   
   # if there's extended content, this shows it
   def extended_content_block(post)
-		return (post.extended != '' ? post.extended : '')
-	end
+  	return (post.extended != '' ? post.extended : '')
+  end
   
   # if the comment system is turned on, return comment info for a post
   def comment_info(post)

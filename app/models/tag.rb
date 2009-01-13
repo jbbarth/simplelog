@@ -36,10 +36,10 @@ class Tag < ActiveRecord::Base
   end
   
   # find all tags in the db that contain string
-	def self.find_by_string(str, limit = 20)
-	  # use plain old SQL to find this, it's not that complicated
-	  results = Tag.find(:all, {:select => 'tags.id, tags.name, count(tags_posts.tag_id) as post_count', :joins => 'left outer join tags_posts on tags.id = tags_posts.tag_id', :group => 'tags.id, tags.name', :conditions => ['name like ?', '%' + str + '%'], :limit => limit})
-	  return results
-	end
+  def self.find_by_string(str, limit = 20)
+    # use plain old SQL to find this, it's not that complicated
+    results = Tag.find(:all, {:select => 'tags.id, tags.name, count(tags_posts.tag_id) as post_count', :joins => 'left outer join tags_posts on tags.id = tags_posts.tag_id', :group => 'tags.id, tags.name', :conditions => ['name like ?', '%' + str + '%'], :limit => limit})
+    return results
+  end
   
 end

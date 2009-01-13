@@ -54,22 +54,22 @@ class AuthorController < ApplicationController
       @logged_in_author = Author.find(:all, :conditions => ['email = ? and hashed_pass = ? and is_active = true', @author.email, Author.do_password_hash(@author.password)])
       if @logged_in_author.length > 0
       # we found a author, let's set cookies and send them on their way
-				cookies[SL_CONFIG[:USER_EMAIL_COOKIE]] = { :value => @logged_in_author[0].email, :expires => Time.now + 31536000 }
-				cookies[SL_CONFIG[:USER_HASH_COOKIE]] = { :value => @logged_in_author[0].hashed_pass, :expires => Time.now + 31536000 }
-				if session[:came_from]
-				# they came from somewhere, let's send them back there
-					temp = session[:came_from]
-					session[:came_from] = nil
-					redirect_to temp
-				else
-				# not sure where they came from, just send them to /admin
-					redirect_to Site.full_url + '/admin'
-				end
-			else
-			# no good
-				flash[:notice] = 'Sorry, but that email/password combination is invalid.'
-				login_error = true
-			end
+  			cookies[SL_CONFIG[:USER_EMAIL_COOKIE]] = { :value => @logged_in_author[0].email, :expires => Time.now + 31536000 }
+  			cookies[SL_CONFIG[:USER_HASH_COOKIE]] = { :value => @logged_in_author[0].hashed_pass, :expires => Time.now + 31536000 }
+  			if session[:came_from]
+  			# they came from somewhere, let's send them back there
+  				temp = session[:came_from]
+  				session[:came_from] = nil
+  				redirect_to temp
+  			else
+  			# not sure where they came from, just send them to /admin
+  				redirect_to Site.full_url + '/admin'
+  			end
+  		else
+  		# no good
+  			flash[:notice] = 'Sorry, but that email/password combination is invalid.'
+  			login_error = true
+  		end
   	else
   	# didn't enter required data
   		flash[:notice] = 'You must enter an email and a password.'
@@ -78,16 +78,16 @@ class AuthorController < ApplicationController
   	if login_error
   	# there was an error--delete the cookies and send them back to the login page
   	  cookies.delete SL_CONFIG[:USER_EMAIL_COOKIE]
-			cookies.delete SL_CONFIG[:USER_HASH_COOKIE]
-			redirect_to Site.full_url + '/login'
+  		cookies.delete SL_CONFIG[:USER_HASH_COOKIE]
+  		redirect_to Site.full_url + '/login'
   	end
   end
   
   # logs a author out by destroying cookies
   def logout
     cookies.delete SL_CONFIG[:USER_EMAIL_COOKIE]
-		cookies.delete SL_CONFIG[:USER_HASH_COOKIE]
-		redirect_to Site.full_url
+  	cookies.delete SL_CONFIG[:USER_HASH_COOKIE]
+  	redirect_to Site.full_url
   end
   
 end
