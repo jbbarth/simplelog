@@ -255,14 +255,14 @@ class PostController < ApplicationController
   def feed_all_rss
     # get all the posts for the feed (set number in preferences)
     @posts = Post.find_for_feed
-    render :template => 'feeds/posts'
+    render :template => 'feeds/posts.rss.builder'
   end
 
   # rss feed for comments
   def feed_comments_rss
     # get recent comments for the feed
     @comments = Comment.find_for_feed
-    render :template => 'feeds/comments'
+    render :template => 'feeds/comments.rss.builder'
   end
 
 end
