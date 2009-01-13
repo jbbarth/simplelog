@@ -654,7 +654,7 @@ end
         output  = content_split[0].strip + "\n\n"
         output += "# Set your mail configuration for comment notification (optional)"
 output += "
-  ActionMailer::Base.server_settings = {
+  ActionMailer::Base.smtp_settings = {
     :address        => '',
     :port           => 25, 
     :domain         => '',

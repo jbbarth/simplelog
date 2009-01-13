@@ -24,7 +24,7 @@
   SL_CONFIG[:DB_TYPE_MYSQL] = 'yes' # (yes or no) are you using mysql as the database type?
 
 # Set your mail configuration for comment notification (optional)
-  ActionMailer::Base.server_settings = {
+  ActionMailer::Base.smtp_settings = {
     :address        => '',
     :port           => 25, 
     :domain         => '',
