@@ -1,3 +1,5 @@
-User-agent: *
-Disallow: /mint/ # if you've got it, this is a good idea
-Disallow: /admin/ # no reason for them to try there
+# See http://www.robotstxt.org/wc/norobots.html for documentation on how to use the robots.txt file
+#
+# To ban all spiders from the entire site uncomment the next two lines:
+# User-Agent: *
+# Disallow: /
