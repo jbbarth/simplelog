@@ -45,15 +45,15 @@ class PostTest < Test::Unit::TestCase
     ActiveSupport::Deprecation.silenced = true
     
     p = Post.find(1)
-    c = p.tag_names.length
+    c = p.tags.length
     assert p.tag('another')
-    assert_equal c+1, p.tag_names.length
+    assert_equal c+1, p.tags.length
   end
   
   def test_remove_tags
     p = Post.find(1)
     assert p.tag('', :clear => true)
-    assert_equal 0, p.tag_names.length
+    assert_equal 0, p.tags.length
   end
   
   def test_permalinks

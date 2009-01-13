@@ -52,9 +52,9 @@ class AuthorsControllerTest < Test::Unit::TestCase
     assert_redirected_to 'admin/authors'
     post :author_update, :id => 3, :author => {:is_active => '0'}
     assert_redirected_to 'admin/authors'
-    assert_equal 1, Author.find(:all, :conditions => 'is_active = true').length
+    assert_equal 1, Author.find(:all, :conditions => 'is_active = 1').length
     post :author_update, :id => 1, :author => {:is_active => '0'} # shouldn't able to
-    assert_equal 1, Author.find(:all, :conditions => 'is_active = true').length
+    assert_equal 1, Author.find(:all, :conditions => 'is_active = 1').length
   end
   
   def test_author_destroy
