@@ -71,9 +71,9 @@ class Admin::PrefsController < Admin::BaseController
     @write_errors = false
     # blank array to store them
     @errors_list = []
-    if !params[:preferences]['domain'] or params[:preferences]['domain'] == ''
-      @errors_list[@errors_list.length] = record_pref_err('Domain', 'domain', 'cannot be blank. [<a href="#" onclick="swapTab(\'site_details\')" title="Show the Site Details tab">Site details</a>]')
-    end
+    #if !params[:preferences]['domain'] or params[:preferences]['domain'] == ''
+    #  @errors_list[@errors_list.length] = record_pref_err('Domain', 'domain', 'cannot be blank. [<a href="#" onclick="swapTab(\'site_details\')" title="Show the Site Details tab">Site details</a>]')
+    #end
     if !params[:preferences]['site_name'] or params[:preferences]['site_name'] == ''
       @errors_list[@errors_list.length] = record_pref_err('Site name', 'site_name', 'cannot be blank. [<a href="#" onclick="swapTab(\'site_details\')" title="Show the Site Details tab">Site details</a>]')
     end
