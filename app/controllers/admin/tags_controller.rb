@@ -38,7 +38,7 @@ class Admin::TagsController < Admin::BaseController
     # grab the paginator
     @tag_pages = Paginator.new self, Tag.count, 20, params[:page]
     # grab the tags and get posts counts as well for sorting
-    @tags = Tag.find(:all, :select => 'tags.id, tags.name, count(tags_posts.tag_id) as post_count', :joins => 'left outer join tags_posts on tags.id = tags_posts.tag_id', :group => 'tags.id, tags.name', :order => @sorter.to_sql, :limit => @tag_pages.items_per_page, :offset =>  @tag_pages.current.offset)
+    @tags =  Tag.find(:all, :select => 'tags.id, tags.name, count(taggings.tag_id) as post_count', :joins => 'left outer join taggings on tags.id = taggings.tag_id', :group => 'tags.id, tags.name', :order => @sorter.to_sql, :limit => @tag_pages.items_per_page, :offset => @tag_pages.current.offset)
     $admin_page_title = 'Listing tags'
     render :template => 'admin/tags/tag_list'
   end
@@ -101,7 +101,7 @@ class Admin::TagsController < Admin::BaseController
     for tag in @tags
       if @temp.name == tag.name and tag.name != params[:old_name]
       # we found a duplicate
-        dup = true
+        dup = tag
         break
       end
     end
@@ -110,7 +110,8 @@ class Admin::TagsController < Admin::BaseController
     # one and then delete the old one
       @posts = Post.find_by_tag(params[:old_name])
       for post in @posts
-        post.tag(@temp.name)
+        post.tags.push dup
+        post.save
       end
       # kill the old tag
       @tag = Tag.find(:all, :conditions => ['name = ?', params[:old_name]])
