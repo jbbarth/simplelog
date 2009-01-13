@@ -24,7 +24,7 @@ end
 <span id="plaintext_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'post_new' and get_pref('TEXT_FILTER') == 'plain text') or (params[:action] != 'post_new' and @post.text_filter == 'plain text') %>><b>Plain text</b> mode enabled.</span></td></tr>
 
 <tr><td><label for="tag_input">Tags</label></td><td>
-<%= text_field_tag 'tag_input', @post.tag_names.join(' '), :size => '58', :class => 'normal_i_width', :id => 'tag_input', :onkeyup => 'highlight_tags(this)' %><br/>
+<%= text_field_tag 'tag_input', @post.tags.join(' '), :size => '58', :class => 'normal_i_width', :id => 'tag_input', :onkeyup => 'highlight_tags(this)' %><br/>
 <span class="small gray">Enter tags separated by a space or click existing tags below.</span></td></tr>
 
 <tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('et1');Element.toggle('et_i1');Element.toggle('et_i2');">Existing Tags&nbsp;&nbsp;<img id="et_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""<% if get_pref('ALL_TAGS_BY_DEFAULT') == 'yes' %> style="display: none;"<% end %>/><img id="et_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt=""<% if get_pref('ALL_TAGS_BY_DEFAULT') != 'yes' %> style="display: none;"<% end %>/></a></td></tr>

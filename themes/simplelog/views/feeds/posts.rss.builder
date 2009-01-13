@@ -22,8 +22,8 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
   			  xml.author(post.author.email + ' (' + post.author.name + ')')
   			end
   			xml.description(post.body + ((post.extended and post.extended != '') ? post.extended : ''))
-  			if post.tag_names.length > 0
-  				for tag in post.tag_names.sort!
+  			if post.tags.length > 0
+  				for tag in post.tags.sort!
   					xml.category tag, "domain" => Site.full_url + '/' + get_pref('ARCHIVE_TOKEN') + '/tags/' + tag
   				end
   			end

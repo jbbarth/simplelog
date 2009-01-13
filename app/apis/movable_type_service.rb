@@ -80,7 +80,7 @@ class MovableTypeService < SimplelogWebService
   before_invocation :authorize, :except => [:getTrackbackPings, :supportedMethods, :supportedTextFilters]
   
   def getPostCategories(postid, username, password)
-    Post.find(postid).tag_names.sort!.collect do |t|
+    Post.find(postid).tags.sort!.collect do |t|
       MovableTypeStructs::PostCategory.new(
         :categoryName => t,
         :categoryId => t,
