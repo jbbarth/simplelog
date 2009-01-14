@@ -27,7 +27,7 @@ module PostHelper
     url = (url != '' ? 'http://' + url : '')
     list = ''
     for tag in tags
-      list += (list != '' ? separator : '') + "<a href=\"#{url}/#{archive_token}/tags/#{tag}\" title=\"View posts tagged with &quot;#{tag}&quot;\">#{tag}</a>"
+      list += (list != '' ? separator : '') + "<a href=\"#{url}/#{archive_token}/tags/#{tag}\" class=\"tag public_tag\" title=\"View posts tagged with &quot;#{tag}&quot;\">#{tag}</a>"
     end
     return list
   rescue
@@ -70,14 +70,14 @@ module PostHelper
   # use this in views to get any posts you want (say, for instance, all posts with comments)
   # uses SQL so people can do virtually anything they want with it
   #### DEPRECATED: Site site_helper -> get_posts
-  def get_posts(sql = "select * from posts where is_active = true order by created_at desc")
+  def get_posts(sql = "select * from posts where is_active = 1 order by created_at desc")
     logger.warn('DEPRECATED: The PostHelper method get_posts() has been deprecated. Please use Site.get_posts() instead.')
     return Post.find_flexible(sql)
   end
   
   # date/time of post linked, using formats from preferences
-  def date_time_linked(post)
-    return "<a href=\"#{Post.permalink(post)}\" title=\"Permalink for this post\">#{post.created_at.strftime(Preference.get_setting('date_format'))} at #{post.created_at.strftime(Preference.get_setting('time_format'))}</a>"
+  def date_time_linked(post, separator = "at")
+    return "<a href=\"#{Post.permalink(post)}\" title=\"Permalink for this post\">#{post.created_at.strftime(Preference.get_setting('date_format'))} #{separator} #{post.created_at.strftime(Preference.get_setting('time_format'))}</a>"
   end
   
   # date/time of post
@@ -119,7 +119,7 @@ module PostHelper
       return '(disabled)'
     end
   end
-  
+
   # describes the current comment amount for a post in language
   def comment_count_description(post)
     if post
@@ -128,7 +128,7 @@ module PostHelper
       return ''
     end
   end
-  
+ 
   # a link to posting, if posting comments is allowed for this post
   def add_comment_link(post)
     if post.comment_status == 1
@@ -153,9 +153,9 @@ module PostHelper
   end
   
   # if there are tags, return them for this post
-  def tag_info(post)
+  def tag_info(post, separator = ", ")
     if post.tags.length > 0
-      return build_tag_list(post.tags.map(&:name).sort)
+      return build_tag_list(post.tags.map(&:name).sort!, get_pref('ARCHIVE_TOKEN'), separator)
     else
       return '(none)'
     end
