@@ -102,7 +102,7 @@ class Post < ActiveRecord::Base
   # this fixes redcloth issues because redcloth sucks and i hate it!
   def self.fix_redcloth(input)
     input = input.gsub(/\>\s+?\</, '><') # get rid of newlines between tags
-    input = input.gsub(/\n{2,}/, '') # get rid of more than one newline block
+    input = input.gsub(/\n{2,}/, "\n") # get rid of more than one newline block
     input = input.gsub("\n", '<br/>') # replace single newline with BR
     return input
   end
@@ -113,7 +113,8 @@ class Post < ActiveRecord::Base
     if text_filter == 'markdown'
       input = BlueCloth.new(input).to_html
     elsif text_filter == 'textile'
-      input = self.fix_redcloth(RedCloth.new(input).to_html)
+      #input = self.fix_redcloth(RedCloth.new(input).to_html)
+      input = self.fix_redcloth(Textilizer.new(input).to_html)
     elsif text_filter == 'convert line breaks'
       input = input.gsub(/\n\n/, '</p><p>')
       input = input.gsub(/\n/, '<br/>')
