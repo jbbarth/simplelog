@@ -10,7 +10,7 @@ class Pages < ActiveRecord::Migration
       t.column "permalink", :string, :limit => 128
       t.column "body_raw", :text
       t.column "body", :text
-      t.column "is_active", :boolean, :default => true
+      t.column "is_active", :boolean, :default => 1
       t.column "created_at", :datetime
       t.column "modified_at", :datetime
       t.column "text_filter", :string

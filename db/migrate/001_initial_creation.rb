@@ -31,7 +31,7 @@ class InitialCreation < ActiveRecord::Migration
     
     # create an example first post (via SQL because our prefs aren't
     # loaded yet and we don't know which filter to use!)
-    temp_body = 'Welcome to <a href="http://simplelog.net" title="SimpleLog">SimpleLog</a>! This is an example first post, feel free to delete it. What\\\'s next? You should log in to your <a href="/admin" title="Admin section">administration section</a> and create a new user, delete the temporary user, and then start writing! You can also customize your CSS and theme to suit your taste. Thanks for using SimpleLog!</p><p>While SimpleLog is free, <a href="http://simplelog.net/donate" title="Donate">donations are accepted</a> (and <i>encouraged</i>). <b>Half of all donations will be given to <a href="http://nationalmssociety.org" title="The National MS Society">The National MS Society</a></b>, the other half will be used to pay for hosting costs and fund future development. Please consider donating!'
+    temp_body = 'Welcome to <a href="http://simplelog.net" title="SimpleLog">SimpleLog</a>! This is an example first post'
     execute "INSERT INTO posts (author_id, created_at, modified_at, permalink, title, synd_title, summary, body_raw, body, extended_raw, extended) VALUES (1, '#{time}', '#{time}', 'welcome_to_simplelog_this_is', 'My First Post', 'Welcome to Simplelog! This is...', 'This is the first post of my weblog.', '#{temp_body}', '<p>#{temp_body}</p>', '', '')"
     
     if SL_CONFIG[:DB_TYPE_MYSQL] == 'yes'
@@ -68,7 +68,7 @@ class InitialCreation < ActiveRecord::Migration
     
     # create a temporary first author to that we can log in to the admin section
     # username: temp@email.com, password: !@gonow
-    execute "INSERT INTO authors (created_at, modified_at, email, hashed_pass, name, url, is_active) VALUES ('#{time}', '#{time}', 'temp@email.com', '#{Author.do_password_hash('!@gonow')}', 'Temporary User', 'http://simplelog.net', true)"
+    execute "INSERT INTO authors (created_at, modified_at, email, hashed_pass, name, url, is_active) VALUES ('#{time}', '#{time}', 'temp@email.com', '#{Author.do_password_hash('!@gonow')}', 'Temporary User', 'http://simplelog.net', 1)"
     
     # create sessions table for session store (much faster!), see enabled option in env
     create_table "sessions", :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|

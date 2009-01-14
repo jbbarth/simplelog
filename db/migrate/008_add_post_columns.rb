@@ -17,11 +17,11 @@ class AddPostColumns < ActiveRecord::Migration
     # loop
     for p in posts
       sql = ''
-      b_searchable = Post.strip_html(p.body, [], true, true)
+      b_searchable = Post.strip_html(p.body, [], 1, 1)
       b_searchable = b_searchable.gsub("'", "\\\\'")
       sql += 'update posts set body_searchable = \'' + b_searchable + '\', '
       if p.extended_raw != ''
-        e_searchable = Post.strip_html(p.extended, [], true, true)
+        e_searchable = Post.strip_html(p.extended, [], 1, 1)
         e_searchable = e_searchable.gsub("'", "\\\\'")
         sql += 'extended_searchable = \'' + e_searchable + '\', '
       end
