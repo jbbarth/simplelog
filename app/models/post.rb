@@ -328,11 +328,13 @@ class Post < ActiveRecord::Base
   # get a list of posts tagged with `tag`
   def self.find_by_tag(tag, only_active = true)
     tag = tag.gsub("'", "''") # protect against quotes
-    if only_active
-      self.find_tagged_with(:all => tag, :conditions => ['is_active = ? and created_at <= ?', true, Time.sl_local], :order => 'created_at desc')
-    else
-      self.find_tagged_with(:all => tag, :order => 'created_at desc')
-    end
+    #if only_active
+    #  self.find_tagged_with(:all => tag, :conditions => ['is_active = ? and created_at <= ?', true, Time.sl_local], :order => 'created_at desc')
+    #else
+    #  self.find_tagged_with(:all => tag, :order => 'created_at desc')
+    #end
+    #TODO: recode the "is_active" feature...
+    self.find(:all).select{|p| p.tags.map(&:name).include? tag }
   end
   
   # get a single post based on permalink
@@ -353,14 +355,14 @@ class Post < ActiveRecord::Base
   # find all posts in the db that contain string
   def self.find_by_string(str, limit = Preference.get_setting('SEARCH_RESULTS'), active_only = true)
     # use the search lib to run this search
-    results = self.search(str, {:conditions => (active_only ? "is_active = #{true} and created_at <= '#{Time.sl_local_db}'" : nil), :limit => limit})
+    results = self.search(str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
     if (results.length > 1) or (str.downcase.index(' and '))
     # if the first search returned something or there was an AND operator
       return results
     else
     # first search didn't find anthing, let's try it with the OR operator
       simple_str = str.gsub(' ',' OR ')
-      return self.search(simple_str, {:conditions => (active_only ? "is_active = #{true} and created_at <= '#{Time.sl_local_db}'" : nil), :limit => limit})
+      return self.search(simple_str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
     end
   end
   def self.find_by_string_full(str, limit = Preference.get_setting('SEARCH_RESULTS_FULL'))
