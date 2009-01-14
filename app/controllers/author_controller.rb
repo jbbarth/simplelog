@@ -51,7 +51,7 @@ class AuthorController < ApplicationController
     @author = Author.new(params[:author])
     if @author.email != '' && @author.password != ''
     # the author entered the required data, let's check it
-      @logged_in_author = Author.find(:all, :conditions => ['email = ? and hashed_pass = ? and is_active = true', @author.email, Author.do_password_hash(@author.password)])
+      @logged_in_author = Author.find(:all, :conditions => ['email = ? and hashed_pass = ? and is_active = ?', @author.email, Author.do_password_hash(@author.password), true])
       if @logged_in_author.length > 0
       # we found a author, let's set cookies and send them on their way
         cookies[SL_CONFIG[:USER_EMAIL_COOKIE]] = { :value => @logged_in_author[0].email, :expires => Time.now + 31536000 }
