@@ -22,7 +22,9 @@
 ActionController::Routing::Routes.draw do |map|
 
   tokens = /archives|older|past/
-  
+
+  map.resources :posts, :has_many => :comments
+
   # site ########################################################################################
   # index page
   map.connect '', :controller => 'post', :action => 'list'
