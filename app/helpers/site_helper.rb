@@ -84,7 +84,27 @@ class Site
     # all done
     return list + (div_id != '' ? '</div>' : '')
   end
-  
+ 
+ def self.tag_cloud(tags, classes)
+    max, min = 0, 0
+    tags.each do |t|
+       max = t.count.to_i if t.count.to_i > max
+       min = t.count.to_i if t.count.to_i < min
+     end
+     divisor = ((max - min) / classes.size) + 1
+     tags.each do |t|
+     yield t.name, classes[(t.count.to_i - min) / divisor]
+   end
+ end
+
+  def self.tag_cloud_link(tag, css_class, archive_token = Preference.get_setting('archive_token'))
+    "<a href=\"#{self.full_url}/#{archive_token}/tags/#{tag}\" title=\"View posts tagged with &quot;#{tag}&quot;\" class=\"#{css_class}\">#{tag}</a>"
+  end
+
+  def tag_links_for(tags)
+    (tags.count >= 1 ? tags.map{ |t| link_to t.name, "/tags/#{t.name}" }.join(", ") : "No tag")
+  end
+
   # a list of all active authors (1 or more post written)
   def self.list_authors_linked(authors, div_id = 'authors', title = 'Authors', archive_token = Preference.get_setting('archive_token'), separator = ', ')
     if Preference.get_setting('SHOW_AUTHOR_OF_POST') == 'yes' and authors
