@@ -75,9 +75,9 @@ class Site
     else
     # we've got some tags
       c = 0
-      for tag in tags.sort
+      for tag in tags.sort_by(&:name)
       # build the list
-        list += (c > 0 ? separator : '') + "<a href=\"#{self.full_url}/#{archive_token}/tags/#{tag[0]}\" title=\"View posts tagged with &quot;#{tag[0]}&quot;\">#{tag[0]}</a>"
+        list += (c > 0 ? separator : '') + "<a href=\"#{self.full_url}/#{archive_token}/tags/#{tag.name}\" title=\"View posts tagged with &quot;#{tag.name}&quot;\">#{tag.name}</a>"
         c = c+1
       end
     end

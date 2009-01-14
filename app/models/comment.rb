@@ -139,7 +139,7 @@ class Comment < ActiveRecord::Base
   
   # get a list of comments for the feed
   def self.find_for_feed
-    self.find(:all, :conditions => 'is_approved = true', :order => 'created_at desc', :limit => 20)
+    self.find(:all, :conditions => ['is_approved = ?', true], :order => 'created_at desc', :limit => 20)
   end
   
   # find all comments in the db that contain string

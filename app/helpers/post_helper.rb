@@ -155,7 +155,7 @@ module PostHelper
   # if there are tags, return them for this post
   def tag_info(post)
     if post.tags.length > 0
-      return build_tag_list(post.tags.sort!)
+      return build_tag_list(post.tags.map(&:name).sort)
     else
       return '(none)'
     end
