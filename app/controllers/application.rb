@@ -59,7 +59,12 @@ class ApplicationController < ActionController::Base
     @error = true # for use later
     render :template => 'errors/unknown_request'
   end
-  
+
+  #build tag cloud
+  before_filter :build_cloud
+  def build_cloud
+    @all_tags = Post.tag_counts(:order=>'tags.name asc')
+  end
 end
 
 
