@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+  <%# please don't remove this! -%>
+  <%= Site.powered_by_comment %>
+  <%# please don't remove this! -%>
+  
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%= get_pref('LANGUAGE') %>">
+  
+<head>  
+  <title><%= Site.site_name %>.<%= ' ' + $page_title %></title>
+  <meta name="robots" content="index,follow"/>
+  <meta name="mssmarttagspreventparsing" content="true"/>
+  <%= Site.default_meta_tags %>
+  <%= Site.icbm_meta_tag %>
+  <%= Site.esbn_meta_tag %>
+  <%= Site.issn_meta_tag %>
+  <%= auto_discovery_link_tag :rss, Site.rss_url, :title => 'Primary Feed' %>
+  <!--[if IE]><%= theme_stylesheet_link_tag 'blueprint/ie.css', :title => Site.site_name, :media => 'screen, projection' %><![endif]-->
+  <%= theme_stylesheet_link_tag 'blueprint/screen.css', :media => 'screen, projection' %>
+  <%= theme_stylesheet_link_tag 'blueprint/print.css', :media => 'print' %>
+  <%= theme_stylesheet_link_tag 'styles.css' %>
+  <%= stylesheet_link_tag 'coderay.css' %>
+  <!-- <%= theme_javascript_include_tag 'site' %>
+  <%= theme_javascript_include_tag 'prototype' %>
+  <%= theme_javascript_include_tag 'lightbox' %> -->
+</head>
+
+
+<!--<%= javascript_include_tag :all %>-->
+
+<body<%= Site.body_id %>>
+  
+  <%= render :partial => 'includes/browser_check' %>
+
+  <div class="container">
+    <div id="top-menu" class="span-24 last">
+      <a href="/admin">Admin</a> &nbsp; | &nbsp; 
+      <a href="/">Photos</a> &nbsp; | &nbsp; 
+      <a href="/">Projets</a> &nbsp; | &nbsp; 
+      <a href="http://www.wishlistr.com/jbbarth" target="_blank">Wishlist</a> &nbsp; | &nbsp; 
+      <a href="/cv-en.html">CV</a>
+    </div>
+    <div id="header" class="span-24 last">
+      <div class="span-16">
+        <h1><%= Site.site_name_linked %></h1>
+        <h2><%= Site.slogan %></h2>
+      </div>
+      <div class="span-7 nube last">
+        <% Site.tag_cloud @all_tags, %w(nube1 nube2 nube3 nube4 nube5) do |name, css_class| %>
+          <%= Site.tag_cloud_link name, css_class %>
+        <% end %>
+      </div>
+    </div>
+    <% if flash[:notice] %>
+      <div id="notice" class="span-23 last"><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:error] %>
+      <div id="error" class="span-23 last"><%= flash[:error] %></div>
+    <% end %>
+    <div class="span-12 left">
+      <%= yield %>
+    </div>
+    <div class="span-12 right last">
+      <%= yield :right%>
+    </div>
+    <div class="span-24 last">
+      <%= render :partial => 'includes/footer' %>
+    </div>
+  </div>
+  
+  <%= Site.mint_tag %>
+
+</body>
+
+<%= Site.version_number_comment %>
+
+</html>

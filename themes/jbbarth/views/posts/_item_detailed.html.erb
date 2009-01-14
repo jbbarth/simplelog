@@ -1,0 +1,106 @@
+<%= render :partial => post %>
+
+<%# ##################################################### -%>
+<%# This is the logic/code for comments... you can copy   -%>
+<%# this and use it in your themes to support comments    -%>
+<%# ##################################################### -%>
+<% if Site.comment_system_on and post.comment_status != 0 -%>
+<!-- comments for this post -->
+<div id="comments_box">
+    <h4>Commentaires</h4>
+
+    <p><%= comment_count_description_fr(post) %><%= add_comment_link_fr(post) %></p>
+    
+    <% if flash[:notice] -%>
+    <div class="approval_required"><%= flash[:notice] %></div>
+    <% end -%>
+    
+    <% show_gravatars = Site.gravatars_on %>
+    <% i = post.comments.count %>
+    <div id="comments" class="content">
+      <% for comment in post.comments.sort_by{|c| c.id}.reverse -%>
+        <div class="comment" id="c<%= comment.id.to_s %>">
+          <% if show_gravatars && false -%>
+            <div class="gravatar"><img src="<%= get_gravatar_url(comment.email) %>"/></div>
+          <% end -%>
+          <span class="position"><%= i %>.</span>
+	  <% i -= 1 %>
+          <span class="name"><a href="" rel="nofollow"><%= comment_author(comment) %></a></span>
+          <span class="created_at"><%= date_time_comment_fr(comment, post) %></span>
+          <div class="comment_content">
+            <%= comment.body %>
+          </div>
+        </div>
+        <%= "<hr />" if i >= 1 -%>
+    <% end -%>
+    </div>
+    
+    <% if accepting_comments(post) -%>
+      <% content_for :right do %>
+        <div class="post">
+        <h4>Poster un commentaire</h4>
+        <p>Les champs obligatoires sont en <b>gras</b>.</p>
+    
+        <% form_tag(Site.full_url + '/comments/add', :id => 'post_form') do %>
+        <%= hidden_field_tag 'do', '1' %>
+        <%# ###################################################### -%>
+        <%# This is used to check if commenter is human by seeing  -%>
+        <%# if they actually input text into any of the boxes and  -%>
+        <%# requires the additional :onclick and :onkeypress below -%>
+        <%# ###################################################### -%>
+        <%= hidden_field_tag 'human_check', '0' %>
+        <%= hidden_field_tag 'return_url', Post.permalink(post) %>
+        <%= hidden_field_tag 'link', post.permalink %>
+        <%= hidden_field 'comment', 'post_id', :value => post.id.to_s %>
+        <%  temp_repair = error_messages_for('comment') || '' %>
+        <%= temp_repair.gsub('Body raw', 'Body') %>
+   
+        <div id="comment_form">
+            
+            <table id="comment_form" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="labels"><label for="comment_name">Nom:</label></td>
+                    <td class="fields"><%= text_field 'comment', 'name' %></td>
+                </tr>
+                <tr>
+                    <td class="labels"><label for="comment_email"><b>Email:</b></label></td>
+                    <td class="fields"><%= text_field 'comment', 'email' %></td>
+                </tr>
+                <!--<tr>
+                    <td class="labels"><label for="comment_url">Site:</label></td>
+                    <td class="fields"><%= text_field 'comment', 'url' %></td>
+                </tr>-->
+                <% if Site.allow_comment_subjects %>
+                <tr>
+                    <td class="labels"><label for="subject">Sujet:</label></td>
+                    <td class="fields"><%= text_field 'comment', 'subject' %></td>
+                </tr>
+                <% end %>
+                <tr>
+                    <td class="labels"><label for="tag_name"><b>Commentaire:</b></label></td>
+                    <td class="fields"><%= text_area 'comment', 'body_raw', :class => "span-9", :rows => 10, :cols => 35, :wrap => 'virtual', :onkeypress => "this.form.elements['human_check'].value = '8'" %></td>
+                </tr>
+                <tr>
+                    <td class="labels">&nbsp;</td>
+                    <td class="fields">
+                        <div class="submit_area">
+                            <%= submit_tag 'Envoyer', :class => 'submit', :onclick => "this.form.elements['human_check'].value = '8'" %>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+          </div>
+        </div>
+    
+        <% end -%>
+      <% end -%>
+    <% end -%>
+</div>
+<!-- end comments -->
+<% end -%>
+<%# ##################################################### -%>
+<%# This is the end of the comment logic block            -%>
+<%# ##################################################### -%>
+
+<!-- end post id <%= post.id %> -->

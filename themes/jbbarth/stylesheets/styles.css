@@ -1,0 +1,49 @@
+/* general */
+a { color: #1b97f2; text-decoration:none; font-weight:bold; }
+a:hover { text-decoration:underline; }
+.center { text-align:center; }
+pre { border:1px solid #ddd; background-color:#eee; width:100%; overflow:auto; }
+div#error { border:1px solid red; background-color:#faa; padding:5px; margin-bottom:5px; }
+div#notice { border: 1px solid green; background-color:#afa; padding:5px; margin-bottom:5px; }
+label { font-weigth:normal; }
+/* specific */
+#header { padding-left:10px; }
+#header a, #footer a, a.white { font-weight: bold; }
+#header h1 { color:#000; font-weight:bold; font-size:2.6em; margin-top:10px; }
+#header h1 a { color:#000; }
+#header h1 a:hover { text-decoration:none; }
+#header h2 { color:#666; font-size:0.9em; font-weight:bold; }
+div.left { border-right: 1px solid #ccc; padding-right:10px; }
+div.post, #post-comment { padding:20px 10px; margin:10px 0; text-align:justify; }
+div.even { background-color:#fff !important; }
+div.odd { background-color:#e3e7ee !important; }
+div.post h3 { margin-bottom: 5px; color:#e80; font-size:1.7em; font-weight:bold; }
+div.post h3 a { color:#e80; font-weight:bold; }
+div.post h4, div#comments_box h4 { margin-bottom: 5px; color:#e80; font-size:1.4em; font-weight:bold; }
+div.post .meta { margin-top: 0; margin-bottom:8px; }
+div.post .meta img { margin: 3px 5px; float:left; }
+div.post .meta .comments { background:url(../images/comment.png) center left no-repeat; margin-top:2px; padding: 0 10px 0 20px; float:left; }
+/* tags ; taken from blogmarks.net */
+.tags { margin:0; }
+.tags .tag { font-size:10px; display:block; float:left; padding:0 7px 1px 17px; margin-top:3px; text-decoration:none; height:15px; }
+.tags .public_tag { background:url(../images/tag.gif) bottom left no-repeat; border-right:1px solid #C2C1C1; }
+/* tag cloud */
+.nube { padding:8px; margin:5px 10px 20px 0; text-align:center; background-color:#efefef; -moz-border-radius:4px; }
+.nube1 { font-size:1.0em; }
+.nube2 { font-size:1.2em; }
+.nube3 { font-size:1.4em; }
+.nube4 { font-size:1.6em; }
+.nube5 { font-size:1.8em; }
+.nube6 { font-size:2.0em; }
+/* comments */
+#comments_box { font-size:11px; padding:0 10px; }
+#comments { border: #AAA solid 1px; background-color: #F3F3F3; margin-right: 50px; }
+.comment { margin: 15px 20px; }
+.comment .position, .comment .name { font-size: 12px; font-weight: bold; }
+.comment_content { font-size: 12px; }
+.comment_content p { margin: 8px 0; }
+#comments hr { width: 200px; margin: 0 auto; border: none; border-top: 1px solid #CCC; }
+/* special places */
+#top-menu { background-color:#000; color:#fff; text-align:center; font-weight:bold; margin-bottom:15px; padding:2px 0; -moz-border-radius:0 0 4px 4px; }
+#top-menu a { color:#fff; }
+#footer { text-align:center; padding:10px; }

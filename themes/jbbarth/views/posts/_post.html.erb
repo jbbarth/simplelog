@@ -1,0 +1,21 @@
+<!-- this is post id <%= post.id %> -->
+<% css_class ||= "even" %>
+<% div_for(post, :class => css_class) do %>
+  <h3><%= link_to_unless_current h(post.title), Post.permalink(post) %></h3>
+  <div class="meta">
+    <%= image_tag get_gravatar_url(post.author.email, 32) %>
+    <div class="meta-infos">
+      <span class="author"><%= author_info(post, "") %></span> | 
+      <span class="date"><%= date_time_linked(post, "-") %></span><br />
+      <span class="comments"><%= (Site.comment_system_on && post.comment_status != 0 ? comment_info_fr(post) : "Comments désactivés") %></span>
+      <span class="tags">
+        <%= tag_info post, "" %>
+      </span>
+    </div>
+  </div>
+  <br />
+  <%= post.body %>
+  <%= extended_content_link(post) %>
+<% end %>
+<!-- end post id <%= post.id %> -->
+

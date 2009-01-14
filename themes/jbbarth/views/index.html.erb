@@ -1,0 +1,11 @@
+<%# loop through and show posts -%>
+<% for post in @posts.select{|p| !p.tags.map(&:name).include?("tech") } -%>
+    <%= render :partial => 'posts/item', :locals => {:post => post, :css_class => cycle("even","odd")} %>
+<% end -%>
+
+<% reset_cycle %>
+<% content_for :right do %>
+  <% for post in @posts.select{|p| p.tags.map(&:name).include?("tech") } -%>
+    <%= render :partial => 'posts/item', :locals => {:post => post, :css_class => cycle("even","odd")} %>
+  <% end -%>
+<% end %>
