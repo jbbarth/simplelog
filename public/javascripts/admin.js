@@ -47,7 +47,7 @@ function init()
     green_check_img.src = simplelog_url + '/images/admin/green_check.png';
     light_check_img = new Image();
     light_check_img.src = simplelog_url + '/images/admin/light_check.png';
-    el = document.getElementById('tag_input');
+    el = document.getElementById('post_tag_list');
     if (el)
     {
         highlight_tags(el);
