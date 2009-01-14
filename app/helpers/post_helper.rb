@@ -95,6 +95,11 @@ module PostHelper
     return "<a href=\"#{Post.permalink(post)}\#c#{comment.id.to_s}\" title=\"Permalink for this comment\">#{comment.created_at.strftime(Preference.get_setting('date_format'))} at #{comment.created_at.strftime(Preference.get_setting('time_format'))}</a>"
   end
   
+  #TODO: globalize it
+  def date_time_comment_fr(comment, post)
+    "#{comment.created_at.strftime(Preference.get_setting('date_format'))} - #{comment.created_at.strftime(Preference.get_setting('time_format'))}"
+  end
+  
   # if there's extended content, this shows a link
   def extended_content_link(post, wrap_in_p = true)
     if post.extended != ''
@@ -119,6 +124,15 @@ module PostHelper
       return '(disabled)'
     end
   end
+  
+  #TODO: globalize it
+  def comment_info_fr(post)
+    if post.comment_status != 0
+      return "<a href=\"#{Post.permalink(post)}\#comments\" title=\"Commentaire sur cet article\">#{post.comments.length.to_s}#{(post.comment_status == 2 ? ' (commentaires fermés)' : ' commentaire'+(post.comments.count >= 2 ? 's' : ''))}</a>"
+    else
+      return '(désactivés)'
+    end
+  end
 
   # describes the current comment amount for a post in language
   def comment_count_description(post)
@@ -129,6 +143,15 @@ module PostHelper
     end
   end
  
+  #TODO: globalize or i18n it...
+  def comment_count_description_fr(post)
+    if post
+      return "Il y a #{pluralize(post.comments.length, 'commentaire')} sur cet article."
+    else
+      return ''
+    end
+  end 
+
   # a link to posting, if posting comments is allowed for this post
   def add_comment_link(post)
     if post.comment_status == 1
@@ -138,6 +161,15 @@ module PostHelper
     end
   end
   
+  #TODO: i18n it..
+  def add_comment_link_fr(post)
+    if post.comment_status == 1
+      return '&nbsp;<a href="#post" title="En ajouter un &rarr;">En ajouter un &rarr;</a>'
+    else
+      return ''
+    end
+  end
+
   # return the commenter's name, linked if necessary
   def comment_author(comment)
     if comment.url and comment.url != ''
