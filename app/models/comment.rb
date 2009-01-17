@@ -130,7 +130,7 @@ class Comment < ActiveRecord::Base
   # before a comment is created, set its modification date to now
   def before_create
     # if we approve by default, let's do that
-    self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? true : false)
+    self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? 1 : 0)
     # set modification date
     self.modified_at = Time.sl_local
     # set created date
@@ -139,7 +139,7 @@ class Comment < ActiveRecord::Base
   
   # get a list of comments for the feed
   def self.find_for_feed
-    self.find(:all, :conditions => ['is_approved = ?', true], :order => 'created_at desc', :limit => 20)
+    self.find(:all, :conditions => ['is_approved = ?', 1], :order => 'created_at desc', :limit => 20)
   end
   
   # find all comments in the db that contain string
@@ -158,7 +158,7 @@ class Comment < ActiveRecord::Base
   
   # find only unapproved comments
   def self.find_unapproved
-    self.find(:all, :conditions => ['is_approved = ?', false])
+    self.find(:all, :conditions => ['is_approved = ?', 0])
   end
   
 end

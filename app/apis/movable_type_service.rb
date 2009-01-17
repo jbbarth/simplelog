@@ -135,7 +135,7 @@ class MovableTypeService < SimplelogWebService
   
   def publishPost(postid, username, password)
     post = Post.find(postid)
-    post.is_active = true
+    post.is_active = 1
     post.save
   end
     

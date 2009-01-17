@@ -174,7 +174,7 @@ class Site
   end
     
   # grab any posts using SQL
-  def self.get_posts(sql = "select * from posts where is_active = true order by created_at desc")
+  def self.get_posts(sql = "select * from posts where is_active = 1 order by created_at desc")
     return Post.find_flexible(sql)
   end
   

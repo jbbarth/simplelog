@@ -36,7 +36,7 @@ class PostTest < Test::Unit::TestCase
   def test_get_active_posts
     # fixtures have 3 posts, 2 active
     c = Post.count # 3
-    n = Post.count(:conditions => ['is_active = ?', true]) # 2
+    n = Post.count(:conditions => ['is_active = ?', 1]) # 2
     assert_equal c, n+1
   end    
   
