@@ -98,7 +98,7 @@ class Admin::BaseController < ApplicationController
       # there was a check relatively recently, was there an update available?
         if last_update.update_available
         # there was!
-          if last_update.update_version >= SL_CONFIG[:VERSION]
+          if last_update.update_version > SL_CONFIG[:VERSION]
           # this is a different version, let's tell them about it
             @update_checker = "<b>Update found!</b> Version #{last_update.update_version} is <a href=\"http://simplelog.net\" title=\"Visit the SimpleLog website\" target=\"_blank\">now available</a>. (Want to <a href=\"#{Site.full_url}/admin/updates/auto/toggle\" title=\"Turn off auto update checking\">turn off auto update checking</a>?)"
             session[:update_check_version_stored] = last_update.update_version

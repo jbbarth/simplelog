@@ -77,7 +77,7 @@ class Admin::MiscController < Admin::BaseController
     server_version_info = server_version_info.split("\n")
     # get the version number
     server_version = server_version_info[0].gsub(/\<(\/*)version\>/, '').strip
-    if server_version != '' and server_version != SL_CONFIG[:VERSION]
+    if server_version != '' and server_version > SL_CONFIG[:VERSION]
     # different version on server
       output = "<p><b>Update found!</b> Version #{server_version} is now available: <a href=\"http://simplelog.net\" title=\"Visit the SimpleLog website\" target=\"_blank\">Visit the SimpleLog website</a> to download.</p>"
       # grab the change details
