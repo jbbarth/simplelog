@@ -8,18 +8,18 @@
 class SanitizeTags < ActiveRecord::Migration
   def self.up
     # grab the tags
-    tags = Tag.find(:all)
-    for t in tags
+    #tags = Tag.find(:all)
+    #for t in tags
       # clean the name
-      name = t.name.gsub(' ', '').gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '')
+    #  name = t.name.gsub(' ', '').gsub("'", '').gsub(/[^a-zA-Z0-9 ]/, '')
       # check to see if the name is blank now, if it is, destroy the tag
-      if name == ''
-        Tag.find(t.id).destroy
-        next
-      end
+    #  if name == ''
+    #    Tag.find(t.id).destroy
+    #    next
+    #  end
       # update
-      t.update_attributes(:name => name)
-    end
+    #  t.update_attributes(:name => name)
+    #end
     # done!
   end
 
