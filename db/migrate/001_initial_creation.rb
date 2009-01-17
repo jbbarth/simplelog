@@ -40,20 +40,20 @@ class InitialCreation < ActiveRecord::Migration
     end
     
     # tags table
-    create_table "tags", :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
-      t.column "name", :string, :limit => 128
-    end
+    #create_table "tags", :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
+    #  t.column "name", :string, :limit => 128
+    #end
     
     # tags/posts join table (HABTM)
-    create_table "tags_posts", :id => false, :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
-      t.column "tag_id", :integer
-      t.column "post_id", :integer
-    end
+    #create_table "tags_posts", :id => false, :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
+    #  t.column "tag_id", :integer
+    #  t.column "post_id", :integer
+    #end
     
     # tag the first post with a sample tag
-    post = Post.find(:first)
-    post.tag "sample"
-    post.tag "simplelog"
+    #post = Post.find(:first)
+    #post.tag "sample"
+    #post.tag "simplelog"
     
     # authors table (for admin section)
     create_table "authors", :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
@@ -81,8 +81,8 @@ class InitialCreation < ActiveRecord::Migration
   def self.down
     # just drop all the tables
     drop_table "posts"
-    drop_table "tags"
-    drop_table "tags_posts"
+    #drop_table "tags"
+    #drop_table "tags_posts"
     drop_table "authors"
     drop_table "sessions"
   end
