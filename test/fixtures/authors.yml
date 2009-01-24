@@ -9,7 +9,7 @@ garrett:
   email: garrett@email.com
   hashed_pass: a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
   name: garrett
-  is_active: true
+  is_active: 1
   
 dudeous:
   id: 2
@@ -18,7 +18,7 @@ dudeous:
   email: dudeous@email.com
   hashed_pass: a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
   name: dudeous
-  is_active: false
+  is_active: 0
   
 guy:
   id: 3
@@ -27,4 +27,4 @@ guy:
   email: guy@email.com
   hashed_pass: a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
   name: guy
-  is_active: true
+  is_active: 1
