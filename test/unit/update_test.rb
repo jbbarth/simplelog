@@ -7,7 +7,7 @@ class UpdateTest < Test::Unit::TestCase
   fixtures :updates
 
   def test_check_updates
-    u = Update.find(1)
+    u = Update.find(:first)
     assert_equal false, u.update_available
   end
   
