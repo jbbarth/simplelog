@@ -52,7 +52,7 @@ class PostTest < Test::Unit::TestCase
   
   def test_remove_tags
     p = Post.find(1)
-    assert p.tag('', :clear => true)
+    assert p.tags = []
     assert_equal 0, p.tags.length
   end
   
