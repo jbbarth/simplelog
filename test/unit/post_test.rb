@@ -46,7 +46,7 @@ class PostTest < Test::Unit::TestCase
     
     p = Post.find(1)
     c = p.tags.length
-    assert p.tag('another')
+    assert p.tags << Tag.new(:name => 'another')
     assert_equal c+1, p.tags.length
   end
   
