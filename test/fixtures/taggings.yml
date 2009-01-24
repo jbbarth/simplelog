@@ -1,0 +1,11 @@
+tagging_1:
+  tag_id: 1
+  taggable_id: 1
+  taggable_type: Post
+  created_at: '2006-05-01 00:00:00'
+
+tagging_2:
+  tag_id: 2
+  taggable_id: 1
+  taggable_type: Post
+  created_at: '2006-05-01 00:00:00'

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class PostTest < Test::Unit::TestCase
   
-  fixtures :tags, :posts, :tags_posts
+  fixtures :tags, :posts, :taggings
   
   def test_create_post
     c = Post.count
