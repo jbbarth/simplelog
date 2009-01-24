@@ -9,7 +9,7 @@ post_1:
   title: test
   body_raw: test body content
   body: test body content
-  is_active: true
+  is_active: 1
   
 post_2:
   id: 2
@@ -20,7 +20,7 @@ post_2:
   title: test not active
   body_raw: test body content
   body: test body content
-  is_active: false
+  is_active: 0
   
 post_3:
   id: 3
@@ -31,7 +31,7 @@ post_3:
   title: no author
   body_raw: test
   body: test
-  is_active: true
+  is_active: 1
   
 post_4:
   id: 4
@@ -42,7 +42,7 @@ post_4:
   title: another test
   body_raw: test one more
   body: test one more
-  is_active: true
+  is_active: 1
   
 post_5:
   id: 5
@@ -53,7 +53,7 @@ post_5:
   title: another test post for author 3
   body_raw: test one more time for 3
   body: test one more time for 3
-  is_active: true
+  is_active: 1
 
 post_6:
   id: 6
@@ -64,4 +64,4 @@ post_6:
   title: another test post for author 3 again
   body_raw: test one more time for 3 again
   body: test one more time for 3 again
-  is_active: true
+  is_active: 1
