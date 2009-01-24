@@ -9,7 +9,7 @@ class PostController; def rescue_action(e) raise e end; end
 
 class PostControllerTest < Test::Unit::TestCase
   
-  fixtures :tags, :posts, :tags_posts
+  fixtures :tags, :posts, :taggings
 
   def setup
     @controller = PostController.new
