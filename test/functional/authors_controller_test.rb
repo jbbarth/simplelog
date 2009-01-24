@@ -72,8 +72,8 @@ class AuthorsControllerTest < Test::Unit::TestCase
     assert_redirected_to 'admin/authors'
     assert_equal c, Author.count
     # now we set the inactive author active and we should be able to delete it
-    assert Author.find(2).update_attribute('is_active', true)
-    get :author_destroy, :id => 1
+    assert Author.find(2).update_attribute('is_active', 1)
+    get :author_destroy, :id => 2
     assert_equal 1, Author.count
   end
   
