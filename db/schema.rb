@@ -26,8 +26,21 @@ ActiveRecord::Schema.define(:version => 29) do
     t.datetime "created_at", :null => false
   end
 
-# Could not dump table "comments" because of following StandardError
-#   Unknown type 'bool' for column 'is_approved'
+  create_table "comments", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "name"
+    t.string   "email"
+    t.string   "url"
+    t.string   "subject"
+    t.string   "synd_title"
+    t.text     "body"
+    t.text     "body_raw"
+    t.text     "body_searchable"
+    t.string   "ip"
+    t.boolean  "is_approved",     :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "modified_at",                        :null => false
+  end
 
   create_table "pages", :force => true do |t|
     t.string   "permalink",   :limit => 128
@@ -86,7 +99,10 @@ ActiveRecord::Schema.define(:version => 29) do
     t.string "name"
   end
 
-# Could not dump table "updates" because of following StandardError
-#   Unknown type 'bool' for column 'update_available'
+  create_table "updates", :force => true do |t|
+    t.datetime "last_checked_at"
+    t.boolean  "update_available", :default => false
+    t.string   "update_version"
+  end
 
 end

@@ -9,7 +9,7 @@ class AddAutoUpdates < ActiveRecord::Migration
   def self.up
     create_table "updates" do |t|
       t.column "last_checked_at", :datetime
-      t.column "update_available", :bool, :default => false
+      t.column "update_available", :boolean, :default => false
       t.column "update_version", :string
     end
     execute "INSERT INTO updates (last_checked_at, update_version) VALUES ('1981-05-15 00:00:00', '1.2')"

@@ -19,7 +19,7 @@ class Comments < ActiveRecord::Migration
       t.column "body_raw", :text
       t.column "body_searchable", :text
       t.column "ip", :string
-      t.column "is_approved", :bool, :default => false
+      t.column "is_approved", :boolean, :default => false
       t.column "created_at", :datetime, :null => false
       t.column "modified_at", :datetime, :null => false
     end
