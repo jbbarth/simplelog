@@ -8,7 +8,7 @@ class Admin::BaseController; def rescue_action(e) raise e end; end
 
 class BaseControllerTest < Test::Unit::TestCase
   
-  fixtures :authors, :comments, :tags, :posts, :tags_posts
+  fixtures :authors, :comments, :tags, :posts, :taggings
   
   def setup
     @controller = Admin::BaseController.new
