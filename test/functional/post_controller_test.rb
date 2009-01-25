@@ -159,7 +159,7 @@ class PostControllerTest < Test::Unit::TestCase
   def test_feed_all
     get :feed_all_rss
     assert_response :success
-    assert_template 'posts'
+    assert_template 'posts.rss.builder'
     assert(@response.has_template_object?('posts'))
   end
   
