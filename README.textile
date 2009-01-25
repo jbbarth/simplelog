@@ -1,0 +1,9 @@
+h1. Simplelog
+
+_"Simplelog is a simple (and free!) Ruby on Rails weblog application"_
+
+It's a project from Garrett Murray, you can find informations on its official site http://www.simplelog.net/. Since the project is no more active, here is a fork to maintain it with recent versions of Rails, and make it work under Sqlite (which fit perfectly with the initial goals of the project in my opinion).
+
+*Warning* : this version has only been tested with Sqlite, no Postgresql or Mysql warranty.
+
+*Warning* : the major part of tests pass successfully but some are broken and some features may not work (soap api, automated updates, ...)
