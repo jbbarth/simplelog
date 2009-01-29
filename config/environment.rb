@@ -63,5 +63,6 @@ end
   require 'cgi'           # we use this in places
   require 'digest/sha1'   # for password hashing
   require 'digest/md5'    # for creating MD5 hashes (gravatar)
+  require 'bluecloth'     # for bluecloth support
   require 'redcloth'      # for textile support
   require 'coderay'       # for coderay support (syntax highlighting)
