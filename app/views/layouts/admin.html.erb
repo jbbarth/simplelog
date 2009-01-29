@@ -10,7 +10,11 @@
 	<%= javascript_include_tag Site.full_url + '/javascripts/dragdrop.js' %>
 	<%= javascript_include_tag Site.full_url + '/javascripts/controls.js' %>
 </head>
-<body<% if @onload %> onload="doFieldSelect(<%= @onload %>);"<% end %>>
+<% if @onload %>
+  <body onload="doFieldSelect(<%= @onload %>);">
+<% else %>
+  <body>
+<% end %>
 
 <div id="ping_panel">
     <div id="pp_top_arrow"><img src="/images/admin/trans_black_arrow.png" border="0"/></div>
