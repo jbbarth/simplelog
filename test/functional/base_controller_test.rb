@@ -41,8 +41,9 @@ class BaseControllerTest < Test::Unit::TestCase
     assert_routing 'admin/authors/update/1', route
     route = {:controller => 'admin/misc', :action => 'do_ping'}
     assert_routing 'admin/ping/do', route
-    route = {:controller => 'xmlrpc', :action => 'api'}
-    assert_routing 'xmlrpc/api', route
+    #TODO: restore xmlrpc api
+    #route = {:controller => 'xmlrpc', :action => 'api'}
+    #assert_routing 'xmlrpc/api', route
   end
   
 end
