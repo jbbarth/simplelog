@@ -17,4 +17,11 @@ class Admin::AssetsController < Admin::BaseController
       render :action => :new
     end
   end
+
+  def destroy
+    @asset = Asset.find(params[:id])
+    @asset.destroy
+    flash[:notice] = 'Asset was successfully destroyed.'
+    redirect_to Site.full_url + '/admin/assets'
+  end
 end

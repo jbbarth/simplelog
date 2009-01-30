@@ -8,7 +8,8 @@
 <table class="list" cellspacing="0" cellpadding="0">
 
   <tr>
-    <th class="first_col">Filename</th>
+    <th class="first_col">Thumb</th>
+    <th>Filename</th>
     <th>Uploaded at</th>
     <th class="del_col">X</th>
   </tr>
@@ -16,7 +17,8 @@
   <% f = 1 -%>
   <% for asset in @assets -%>
     <tr class="<%= cycle('alt_row ','') %><%= (f == 1 ? 'first_row' : '') %>">
-      <td class="first_col"><%= link_to asset.filename, Site.full_url + '/admin/assets/edit/' + asset.id.to_s %></td>
+      <td class="first_col"><%= link_to image_tag(asset.public_filename(:thumb)), asset.public_filename %></td>
+      <td><%= link_to asset.filename, asset.public_filename %></td>
       <td><%= asset.created_at %></td>
       <td class="del_col"><%= link_to 'X', Site.full_url + '/admin/assets/destroy/' + asset.id.to_s, :confirm => "You are about to delete this asset. This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
     </tr>

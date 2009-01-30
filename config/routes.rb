@@ -23,8 +23,9 @@ ActionController::Routing::Routes.draw do |map|
   
   # assets
   # map.resources :assets
-  map.connect 'admin/assets', :controller => 'admin/assets', :action => 'index'
+  map.connect 'admin/assets/:action/:id', :controller => 'admin/assets'
   map.connect 'admin/assets/:action', :controller => 'admin/assets'
+  map.connect 'admin/assets', :controller => 'admin/assets', :action => 'index'
 
   tokens = /archives|older|past/
 
