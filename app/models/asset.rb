@@ -1,7 +1,11 @@
 class Asset < ActiveRecord::Base
-  def self.save(upload)
-    directory = "public/files"
-    path = File.join(directory, upload['file'].original_filename)
-    File.open(path, "wb") { |f| f.write(upload['file'].read) }
-  end
+
+  has_attachment :content_type => :image, 
+                  :storage => :file_system, 
+                  :max_size => 5.megabytes,
+                  :resize_to => '320x200>',
+                  :thumbnails => { :thumb => '100x100>' }
+
+  validates_as_attachment
+
 end

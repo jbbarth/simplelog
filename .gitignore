@@ -4,3 +4,4 @@ tmp/**/*
 db/*.sqlite3
 db/*.db
 nbproject/*
+public/assets/*

@@ -11,6 +11,18 @@
 
 ActiveRecord::Schema.define(:version => 30) do
 
+  create_table "assets", :force => true do |t|
+    t.integer  "parent_id"
+    t.string   "content_type"
+    t.string   "filename"
+    t.string   "thumbnail"
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "authors", :force => true do |t|
     t.datetime "created_at",                                    :null => false
     t.datetime "modified_at",                                   :null => false

@@ -67,7 +67,11 @@ class Admin::BaseController < ApplicationController
     unless valid
       # we didn't find a author... send them to the login page
       session[:came_from] = nil
-      #session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
+      if !$no_session_actions.index(params[:action])
+        req = request.parameters.dup
+        req.delete("asset")
+        session[:came_from] = req
+      end
       flash[:notice] = 'Please log in'
       redirect_to Site.full_url + '/login' and return false
     end
@@ -80,7 +84,11 @@ class Admin::BaseController < ApplicationController
       misc_class = Admin::MiscController.new
       # track where they came from, in case they turn this off
       session[:came_from] = nil
-      session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
+      if !$no_session_actions.index(params[:action])
+        req = request.parameters.dup
+        req.delete("asset")
+        session[:came_from] = req
+      end
       # get the last update record
       last_update = Update.find(1)
       # how long ago was this check?

@@ -4,6 +4,10 @@ class Admin::AssetsController < Admin::BaseController
     @assets = Asset.find(:all)
   end
   
+  def new
+    @asset = Asset.new
+  end
+
   def create
     @asset = Asset.new(params[:asset])
     if @asset.save
@@ -12,10 +16,5 @@ class Admin::AssetsController < Admin::BaseController
     else
       render :action => :new
     end
-  end
-
-  def upload
-    post = Asset.save(params[:asset])
-    render :text => "File has been uploaded successfully"
   end
 end
