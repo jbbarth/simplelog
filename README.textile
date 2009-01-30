@@ -6,4 +6,4 @@ It's a project from Garrett Murray, you can find informations on its official si
 
 *Warning* : this version has only been tested with Sqlite, no Postgresql or Mysql warranty.
 
-*Warning* : all tests pass successfully but some assertions are commented out (soap api and automated updates don't work for the moment)
+*Warning* : the major part of tests pass successfully but some are broken and some features may not work (soap api, automated updates, ...)
