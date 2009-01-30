@@ -1,0 +1,16 @@
+<%= render :partial => 'admin/assets/subnav', :locals => {:na => true} %>
+
+<div id="header">
+	<h1>New file</h1>
+	<br/>
+</div>
+
+<% form_tag(Site.full_url + '/admin/assets/upload', :multipart => true) do %>
+  <%= render :partial => 'admin/assets/form' %>
+  <div class="submit_area">
+    <%= submit_tag 'Upload the file', :class => 'submit' %> or
+    <%= link_to 'cancel and return to file list', Site.full_url + '/admin/assets' %>
+  </div>
+<% end -%>
+
+<br/>

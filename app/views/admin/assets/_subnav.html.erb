@@ -1,0 +1,12 @@
+<div id="admin_sub_nav">
+  <div class="sn_left">
+    <% if na %>
+      New asset!
+    <% else %>
+      <% form_tag(Site.full_url + '/admin/posts/search', :id => 'post_search_form') do %>
+        <%= link_to '<b>Upload a new file</b>', Site.full_url + '/admin/assets/new' %> or search...
+      <% end -%>
+    <% end %>
+  </div>
+  <br/>
+</div>

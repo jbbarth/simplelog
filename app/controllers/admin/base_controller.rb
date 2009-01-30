@@ -67,7 +67,7 @@ class Admin::BaseController < ApplicationController
     unless valid
       # we didn't find a author... send them to the login page
       session[:came_from] = nil
-      session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
+      #session[:came_from] = request.parameters if !$no_session_actions.index(params[:action])
       flash[:notice] = 'Please log in'
       redirect_to Site.full_url + '/login' and return false
     end
