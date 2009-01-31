@@ -1,7 +1,8 @@
 <%= render :partial => 'admin/images/subnav', :locals => {:na => false} %>
 
 <div id="header">
-  <h1>Your images</h1>
+  <h1 class="skinny">Your images</h1>
+  <h2 class="fat">Right-click on an image and copy link location to use it in your posts or pages.</h2><br />
   <% if flash[:notice] %><div class="green flash"><b>Success:</b> <%= flash[:notice] %></div><% end %>
 </div>
 
@@ -19,7 +20,7 @@
     <tr class="<%= cycle('alt_row ','') %><%= (f == 1 ? 'first_row' : '') %>">
       <td class="first_col"><%= link_to image_tag(image.public_filename(:thumb)), image.public_filename %></td>
       <td><%= link_to image.filename, image.public_filename %></td>
-      <td><%= image.created_at %></td>
+      <td><%= image.created_at.strftime('%d %b, %Y') %></td>
       <td class="del_col"><%= link_to 'X', Site.full_url + '/admin/images/destroy/' + image.id.to_s, :confirm => "You are about to delete this image. This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
     </tr>
     <% f += 1 -%>

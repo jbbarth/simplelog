@@ -1,7 +1,7 @@
 class Admin::ImagesController < Admin::BaseController
   def index
     @sorter = SortingHelper::Sorter.new self, %w(filename), params[:sort], params[:order], 'filename', 'ASC'
-    @images = Image.find(:all)
+    @images = Image.find(:all, :conditions => ['parent_id is null'])
   end
   
   def new
