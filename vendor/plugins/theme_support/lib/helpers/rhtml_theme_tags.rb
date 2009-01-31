@@ -59,7 +59,6 @@ module ActionView::Helpers::AssetTagHelper
        sources << "application" if defined?(RAILS_ROOT) && File.exists?("#{RAILS_ROOT}/public/javascripts/application.js") 
      end
      sources.collect { |source|
-       debugger
        source = theme_javascripts_path(source)        
        content_tag("script", "", { "type" => "text/javascript", "src" => source }.merge(options))
      }.join("\n")
