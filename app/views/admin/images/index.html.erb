@@ -10,21 +10,29 @@
 
   <tr>
     <th class="first_col">Thumb</th>
-    <th>Filename</th>
-    <th>Uploaded at</th>
+    <th>Informations</th>
+    <th class="del_col">X</th>
+    <th class="first_col">Thumb</th>
+    <th>Informations</th>
     <th class="del_col">X</th>
   </tr>
   
   <% f = 1 -%>
   <% for image in @images -%>
-    <tr class="<%= cycle('alt_row ','') %><%= (f == 1 ? 'first_row' : '') %>">
-      <td class="first_col"><%= link_to image_tag(image.public_filename(:thumb)), image.public_filename %></td>
-      <td><%= link_to image.filename, image.public_filename %></td>
-      <td><%= image.created_at.strftime('%d %b, %Y') %></td>
-      <td class="del_col"><%= link_to 'X', Site.full_url + '/admin/images/destroy/' + image.id.to_s, :confirm => "You are about to delete this image. This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
-    </tr>
+    <%= "<tr class=\"#{ cycle('alt_row ','') + (f == 1 ? 'first_row' : '') } \">" if f % 2 == 1 %>
+      <td class="<%= (f % 2 == 1 ? 'first_col' : '') %>"><%= link_to image_tag(image.public_filename(:thumb)), image.public_filename %></td>
+      <td>
+        Filename: <%= link_to image.filename, image.public_filename %><br />
+        Uploaded at: <%= image.created_at.strftime('%d %b, %Y') %><br />
+      </td>
+      <td class="del_col"><%= link_to 'X', Site.full_url + '/admin/images/destroy/' + image.id.to_s, :confirm => "You are about to delete this image (#{image.filename}). This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
+    <%= "</tr>" if f % 2 == 0 %>
     <% f += 1 -%>
   <% end -%>
+  <% if @images.length > 0 && f % 2 == 0 %>
+    <%= "<td>&nbsp;</td>"*3 %>
+    </tr>
+  <% end %>
   <% unless @images.length > 0 -%>
   <tr class="first_row"><td class="first_col" colspan="3"><span class="gray">There are no images at this time.</span></td></tr>
   <% end -%>
