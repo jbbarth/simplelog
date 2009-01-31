@@ -1,6 +1,6 @@
-class CreateAssets < ActiveRecord::Migration
+class CreateImages < ActiveRecord::Migration
   def self.up
-    create_table :assets do |t|
+    create_table :images do |t|
       t.integer :parent_id
       t.string :content_type
       t.string :filename
@@ -13,6 +13,6 @@ class CreateAssets < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :assets
+    drop_table :images
   end
 end

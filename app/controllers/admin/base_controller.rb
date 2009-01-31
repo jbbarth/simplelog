@@ -69,7 +69,7 @@ class Admin::BaseController < ApplicationController
       session[:came_from] = nil
       if !$no_session_actions.index(params[:action])
         req = request.parameters.dup
-        req.delete("asset")
+        req.delete("image")
         session[:came_from] = req
       end
       flash[:notice] = 'Please log in'
@@ -86,7 +86,7 @@ class Admin::BaseController < ApplicationController
       session[:came_from] = nil
       if !$no_session_actions.index(params[:action])
         req = request.parameters.dup
-        req.delete("asset")
+        req.delete("image")
         session[:came_from] = req
       end
       # get the last update record

@@ -57,7 +57,7 @@ a = 0
 	<ul class="navlist">
 		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/posts" title="Posts"<%= ' class="current"' if params[:action][0..3] == 'post' %>>Posts</a>&nbsp;<a accesskey="n" href="<%= Site.full_url %>/admin/posts/new" title="Create a new post"><img src="<%= Site.full_url %>/images/admin/new_button.png" id="new_post_button" alt="Create a new post" border="0"/></a></li>
 		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/pages" title="Pages"<%= ' class="current"' if params[:action][0..3] == 'page' %>>Pages</a></li>
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/assets" title="Assets"<%= ' class="current"' if params[:controller].include?('asset') %>>Assets</a></li>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/images" title="Images"<%= ' class="current"' if params[:controller].include?('image') %>>Images</a></li>
 	  <% if cb %><li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/comments" title="Comments"<%= ' class="current"' if (params[:action][0..6] == 'comment' or params[:action][0..8] == 'blacklist') %>>Comments</a></li><% end %>
 		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/tags" title="Tags"<%= ' class="current"' if params[:action][0..2] == 'tag' %>>Tags</a></li>
 		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/authors" title="Authors"<%= ' class="current"' if params[:action][0..5] == 'author' %>>Authors</a></li>

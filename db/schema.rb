@@ -11,7 +11,7 @@
 
 ActiveRecord::Schema.define(:version => 30) do
 
-  create_table "assets", :force => true do |t|
+  create_table "images", :force => true do |t|
     t.integer  "parent_id"
     t.string   "content_type"
     t.string   "filename"
