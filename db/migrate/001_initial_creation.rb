@@ -68,7 +68,10 @@ class InitialCreation < ActiveRecord::Migration
     
     # create a temporary first author to that we can log in to the admin section
     # username: temp@email.com, password: !@gonow
-    execute "INSERT INTO authors (created_at, modified_at, email, hashed_pass, name, url, is_active) VALUES ('#{time}', '#{time}', 'temp@email.com', '#{Author.do_password_hash('!@gonow')}', 'Temporary User', 'http://simplelog.net', 1)"
+    execute "INSERT INTO authors (created_at, modified_at, email, hashed_pass, name, url) VALUES ('#{time}', '#{time}', 'temp@email.com', '#{Author.do_password_hash('!@gonow')}', 'Temporary User', 'http://simplelog.net')"
+    a = Author.find(:first)
+    a.is_active = true
+    a.save
     
     # create sessions table for session store (much faster!), see enabled option in env
     create_table "sessions", :options => (SL_CONFIG[:DB_TYPE_MYSQL] == 'yes' ? 'ENGINE=MyISAM' : '') do |t|
