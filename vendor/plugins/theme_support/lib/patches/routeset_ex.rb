@@ -19,7 +19,7 @@ class ActionController::Routing::RouteSet
   def create_theme_routes(map)
     map.theme_images "/themes/:theme/images/*filename", :controller=>'theme', :action=>'images'
     map.theme_stylesheets "/themes/:theme/stylesheets/*filename", :controller=>'theme', :action=>'stylesheets'
-    map.theme_javascript "/themes/:theme/javascript/*filename", :controller=>'theme', :action=>'javascript'
+    map.theme_javascript "/themes/:theme/javascripts/*filename", :controller=>'theme', :action=>'javascript'
     map.connect "/themes/*whatever", :controller=>'theme', :action=>'error'
   end
 
