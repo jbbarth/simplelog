@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AssetTest < ActiveSupport::TestCase
+class ImageTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   def test_truth
     assert true
