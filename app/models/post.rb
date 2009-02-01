@@ -283,13 +283,13 @@ class Post < ActiveRecord::Base
   
   # get a list of posts for the index page, based on active, current posts (configure how many in preferences)
   def self.find_current
-    self.find(:all, :conditions => ['is_active = ? and created_at <= ?', true, Time.sl_local], :order => 'created_at desc', :limit => Preference.get_setting('ITEMS_ON_INDEX').to_i)
+    self.find(:all, :conditions => ['is_active = ? and created_at <= ?', 1, Time.sl_local], :order => 'created_at desc', :limit => Preference.get_setting('ITEMS_ON_INDEX').to_i)
   end
   
   # get a list of all posts for the archives page
   def self.find_all_posts(only_active = true)
     if only_active
-      self.find(:all, :conditions => ['is_active = ? and created_at <= ?', true, Time.sl_local], :order => 'created_at desc')
+      self.find(:all, :conditions => ['is_active = ? and created_at <= ?', 1, Time.sl_local], :order => 'created_at desc')
     else
       self.find(:all, :order => 'created_at desc')
     end
@@ -297,33 +297,33 @@ class Post < ActiveRecord::Base
   
   # get a list of posts for the feed
   def self.find_for_feed
-    self.find(:all, :conditions => ['is_active = ? and created_at <= ?', true, Time.sl_local], :order => 'created_at desc', :limit => Preference.get_setting('ITEMS_IN_FEED').to_i)
+    self.find(:all, :conditions => ['is_active = ? and created_at <= ?', 1, Time.sl_local], :order => 'created_at desc', :limit => Preference.get_setting('ITEMS_IN_FEED').to_i)
   end
   
   # get a list of posts written in a certain year
   def self.find_by_year(y)
     first_year = Time.parse("01/01/#{y}").strftime('%Y-%m-%d %H:%M:%S')
     last_year = Time.parse((Date.parse("01/01/#{y}")>>12).to_s).strftime('%Y-%m-%d %H:%M:%S')
-    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', true, first_year, last_year, Time.sl_local], :order => 'created_at desc')
+    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', 1, first_year, last_year, Time.sl_local], :order => 'created_at desc')
   end
   
   # get a list of posts written in a certain month
   def self.find_by_month(m, y)
     first_month = Time.parse("#{m}/01/#{y}").strftime('%Y-%m-%d %H:%M:%S')
     last_month = Time.parse((Date.parse("#{m}/01/#{y}")>>1).to_s).strftime('%Y-%m-%d %H:%M:%S')
-    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', true, first_month, last_month, Time.sl_local], :order => 'created_at desc')
+    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', 1, first_month, last_month, Time.sl_local], :order => 'created_at desc')
   end
   
   # get a list of posts written on a certain day
   def self.find_by_day(d, m, y)
     first_day = Time.parse("#{m}/#{d}/#{y}").strftime('%Y-%m-%d %H:%M:%S')
     last_day = Time.parse((Date.parse("#{m}/#{d}/#{y}")+1).to_s).strftime('%Y-%m-%d %H:%M:%S')
-    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', true, first_day, last_day, Time.sl_local], :order => 'created_at desc')
+    self.find(:all, :conditions => ['is_active = ? and (created_at >= ? and created_at < ?) and created_at <= ?', 1, first_day, last_day, Time.sl_local], :order => 'created_at desc')
   end
   
   # get a list of posts written by `author`
   def self.find_by_author(author)
-    self.find(:all, :conditions => ['is_active = ? and author_id = ? and created_at <= ?', true, author, Time.sl_local], :order => 'created_at desc')
+    self.find(:all, :conditions => ['is_active = ? and author_id = ? and created_at <= ?', 1, author, Time.sl_local], :order => 'created_at desc')
   end
   
   # get a list of posts tagged with `tag`
@@ -340,30 +340,30 @@ class Post < ActiveRecord::Base
   
   # get a single post based on permalink
   def self.find_individual(permalink)
-    self.find(:all, :conditions => ['is_active = ? and permalink = ? and created_at <= ?', true, permalink, Time.sl_local])
+    self.find(:all, :conditions => ['is_active = ? and permalink = ? and created_at <= ?', 1, permalink, Time.sl_local])
   end
   
   # find the previous active post
   def self.find_previous(post)
-    self.find(:all, :conditions => ['is_active = ? and created_at < ? and created_at <= ?', true, post.created_at.strftime('%Y-%m-%d %H:%M:%S'), Time.sl_local], :order => 'created_at desc', :limit => 1)
+    self.find(:all, :conditions => ['is_active = ? and created_at < ? and created_at <= ?', 1, post.created_at.strftime('%Y-%m-%d %H:%M:%S'), Time.sl_local], :order => 'created_at desc', :limit => 1)
   end
   
   # find the next active post
   def self.find_next(post)
-    self.find(:all, :conditions => ['is_active = ? and created_at > ? and created_at <= ?', true, post.created_at.strftime('%Y-%m-%d %H:%M:%S'), Time.sl_local], :order => 'created_at asc', :limit => 1)
+    self.find(:all, :conditions => ['is_active = ? and created_at > ? and created_at <= ?', 1, post.created_at.strftime('%Y-%m-%d %H:%M:%S'), Time.sl_local], :order => 'created_at asc', :limit => 1)
   end
   
   # find all posts in the db that contain string
   def self.find_by_string(str, limit = Preference.get_setting('SEARCH_RESULTS'), active_only = true)
     # use the search lib to run this search
-    results = self.search(str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
+    results = self.search(str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", 1] : nil), :limit => limit})
     if (results.length > 1) or (str.downcase.index(' and '))
     # if the first search returned something or there was an AND operator
       return results
     else
     # first search didn't find anthing, let's try it with the OR operator
       simple_str = str.gsub(' ',' OR ')
-      return self.search(simple_str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
+      return self.search(simple_str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", 1] : nil), :limit => limit})
     end
   end
   def self.find_by_string_full(str, limit = Preference.get_setting('SEARCH_RESULTS_FULL'))
