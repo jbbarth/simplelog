@@ -1,7 +1,7 @@
 # The controller for serving/cacheing theme content...
 #
 class ThemeController < ActionController::Base
-
+  
   after_filter :cache_theme_files
   
   def stylesheets
@@ -9,7 +9,7 @@ class ThemeController < ActionController::Base
   end
 
   def javascript
-    render_theme_item(:javascript, params[:filename].join("/"), params[:theme], 'text/javascript')
+    render_theme_item(:javascripts, params[:filename].join("/"), params[:theme], 'text/javascript')
   end
 
   def images

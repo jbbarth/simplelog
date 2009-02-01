@@ -158,10 +158,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:sort/:order'
   
   # theme stuffs ################################################################################
-  map.connect 'themes/:theme/images/*filename', :controller => 'theme', :action => 'images'
-  map.connect 'themes/:theme/stylesheets/*filename', :controller => 'theme', :action => 'stylesheets'
-  map.connect 'themes/:theme/javascripts/*filename', :controller => 'theme', :action => 'javascript'
-  map.connect 'themes/*whatever', :controller => 'theme', :action => 'error'
+  #map.connect 'themes/:theme/images/*filename', :controller => 'theme', :action => 'images'
+  #map.connect 'themes/:theme/stylesheets/*filename', :controller => 'theme', :action => 'stylesheets'
+  #map.connect 'themes/:theme/javascripts/*filename', :controller => 'theme', :action => 'javascript'
+  #map.connect 'themes/*whatever', :controller => 'theme', :action => 'error'
   
   # some defaults to move stuff around for 404s #################################################
   map.connect 'notfound', :controller => 'application', :action => 'handle_unknown_request'
