@@ -82,13 +82,13 @@ class Author < ActiveRecord::Base
   
   # get all active authors sorted by name
   def self.get_all_active
-    self.find(:all, :conditions => ['is_active = ?', 1], :order => 'name asc')
+    self.find(:all, :conditions => ['is_active = ?', true], :order => 'name asc')
   end
   
   # authorize a author for access to the admin section and xmlrpc access
   def self.authorize(email, pass, do_hash = false, return_id = false)
     pass = (do_hash ? self.do_password_hash(pass) : pass)
-    @author = Author.find(:first, :conditions => ['email = ? and hashed_pass = ? and is_active = ?', email, pass, 1])
+    @author = Author.find(:first, :conditions => ['email = ? and hashed_pass = ? and is_active = ?', email, pass, true])
     return (return_id ? @author : (@author ? true : false))
   end
   

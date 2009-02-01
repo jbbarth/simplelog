@@ -81,7 +81,7 @@ class Admin::AuthorsController < Admin::BaseController
   def author_update
     # find our author
     @author = Author.find(params[:id])
-    if (Author.find(:all, :conditions => ['is_active = ? and id != ?', 1, params[:id]]).length < 1) and params[:author][:is_active] == '0'
+    if (Author.find(:all, :conditions => ['is_active = ? and id != ?', true, params[:id]]).length < 1) and params[:author][:is_active] == '0'
     # trying to set this author to inactive, but it would lock them out of the admin section--don't do it
       flash[:notice] = '<span class="red"><b>Failed:</b> Setting that author to inactive would lock you out!</span>'
       redirect_to Site.full_url + '/admin/authors'
@@ -103,7 +103,7 @@ class Admin::AuthorsController < Admin::BaseController
   # destroy an existing author! destroy! destroy! destory!
   # check to make sure they're not going to lock themselves out first...
   def author_destroy
-    if (Author.count < 2) or (Author.find(:all, :conditions => ['is_active = ? and id != ?', 1, params[:id]]).length < 1)
+    if (Author.count < 2) or (Author.find(:all, :conditions => ['is_active = ? and id != ?', true, params[:id]]).length < 1)
       flash[:notice] = '<b>Failed:</b> Destroying that author would lock you out!'
       if session[:came_from]
       # they came from somewhere, let's send them back there
