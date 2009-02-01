@@ -5,7 +5,7 @@ a:hover { text-decoration:underline; }
 pre { border:1px solid #ddd; background-color:#eee; width:100%; overflow:auto; }
 div#error { border:1px solid red; background-color:#faa; padding:5px; margin-bottom:5px; }
 div#notice { border: 1px solid green; background-color:#afa; padding:5px; margin-bottom:5px; }
-label { font-weigth:normal; }
+label { font-weight:normal; }
 /* specific */
 #header { padding-left:10px; }
 #header a, #footer a, a.white { font-weight: bold; }
