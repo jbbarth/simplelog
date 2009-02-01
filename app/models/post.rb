@@ -161,6 +161,8 @@ class Post < ActiveRecord::Base
   def self.to_permalink(input = '', current_id = nil, number_words = 5, extra_word = 'again', previous_output = nil, loops = 0, added = 0, word_spacer = '_')
     # strip html tags and lowercase first
     words = Post.strip_html(input.downcase)
+    # transform non alphanumeric letters
+    words.gsub!(/\W/,'-')
     # dump double-dashes first, cause they can cause two words to become--one...
     words.gsub!('--', ' ')
     if Preference.get_setting('TEXT_FILTER') == 'markdown'
