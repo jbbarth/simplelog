@@ -54,7 +54,7 @@ end
   # Used in cookies
   SL_CONFIG[:USER_EMAIL_COOKIE] = '_sl_email'
   SL_CONFIG[:USER_HASH_COOKIE] = '_sl_hash'
-  
+
   # we load our site's config now
   require 'server.rb'
 

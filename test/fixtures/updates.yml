@@ -2,5 +2,5 @@
 
 update_1:
   last_checked_at: '1981-05-15 00:00:00'
-  update_available: 0
+  update_available: false
   update_version: '1.2'

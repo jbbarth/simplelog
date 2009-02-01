@@ -88,7 +88,7 @@ class Author < ActiveRecord::Base
   # authorize a author for access to the admin section and xmlrpc access
   def self.authorize(email, pass, do_hash = false, return_id = false)
     pass = (do_hash ? self.do_password_hash(pass) : pass)
-    @author = Author.find(:first, :conditions => ['email = ? and hashed_pass = ? and is_active = ?', email, pass, 1])
+    @author = Author.find(:first, :conditions => ['email = ? and hashed_pass = ? and is_active = ?', email, pass, true])
     return (return_id ? @author : (@author ? true : false))
   end
   

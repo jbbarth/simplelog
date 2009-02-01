@@ -130,7 +130,7 @@ class Comment < ActiveRecord::Base
   # before a comment is created, set its modification date to now
   def before_create
     # if we approve by default, let's do that
-    self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? 1 : 0)
+    self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? true : false)
     # set modification date
     self.modified_at = Time.sl_local
     # set created date
