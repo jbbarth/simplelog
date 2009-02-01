@@ -162,7 +162,7 @@ class Post < ActiveRecord::Base
     # strip html tags and lowercase first
     words = Post.strip_html(input.downcase)
     # transform non alphanumeric letters
-    words.gsub!(/\W/,'-')
+    words.gsub!(/[^a-z _-]/,'-')
     # dump double-dashes first, cause they can cause two words to become--one...
     words.gsub!('--', ' ')
     if Preference.get_setting('TEXT_FILTER') == 'markdown'
