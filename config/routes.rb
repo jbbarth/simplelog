@@ -21,15 +21,10 @@
 
 ActionController::Routing::Routes.draw do |map|
   
-  # images
-  # map.resources :images
-  map.connect 'admin/images/:action/:id', :controller => 'admin/images'
-  map.connect 'admin/images/:action', :controller => 'admin/images'
-  map.connect 'admin/images', :controller => 'admin/images', :action => 'index'
-
   tokens = /archives|older|past/
 
-  map.resources :posts, :has_many => :comments
+  #????
+  #map.resources :posts, :has_many => :comments
 
   # site ########################################################################################
   # index page
@@ -84,61 +79,38 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'logout', :controller => 'author', :action => 'logout'
   # index
   map.connect 'admin', :controller => 'admin/base', :action => 'index'
-  # posts
-  map.connect 'admin/posts', :controller => 'admin/posts', :action => 'post_list'
-  map.connect 'admin/posts/edit/:id', :controller => 'admin/posts', :action => 'post_edit'
-  map.connect 'admin/posts/new', :controller => 'admin/posts', :action => 'post_new'
-  map.connect 'admin/posts/create', :controller => 'admin/posts', :action => 'post_create'
-  map.connect 'admin/posts/update/:id', :controller => 'admin/posts', :action => 'post_update'
-  map.connect 'admin/posts/destroy/:id', :controller => 'admin/posts', :action => 'post_destroy'
-  map.connect 'admin/posts/preview', :controller => 'admin/posts', :action => 'post_preview'
-  map.connect 'admin/posts/search', :controller => 'admin/posts', :action => 'post_search'
-  map.connect 'admin/posts/batch/comments', :controller => 'admin/posts', :action => 'post_batch_comments'
-  # pages
-  map.connect 'admin/pages', :controller => 'admin/pages', :action => 'page_list'
-  map.connect 'admin/pages/edit/:id', :controller => 'admin/pages', :action => 'page_edit'
-  map.connect 'admin/pages/new', :controller => 'admin/pages', :action => 'page_new'
-  map.connect 'admin/pages/create', :controller => 'admin/pages', :action => 'page_create'
-  map.connect 'admin/pages/update/:id', :controller => 'admin/pages', :action => 'page_update'
-  map.connect 'admin/pages/destroy/:id', :controller => 'admin/pages', :action => 'page_destroy'
-  map.connect 'admin/pages/preview', :controller => 'admin/pages', :action => 'page_preview'
-  map.connect 'admin/pages/permalink', :controller => 'admin/pages', :action => 'page_permalink'
-  map.connect 'admin/pages/search', :controller => 'admin/pages', :action => 'page_search'
-  # comments
-  map.connect 'admin/comments', :controller => 'admin/comments', :action => 'comment_list'
-  map.connect 'admin/comments/edit/:id', :controller => 'admin/comments', :action => 'comment_edit'
-  map.connect 'admin/comments/update/:id', :controller => 'admin/comments', :action => 'comment_update'
-  map.connect 'admin/comments/destroy/:id', :controller => 'admin/comments', :action => 'comment_destroy'
-  map.connect 'admin/comments/preview', :controller => 'admin/comments', :action => 'comment_preview'
-  map.connect 'admin/comments/search', :controller => 'admin/comments', :action => 'comment_search'
-  map.connect 'admin/comments/approve/:id/toggle', :controller => 'admin/comments', :action => 'comment_approval'
-  map.connect 'admin/comments/bypost/:id', :controller => 'admin/comments', :action => 'comments_by_post'
-  map.connect 'admin/comments/toggle', :controller => 'admin/comments', :action => 'comments_toggle'
-  map.connect 'admin/comments/approve/all', :controller => 'admin/comments', :action => 'comments_approve_all'
-  map.connect 'admin/comments/delete/unapproved', :controller => 'admin/comments', :action => 'comments_delete_unapproved'
   # blacklist (for comments)
   map.connect 'admin/blacklist', :controller => 'admin/blacklist', :action => 'blacklist_list'
   map.connect 'admin/blacklist/update', :controller => 'admin/blacklist', :action => 'blacklist_update'
   map.connect 'admin/blacklist/remote/add/:item', :controller => 'admin/blacklist', :action => 'blacklist_add_remote'
   map.connect 'admin/blacklist/remote/destroy/:item', :controller => 'admin/blacklist', :action => 'blacklist_destroy_remote'
   map.connect 'admin/blacklist/get/rules', :controller => 'admin/blacklist', :action => 'blacklist_get_remote'
-  # tags
-  map.connect 'admin/tags', :controller => 'admin/tags', :action => 'tag_list'
-  map.connect 'admin/tags/show/:id', :controller => 'admin/tags', :action => 'tag_show'
-  map.connect 'admin/tags/edit/:id', :controller => 'admin/tags', :action => 'tag_edit'
-  map.connect 'admin/tags/new', :controller => 'admin/tags', :action => 'tag_new'
-  map.connect 'admin/tags/create', :controller => 'admin/tags', :action => 'tag_create'
-  map.connect 'admin/tags/update/:id', :controller => 'admin/tags', :action => 'tag_update'
-  map.connect 'admin/tags/destroy/:id', :controller => 'admin/tags', :action => 'tag_destroy'
-  map.connect 'admin/tags/search', :controller => 'admin/tags', :action => 'tag_search'
-  # authors
-  map.connect 'admin/authors', :controller => 'admin/authors', :action => 'author_list'
-  map.connect 'admin/authors/show/:id', :controller => 'admin/authors', :action => 'author_show'
-  map.connect 'admin/authors/edit/:id', :controller => 'admin/authors', :action => 'author_edit'
-  map.connect 'admin/authors/new', :controller => 'admin/authors', :action => 'author_new'
-  map.connect 'admin/authors/create', :controller => 'admin/authors', :action => 'author_create'
-  map.connect 'admin/authors/update/:id', :controller => 'admin/authors', :action => 'author_update'
-  map.connect 'admin/authors/destroy/:id', :controller => 'admin/authors', :action => 'author_destroy'
+  # authors tags comments page post
+  %w(author tag comment page post).each do |i|
+    map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "#{i}_list"
+    map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "#{i}_show"
+    map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "#{i}_edit"
+    map.connect "admin/#{i}s/new", :controller => "admin/#{i}s", :action => "#{i}_new"
+    map.connect "admin/#{i}s/create", :controller => "admin/#{i}s", :action => "#{i}_create"
+    map.connect "admin/#{i}s/update/:id", :controller => "admin/#{i}s", :action => "#{i}_update"
+    map.connect "admin/#{i}s/destroy/:id", :controller => "admin/#{i}s", :action => "#{i}_destroy"
+    map.connect "admin/#{i}s/search", :controller => "admin/#{i}s", :action => "#{i}_search"
+    map.connect "admin/#{i}s/preview", :controller => "admin/#{i}s", :action => "#{i}_preview"
+  end
+  # comments
+  map.connect 'admin/comments/approve/:id/toggle', :controller => 'admin/comments', :action => 'comment_approval'
+  map.connect 'admin/comments/bypost/:id', :controller => 'admin/comments', :action => 'comments_by_post'
+  map.connect 'admin/comments/toggle', :controller => 'admin/comments', :action => 'comments_toggle'
+  map.connect 'admin/comments/approve/all', :controller => 'admin/comments', :action => 'comments_approve_all'
+  map.connect 'admin/comments/delete/unapproved', :controller => 'admin/comments', :action => 'comments_delete_unapproved'
+  # pages
+  map.connect 'admin/pages/permalink', :controller => 'admin/pages', :action => 'page_permalink'
+  # posts
+  map.connect 'admin/posts/batch/comments', :controller => 'admin/posts', :action => 'post_batch_comments'
+  # images
+  map.connect 'admin/images/:action/:id', :controller => 'admin/images'
+  map.connect 'admin/images/:action', :controller => 'admin/images'
+  map.connect 'admin/images', :controller => 'admin/images', :action => 'index'
   # prefs
   map.connect 'admin/prefs', :controller => 'admin/prefs', :action => 'prefs_list'
   map.connect 'admin/prefs/save', :controller => 'admin/prefs', :action => 'prefs_save'
@@ -156,13 +128,6 @@ ActionController::Routing::Routes.draw do |map|
   # sorting
   map.connect ':controller/:action/:id/:sort/:order'
   map.connect ':controller/:action/:sort/:order'
-  
-  # theme stuffs ################################################################################
-  #map.connect 'themes/:theme/images/*filename', :controller => 'theme', :action => 'images'
-  #map.connect 'themes/:theme/stylesheets/*filename', :controller => 'theme', :action => 'stylesheets'
-  #map.connect 'themes/:theme/javascripts/*filename', :controller => 'theme', :action => 'javascript'
-  #map.connect 'themes/*whatever', :controller => 'theme', :action => 'error'
-  
   # some defaults to move stuff around for 404s #################################################
   map.connect 'notfound', :controller => 'application', :action => 'handle_unknown_request'
   map.connect '*anything', :controller => 'application', :action => 'handle_unknown_request'
