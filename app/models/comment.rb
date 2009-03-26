@@ -40,9 +40,16 @@ class Comment < ActiveRecord::Base
     # if we're passed nil, let's be kind and return an empty string
       return ''
     end
-    input = input.gsub(/<\/?[^>]*>/, '')
-    input = input.gsub('<', '&lt;')
-    input = input.gsub('>', '&gt;')
+
+    _tf = Preference.get_setting('TEXT_FILTER')
+    if _tf == 'convert line breaks' || _tf == 'plain text' || !_tf
+      input = input.gsub(/<\/?[^>]*>/, '')
+      input = input.gsub('<', '&lt;')
+      input = input.gsub('>', '&gt;')
+    end
+
+    # no more XSS
+    input = input.gsub(%r{<+([/ ]*)script}i, '&lt;\1script')
   end
   
   # convert text using our filter and clean up dashes
