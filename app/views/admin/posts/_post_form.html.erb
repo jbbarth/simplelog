@@ -15,13 +15,9 @@ end
 <%= text_field 'post', 'title', :size => '58', :class => 'normal_i_width' %></td></tr>
 
 <tr><td><label for="post_body_raw"><b>Body</b></label></td><td>
-<%= text_area 'post', 'body_raw', :rows => '28', :cols => '59', :wrap => 'virtual', :class => 'normal_i_width' %><br/><span id="markdown_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'post_new' and get_pref('TEXT_FILTER') == 'markdown') or (params[:action] != 'post_new' and @post.text_filter == 'markdown') %>><b>Markdown</b> syntax enabled. See the <%= link_to('syntax rules', 'http://daringfireball.net/projects/markdown/syntax', :title => 'Syntax rules', :target => '_blank') %> for help.</span>
-
-<span id="textile_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'post_new' and get_pref('TEXT_FILTER') == 'textile') or (params[:action] != 'post_new' and @post.text_filter == 'textile') %>><b>Textile</b> syntax enabled. See the <%= link_to('syntax rules', 'http://www.textism.com/tools/textile/', :title => 'Syntax rules', :target => '_blank') %> for help.</span>
-
-<span id="clb_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'post_new' and get_pref('TEXT_FILTER') == 'convert line breaks') or (params[:action] != 'post_new' and @post.text_filter == 'convert line breaks') %>><b>Convert line breaks</b> mode enabled.</span>
-
-<span id="plaintext_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'post_new' and get_pref('TEXT_FILTER') == 'plain text') or (params[:action] != 'post_new' and @post.text_filter == 'plain text') %>><b>Plain text</b> mode enabled.</span></td></tr>
+  <%= text_area 'post', 'body_raw', :rows => '28', :cols => '59', :wrap => 'virtual', :class => 'normal_i_width' %><br/>
+  <%= syntax_link( params[:action] == 'post_new' ? get_pref('TEXT_FILTER') : @post.text_filter ) %>
+</td></tr>
 
 <tr><td><label for="post_tag_list">Tags</label></td><td>
 <%= text_field 'post', 'tag_list', :size => '58', :class => 'normal_i_width', :onkeyup => 'highlight_tags(this)' %><br/>

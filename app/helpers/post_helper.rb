@@ -203,4 +203,18 @@ module PostHelper
     end
   end
 
+  def syntax_link( filter = get_pref('TEXT_FILTER'))
+    filters = {
+      'markdown' => { :id => 'markdown', :url => 'http://daringfireball.net/projects/markdown/syntax' },
+      'textile'  => { :id => 'textile',  :url => 'http://www.textism.com/tools/textile/' },
+      'convert line breaks' => { :id => 'clb' },
+      'plain text' => { :id => 'plaintext' }
+    }
+    return content_tag( :span,
+      %Q{<b>#{filter.titleize}</b> enabled. } + ( filters[filter][:url] ? %Q{See the #{link_to('syntax rules', filters[filter][:url], :title => 'Syntax rules', :target => '_blank')} for help.} : "" ),
+        :id => "#{filters[filter][:id]}_syntax_link",
+        :class => 'small gray'
+      )
+  end
+
 end
