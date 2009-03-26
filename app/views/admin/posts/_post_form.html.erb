@@ -56,7 +56,7 @@ end
 
 <% if get_pref('COMMENTING_ON') == 'yes' -%>
 <% default_comment_setting = get_pref('COMMENT_DEFAULT') %>
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('cs1');Element.toggle('cs2');Element.toggle('cs3');Element.toggle('cs_i1');Element.toggle('cs_i2');">Comment Settings&nbsp;&nbsp;<img id="cs_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="cs_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('cs1');Element.toggle('cs2'); <%= "Element.toggle('cs3');" if @post.comments.length > 0 -%>Element.toggle('cs_i1');Element.toggle('cs_i2');">Comment Settings&nbsp;&nbsp;<img id="cs_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="cs_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
 
 <tr id="cs1" style="display: none;"><td><label for="post_comments"><b>Comment status</b></label></td><td>
 <%= create_comment_select('post[comment_status]', {0 => 'Off', 1 => 'Open', 2 => 'Closed'}, (params[:action] == 'post_new' ? (default_comment_setting == 'yes' ? 1 : 0) : @post['comment_status'])) %></td></tr>
