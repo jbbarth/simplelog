@@ -63,6 +63,8 @@ end
   require 'cgi'           # we use this in places
   require 'digest/sha1'   # for password hashing
   require 'digest/md5'    # for creating MD5 hashes (gravatar)
-  require 'bluecloth'     # for bluecloth support
-  require 'redcloth'      # for textile support
-  require 'coderay'       # for coderay support (syntax highlighting)
+
+  begin; require 'bluecloth'; rescue LoadError; end   #TODO | should add some flag somewhere
+  begin; require 'redcloth';  rescue LoadError; end   #TODO | to disable these choices in the
+  begin; require 'coderay';   rescue LoadError; end   #TODO | admin - so if these aren't loaded
+  begin; require 'rubypants'; rescue LoadError; end   #TODO | then they can't be selected
