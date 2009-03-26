@@ -20,4 +20,5 @@
 #++
 
 module Admin::PostsHelper
+  include PostHelper
 end
