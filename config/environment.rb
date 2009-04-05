@@ -55,6 +55,9 @@ end
   SL_CONFIG[:USER_EMAIL_COOKIE] = '_sl_email'
   SL_CONFIG[:USER_HASH_COOKIE] = '_sl_hash'
 
+  # use space to delimit tags
+  TagList.delimiter = " "
+
   # we load our site's config now
   require 'server.rb'
 
