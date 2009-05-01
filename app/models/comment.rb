@@ -35,14 +35,14 @@ class Comment < ActiveRecord::Base
   validates_format_of :email, :with => /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/i, :message => 'must be a valid email address', :if => Proc.new { |comment| comment.email != '' }
   
   # absolutely destroys any tags and any remaining < and >
-  def self.kill_tags(input)
+  def self.kill_tags(input, force = false)
     if !input
     # if we're passed nil, let's be kind and return an empty string
       return ''
     end
 
     _tf = Preference.get_setting('TEXT_FILTER')
-    if _tf == 'convert line breaks' || _tf == 'plain text' || !_tf
+    if force || _tf == 'convert line breaks' || _tf == 'plain text' || !_tf
       input = input.gsub(/<\/?[^>]*>/, '')
       input = input.gsub('<', '&lt;')
       input = input.gsub('>', '&gt;')

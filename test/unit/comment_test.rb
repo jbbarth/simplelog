@@ -7,7 +7,7 @@ class CommentTest < Test::Unit::TestCase
   fixtures :comments, :blacklist
 
   def test_kill_tags
-    str = Comment.kill_tags('<this>is<great>')
+    str = Comment.kill_tags('<this>is<great>', true)
     assert_equal('is', str)
   end
   
