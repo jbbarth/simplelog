@@ -585,7 +585,7 @@ ul.navlist.right {
 .navlist li {
     display: inline;
     list-style-type: none;
-    padding: 0 9px 2px 6px;
+    padding: 0 7px 2px 4px;
     border-right: 1px solid #555;
 }
 .navlist li a {
