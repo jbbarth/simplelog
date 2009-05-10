@@ -28,22 +28,21 @@ class Preference < ActiveRecord::Base
   # get a preference value
   def self.get_setting(name)
     # drop the case
-    name = name.downcase
+    name.downcase!
     # check for it
-    if !@@stored_prefs[name]
+    unless @@stored_prefs[name]
       #logger.warn("WE ARE HITTING DB FOR: #{name.downcase} (cache length: #{@@stored_prefs.length.to_s})")
       #logger.warn("CURRENT CACHE: #{@@stored_prefs.inspect}")
       result = Preference.find(:first, :conditions => ['name = ?', name])
       if result
-      # we found our preference, return the value
+        # we found our preference, return the value
         @@stored_prefs[name] = result.value    
-        return result.value
+      else
+        # if we've got nothing, let's return an empty string
+        @@stored_prefs[name] = (name == 'TEXT_FILTER' ? 'textile' : '')
       end
-      # if we've got nothing, let's return an empty string
-      @@stored_prefs[name] = ''
-    else
-      return @@stored_prefs[name]
     end
+    @@stored_prefs[name]
   end
   
   # clear the local cached version of prefs (user submitted prefs save or asked
