@@ -204,6 +204,7 @@ module PostHelper
   end
 
   def syntax_link( filter = get_pref('TEXT_FILTER'))
+    filter = 'textile' if filter.nil?
     filters = {
       'markdown' => { :id => 'markdown', :url => 'http://daringfireball.net/projects/markdown/syntax' },
       'textile'  => { :id => 'textile',  :url => 'http://www.textism.com/tools/textile/' },
