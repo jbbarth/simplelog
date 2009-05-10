@@ -55,18 +55,18 @@ a = 0
 %>
 <div id="admin_nav">
 	<ul class="navlist">
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/posts" title="Posts"<%= ' class="current"' if params[:action][0..3] == 'post' %>>Posts</a>&nbsp;<a accesskey="n" href="<%= Site.full_url %>/admin/posts/new" title="Create a new post"><img src="<%= Site.full_url %>/images/admin/new_button.png" id="new_post_button" alt="Create a new post" border="0"/></a></li>
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/pages" title="Pages"<%= ' class="current"' if params[:action][0..3] == 'page' %>>Pages</a></li>
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/images" title="Images"<%= ' class="current"' if params[:controller].include?('image') %>>Images</a></li>
-	  <% if cb %><li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/comments" title="Comments"<%= ' class="current"' if (params[:action][0..6] == 'comment' or params[:action][0..8] == 'blacklist') %>>Comments</a></li><% end %>
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/tags" title="Tags"<%= ' class="current"' if params[:action][0..2] == 'tag' %>>Tags</a></li>
-		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/authors" title="Authors"<%= ' class="current"' if params[:action][0..5] == 'author' %>>Authors</a></li>
-		<li class="end"><a accesskey="<%=a += 1%>" id="ping_obj" href="<%= Site.full_url %>/admin/ping" title="Ping"<%= ' class="current"' if params[:action][0..3] == 'ping' %> onclick="showPingPanel(); return false;">Ping</a></li>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/posts" title="Posts"<%= ' class="current"' if controller.controller_name == 'posts' %>>Posts</a>&nbsp;<a accesskey="n" href="<%= Site.full_url %>/admin/posts/new" title="Create a new post"><img src="<%= Site.full_url %>/images/admin/new_button.png" id="new_post_button" alt="Create a new post" border="0"/></a></li>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/pages" title="Pages"<%= ' class="current"' if controller.controller_name == 'pages' %>>Pages</a></li>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/images" title="Images"<%= ' class="current"' if controller.controller_name == 'images' %>>Images</a></li>
+	  <% if cb %><li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/comments" title="Comments"<%= ' class="current"' if controller.controller_name == 'comments' or controller.controller_name == 'blacklist' %>>Comments</a></li><% end %>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/tags" title="Tags"<%= ' class="current"' if controller.controller_name == 'tags' %>>Tags</a></li>
+		<li><a accesskey="<%=a += 1%>" href="<%= Site.full_url %>/admin/authors" title="Authors"<%= ' class="current"' if controller.controller_name == 'authors' %>>Authors</a></li>
+		<li class="end"><a accesskey="<%=a += 1%>" id="ping_obj" href="<%= Site.full_url %>/admin/ping" title="Ping" onclick="showPingPanel(); return false;">Ping</a></li>
 	</ul>
 	<ul class="navlist right">
-	    <li><a accesskey="p" href="<%= Site.full_url %>/admin/prefs" title="Preferences"<%= ' class="current"' if params[:action][0..4] == 'prefs' %>>Preferences</a></li>
-		<li><a accesskey="u" href="<%= Site.full_url %>/admin/updates" title="Updates"<%= ' class="current"' if params[:action] == 'updates' %>>Updates</a></li>
-		<li><a accesskey="h" id="help_obj" href="<%= Site.full_url %>/admin/help" title="Help"<%= ' class="current"' if params[:action] == 'help' %> onclick="showHelpPanel(); return false;">Help</a></li>
+	    <li><a accesskey="p" href="<%= Site.full_url %>/admin/prefs" title="Preferences"<%= ' class="current"' if controller.controller_name == 'prefs' %>>Preferences</a></li>
+		<li><a accesskey="u" href="<%= Site.full_url %>/admin/updates" title="Updates"<%= ' class="current"' if controller.controller_name == 'misc' and controller.action_name.match(/update/) %>>Updates</a></li>
+		<li><a accesskey="h" id="help_obj" href="<%= Site.full_url %>/admin/help" title="Help"<%= ' class="current"' if controller.controller_name == 'misc' and controller.action_name == 'help' %> onclick="showHelpPanel(); return false;">Help</a></li>
 		<li><a accesskey="l" href="<%= Site.full_url %>/logout" title="Logout">Logout</a></li>
 		<li class="end"><a accesskey="v" href="/" target="_blank" title="View Site">View Site</a></li>
 	</ul><br/>
