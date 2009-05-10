@@ -100,7 +100,7 @@ class OnePointOne < ActiveRecord::Migration
     ds24 = 'Your <a href="http://issn.org" title="ISSN" target="blank">ISSN</a>, if you have one.'
     ds25 = 'Your <a href="http://numly.com" title="ESBN" target="blank">ESBN</a>, if you have one.'
     ds26 = "Site encoding (if you're unsure, leave this as-is)."
-    ds27 = 'See <a href="http://www.loc.gov/standards/iso639-2/langcodes.html" title="Langauge codes" target="_blank">the list of available codes</a> (can be mutliple, separated with commas).'
+    ds27 = 'See <a href="http://www.loc.gov/standards/iso639-2/langcodes.html" title="Language codes" target="_blank">the list of available codes</a> (can be mutliple, separated with commas).'
     ds28 = 'The directory you installed <a href="http://haveamint.com" title="Mint" target="_blank">Mint</a> into, if you have (no leading/trailing slashes necessary).'
     ds29 = 'Your <a href="http://del.icio.us" title="del.icio.us" target="_blank">del.icio.us</a> username, if you have one.'
     ds30 = 'Do not include http:// (<a href="/admin/help#hq9" title="Help: What does the &quot;RSS link location&quot; preference do?&quot;" target="_blank">see help</a> for details).'
