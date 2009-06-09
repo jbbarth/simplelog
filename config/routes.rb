@@ -85,8 +85,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'admin/blacklist/remote/add/:item', :controller => 'admin/blacklist', :action => 'blacklist_add_remote'
   map.connect 'admin/blacklist/remote/destroy/:item', :controller => 'admin/blacklist', :action => 'blacklist_destroy_remote'
   map.connect 'admin/blacklist/get/rules', :controller => 'admin/blacklist', :action => 'blacklist_get_remote'
-  # page post
-  %w(page post).each do |i|
+  # post
+  %w(post).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "#{i}_list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "#{i}_show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "#{i}_edit"
@@ -97,8 +97,8 @@ ActionController::Routing::Routes.draw do |map|
     map.connect "admin/#{i}s/search", :controller => "admin/#{i}s", :action => "#{i}_search"
     map.connect "admin/#{i}s/preview", :controller => "admin/#{i}s", :action => "#{i}_preview"
   end
-  # [NEW!] restful urls : authors tags comments
-  %w(author tag comment).each do |i|
+  # [NEW!] restful urls : authors tags comments pages
+  %w(author tag comment page).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "edit"
@@ -116,7 +116,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'admin/comments/approve/all', :controller => 'admin/comments', :action => 'approve_all'
   map.connect 'admin/comments/delete/unapproved', :controller => 'admin/comments', :action => 'delete_unapproved'
   # pages
-  map.connect 'admin/pages/permalink', :controller => 'admin/pages', :action => 'page_permalink'
+  map.connect 'admin/pages/permalink', :controller => 'admin/pages', :action => 'permalink'
   # posts
   map.connect 'admin/posts/batch/comments', :controller => 'admin/posts', :action => 'post_batch_comments'
   # images

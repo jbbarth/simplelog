@@ -26,27 +26,27 @@ class Admin::PagesController < Admin::BaseController
   #
   
   # get a list of pages, paginated, with sorting
-  def page_list
+  def list
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(created_at title permalink is_active), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
     # grab the paginator
-    @page_pages = Paginator.new self, Page.count, 20, params[:page]
+    @pages = Paginator.new self, Page.count, 20, params[:page]
     # grab the pages
-    @pages = Page.find(:all, :order => @sorter.to_sql, :limit => @page_pages.items_per_page, :offset => @page_pages.current.offset)
-    $admin_page_title = 'Listing pages'
-    render :template => 'admin/pages/page_list'
+    @pages = Page.find(:all, :order => @sorter.to_sql, :limit => @pages.items_per_page, :offset => @pages.current.offset)
+    $admin_title = 'Listing pages'
+    render :template => 'admin/pages/list'
   end
 
   # create a new page
-  def page_new
+  def new
     @page     = Page.new
-    $admin_page_title = 'New page'
-    @onload   = "document.forms['page_form'].elements['page[permalink]'].focus()"
-    render :template => 'admin/pages/page_new'
+    $admin_title = 'New page'
+    @onload   = "document.forms['form'].elements['page[permalink]'].focus()"
+    render :template => 'admin/pages/new'
   end
 
   # save a new page
-  def page_create
+  def create
     # let's create our new post
     @page = Page.new(params[:page])
     if @page.save
@@ -64,22 +64,22 @@ class Admin::PagesController < Admin::BaseController
       @preview  = (@page.body_raw ? @page.body_raw: '')
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'page_new', :template => 'admin/pages/page_new'
+      render :action => 'new', :template => 'admin/pages/new'
     end
   end
 
   # load the page we're editing
-  def page_edit
+  def edit
     @page     = Page.find(params[:id])
     @plink    = Post.permalink(@page[0])
     @preview  = (@page.body ? @page.body : '')
-    $admin_page_title = 'Editing page'
-    @onload   = "document.forms['page_form'].elements['page[permalink]'].focus()"
-    render :template => 'admin/pages/page_edit'
+    $admin_title = 'Editing page'
+    @onload   = "document.forms['form'].elements['page[permalink]'].focus()"
+    render :template => 'admin/pages/edit'
   end
 
   # update an existing page
-  def page_update
+  def update
     # find our post
     @page = Page.find(params[:id])
     if @page.update_attributes(params[:page])
@@ -97,12 +97,12 @@ class Admin::PagesController < Admin::BaseController
       @preview  = (@page.body_raw ? @page.body_raw: '')
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'page_edit', :template => 'admin/pages/page_edit'
+      render :action => 'edit', :template => 'admin/pages/edit'
     end
   end
 
   # destroy an existing page! destroy! destroy! destory!
-  def page_destroy
+  def destroy
     Page.find(params[:id]).destroy
     flash[:notice] = 'Page was destroyed.'  
     if session[:was_searching]
@@ -118,16 +118,16 @@ class Admin::PagesController < Admin::BaseController
   end
   
   # search for pages
-  def page_search
+  def search
     session[:was_searching] = 1
     session[:prev_search_string] = params[:q]
     @pages = Page.find_by_string(params[:q], 20, false)
-    $admin_page_title = 'Search results'
-    render :template => 'admin/pages/page_search'
+    $admin_title = 'Search results'
+    render :template => 'admin/pages/search'
   end
   
   # create a filter-passed preview of the page, checking for malformed XHTML
-  def page_preview
+  def preview
     # add the body if we've got it
     body = '' + (check_for_bad_xhtml(params[:page][:body_raw], 'page', params[:page][:text_filter]) if params[:page][:body_raw])
     # dump it out
@@ -135,7 +135,7 @@ class Admin::PagesController < Admin::BaseController
   end
   
   # update the permalink and preview it
-  def page_permalink
+  def permalink
     render :text => Post.to_permalink(params[:value])
   end
   

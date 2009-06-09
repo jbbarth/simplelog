@@ -20,30 +20,30 @@ class PagesControllerTest < Test::Unit::TestCase
   end
   
   def test_page_list
-    get :page_list
-    assert_template 'page_list'
+    get :list
+    assert_template 'list'
     assert(@response.has_template_object?('pages'))
   end
 
   # def test_page_edit
-  #   get :page_edit, :id => 1
-  #   assert_template 'page_edit'
+  #   get :edit, :id => 1
+  #   assert_template 'edit'
   #   assert(@response.has_template_object?('page'))
   #   assert(assigns('page').valid?)
   #   assert_response :success
   # end
 
   # def test_page_update
-  #   post :page_update, :id => 1, :page => {:is_active => false}
+  #   post :update, :id => 1, :page => {:is_active => false}
   #   assert_redirected_to 'admin/pages'
   #   assert_equal 1, Page.find(:all, :conditions => ['is_active = ?', false]).length
-  #   post :page_update, :id => 1, :page => {:is_active => true}
+  #   post :update, :id => 1, :page => {:is_active => true}
   # end
 
   def test_page_destroy
     page = Page.find(1)
     assert_not_nil page
-    get :page_destroy, :id => 1
+    get :destroy, :id => 1
     assert_redirected_to 'admin/pages'
     assert_raise(ActiveRecord::RecordNotFound) { a = Page.find(1) }
   end
