@@ -32,15 +32,15 @@
 	<% unless @authors.length > 0 -%>
 	<tr class="first_row"><td class="first_col" colspan="5"><span class="gray">There are no authors at this time.</span></td></tr>
 	<% end -%>
-	<% if @pages %>
+	<% if @paginator %>
 	<tr class="header">
 		<th colspan="5">
 			<div class="pagination">
 				<div class="prev">
-					<%= link_to '&laquo; Previous page', { :sort => params[:sort], :page => @pages.current.previous } if @pages.current.previous %>
+					<%= link_to '&laquo; Previous page', { :sort => params[:sort], :page => @paginator.current.previous } if @paginator.current.previous %>
 				&nbsp;</div>
 				<div class="next">&nbsp;
-					<%= link_to 'Next page &raquo;', { :sort => params[:sort], :page => @pages.current.next } if @pages.current.next %>
+					<%= link_to 'Next page &raquo;', { :sort => params[:sort], :page => @paginator.current.next } if @paginator.current.next %>
 				</div>
 			</div>
 		</th>

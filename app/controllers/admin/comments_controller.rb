@@ -30,10 +30,10 @@ class Admin::CommentsController < Admin::BaseController
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(comments.created_at comments.name comments.title comments.is_approved), params[:sort], (params[:order] ? "comments."+params[:order] : 'DESC'), 'comments.created_at', 'ASC'
     # grab the paginator
-    @pages = Paginator.new self, Comment.count, 20, params[:page]
+    @paginator = Paginator.new self, Comment.count, 20, params[:page]
     # grab the comments (join on posts for titles)
     #TODO: restablish pagination
-    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql, :limit => @pages.current.to_sql)
+    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql, :limit => @paginator.current.to_sql)
     @comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql)
     $admin_page_title = 'Listing comments'
     render :template => 'admin/comments/list'
@@ -44,10 +44,10 @@ class Admin::CommentsController < Admin::BaseController
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(created_at name title is_approved), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
     # grab the paginator
-    @pages = Paginator.new self, Comment.count_by_sql(['select count(*) from comments where post_id = ?', params[:id]]), 20, params[:page]
+    @paginator = Paginator.new self, Comment.count_by_sql(['select count(*) from comments where post_id = ?', params[:id]]), 20, params[:page]
     # grab the comments (join on posts for titles)
     #TODO: pagination
-    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql, :limit => @pages.current.to_sql)
+    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql, :limit => @paginator.current.to_sql)
     @comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql)
     $admin_page_title = 'Listing comments'
     render :template => 'admin/comments/list'

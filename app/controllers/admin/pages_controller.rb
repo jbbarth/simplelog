@@ -30,9 +30,9 @@ class Admin::PagesController < Admin::BaseController
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(created_at title permalink is_active), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
     # grab the paginator
-    @pages = Paginator.new self, Page.count, 20, params[:page]
+    @paginator = Paginator.new self, Page.count, 20, params[:page]
     # grab the pages
-    @pages = Page.find(:all, :order => @sorter.to_sql, :limit => @pages.items_per_page, :offset => @pages.current.offset)
+    @pages = Page.find(:all, :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     $admin_title = 'Listing pages'
     render :template => 'admin/pages/list'
   end
