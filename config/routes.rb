@@ -98,7 +98,7 @@ ActionController::Routing::Routes.draw do |map|
     map.connect "admin/#{i}s/preview", :controller => "admin/#{i}s", :action => "#{i}_preview"
   end
   # [NEW!] restful urls : authors
-  %w(author tag comment page post).each do |i|
+  %w(author).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "edit"
