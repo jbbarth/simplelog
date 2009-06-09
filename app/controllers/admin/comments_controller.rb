@@ -26,17 +26,17 @@ class Admin::CommentsController < Admin::BaseController
   #
     
   # get a list of comments, paginated, with sorting
-  def comment_list
+  def list
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(comments.created_at comments.name comments.title comments.is_approved), params[:sort], (params[:order] ? "comments."+params[:order] : 'DESC'), 'comments.created_at', 'ASC'
     # grab the paginator
-    @comment_pages = Paginator.new self, Comment.count, 20, params[:page]
+    @pages = Paginator.new self, Comment.count, 20, params[:page]
     # grab the comments (join on posts for titles)
     #TODO: restablish pagination
-    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql, :limit => @comment_pages.current.to_sql)
+    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql, :limit => @pages.current.to_sql)
     @comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql)
     $admin_page_title = 'Listing comments'
-    render :template => 'admin/comments/comment_list'
+    render :template => 'admin/comments/list'
   end
   
   # get a list of comments by the post they're associated with
@@ -44,27 +44,27 @@ class Admin::CommentsController < Admin::BaseController
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(created_at name title is_approved), params[:sort], (params[:order] ? params[:order] : 'DESC'), 'created_at', 'ASC'
     # grab the paginator
-    @comment_pages = Paginator.new self, Comment.count_by_sql(['select count(*) from comments where post_id = ?', params[:id]]), 20, params[:page]
+    @pages = Paginator.new self, Comment.count_by_sql(['select count(*) from comments where post_id = ?', params[:id]]), 20, params[:page]
     # grab the comments (join on posts for titles)
     #TODO: pagination
-    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql, :limit => @comment_pages.current.to_sql)
+    #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql, :limit => @pages.current.to_sql)
     @comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :conditions => ['post_id = ?', params[:id]], :order => @sorter.to_sql)
     $admin_page_title = 'Listing comments'
-    render :template => 'admin/comments/comment_list'
+    render :template => 'admin/comments/list'
   end
 
   # load the comment we're editing
-  def comment_edit
+  def edit
     @comment  = Comment.find(params[:id])
     @preview  = (@comment.body ? @comment.body : '')
     $admin_page_title = 'Editing comment'
-    @onload   = "document.forms['comment_form'].elements['comment[body]'].focus()"
+    @onload   = "document.forms['form'].elements['comment[body]'].focus()"
     @items    = (Blacklist.cache.length > 0 ? Blacklist.cache : Blacklist.find(:all, :select => 'item', :order => 'item asc'))
-    render :template => 'admin/comments/comment_edit'
+    render :template => 'admin/comments/edit'
   end
 
   # update an existing comment
-  def comment_update
+  def update
     # find our comment
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(params[:comment])
@@ -83,12 +83,12 @@ class Admin::CommentsController < Admin::BaseController
       @preview = (@comment.body_raw ? @comment.body_raw: '')
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'comment_edit', :template => 'admin/comments/comment_edit'
+      render :action => 'edit', :template => 'admin/comments/edit'
     end
   end
 
   # destroy an existing comment! destroy! destroy! destory!
-  def comment_destroy
+  def destroy
     Comment.find(params[:id]).destroy
     flash[:notice] = 'Comment was destroyed.'
     if session[:was_searching]
@@ -104,7 +104,7 @@ class Admin::CommentsController < Admin::BaseController
   end
   
   # create a filter-passed preview of the comment, checking for malformed XHTML
-  def comment_preview
+  def preview
     # add the body if we've got it
     body = '' + (check_for_bad_xhtml(params[:comment][:body_raw], 'comment') if params[:comment][:body_raw])
     # dump it out
@@ -112,16 +112,16 @@ class Admin::CommentsController < Admin::BaseController
   end
   
   # search for comments
-  def comment_search
+  def search
     session[:was_searching] = 1
     session[:prev_search_string] = params[:q]
     @comments = Comment.find_by_string(params[:q], 20)
     $admin_page_title = 'Search results'
-    render :template => 'admin/comments/comment_search'
+    render :template => 'admin/comments/search'
   end
   
   # toggles a comment's approval status based on params
-  def comment_approval
+  def approval
     comment = Comment.find(params[:id])
     comment.update_attribute('is_approved', !comment.is_approved)
     render :nothing => true

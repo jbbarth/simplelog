@@ -20,30 +20,30 @@ class CommentsControllerTest < Test::Unit::TestCase
   end
   
   def test_comment_list
-    get :comment_list
-    assert_template 'comment_list'
+    get :list
+    assert_template 'list'
     assert(@response.has_template_object?('comments'))
   end
   
   def test_comment_edit
-    get :comment_edit, :id => 1
-    assert_template 'comment_edit'
+    get :edit, :id => 1
+    assert_template 'edit'
     assert(@response.has_template_object?('comment'))
     assert(assigns('comment').valid?)
     assert_response :success
   end
   
   def test_comment_update
-    post :comment_update, :id => 1, :comment => {:is_approved => false}
+    post :update, :id => 1, :comment => {:is_approved => false}
     assert_redirected_to 'admin/comments'
     assert_equal 1, Comment.find(:all, :conditions => ['is_approved = ?', false]).length
-    post :comment_update, :id => 1, :comment => {:is_approved => true}
+    post :update, :id => 1, :comment => {:is_approved => true}
   end
   
   def test_comment_destroy
     comment = Comment.find(1)
     assert_not_nil comment
-    get :comment_destroy, :id => 1
+    get :destroy, :id => 1
     assert_redirected_to 'admin/comments'
     assert_raise(ActiveRecord::RecordNotFound) { a = Comment.find(1) }
   end

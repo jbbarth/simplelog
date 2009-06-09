@@ -20,12 +20,12 @@
 	<% c = 1 -%>
 	<% f = 1 -%>
 	<% for comment in @comments -%>
-	    <% comment_post = comment.post -%>
+	    <% post = comment.post -%>
 		<tr id="tca<%= comment.id.to_s%>" class="<% if !comment.is_approved %>inactive <% end %><%= (c%2 == 0 ? 'alt_row ' : '') %><%= (f == 1 ? 'first_row' : '') %>">
 			<td class="first_col"><%= comment.created_at.strftime('%d %b, %Y') %></td>
 			<td><%= link_to (comment.name == '' ? '[Anonymous]' : comment.name), Site.full_url + '/admin/comments/edit/' + comment.id.to_s %></td>
 			<td><%= truncate(Post.strip_html(comment.body), 40) %></td>
-			<td class="small_col"><%= link_to (comment_post.title == '' ? '[Untitled]' : comment_post.title), Site.full_url + '/admin/posts/edit/' + comment_post.id.to_s %></td>
+			<td class="small_col"><%= link_to (post.title == '' ? '[Untitled]' : post.title), Site.full_url + '/admin/posts/edit/' + post.id.to_s %></td>
 			<td class="approved_col"><!--
                 --><span id="yca<%= comment.id.to_s %>"<% if !comment.is_approved %> style="display: none;"<% end %>><!--
                 --><%= link_to_remote(
@@ -57,15 +57,15 @@
 	<% unless @comments.length > 0 -%>
 	<tr class="first_row"><td class="first_col" colspan="6"><span class="gray">There are no comments at this time.</span></td></tr>
 	<% end -%>
-	<% if @comment_pages %>
+	<% if @pages %>
 	<tr class="header">
 		<th colspan="6">
 			<div class="pagination">
 				<div class="prev">
-					<%= link_to '&laquo; Previous page', { :sort => params[:sort], :page => @comment_pages.current.previous } if @comment_pages.current.previous %>
+					<%= link_to '&laquo; Previous page', { :sort => params[:sort], :page => @pages.current.previous } if @pages.current.previous %>
 				&nbsp;</div>
 				<div class="next">&nbsp;
-					<%= link_to 'Next page &raquo;', { :sort => params[:sort], :page => @comment_pages.current.next } if @comment_pages.current.next %>
+					<%= link_to 'Next page &raquo;', { :sort => params[:sort], :page => @pages.current.next } if @pages.current.next %>
 				</div>
 			</div>
 		</th>
