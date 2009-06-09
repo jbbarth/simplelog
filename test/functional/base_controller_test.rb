@@ -33,7 +33,7 @@ class BaseControllerTest < Test::Unit::TestCase
   end
   
   def test_some_routes
-    route = {:controller => 'admin/posts', :action => 'post_edit', :id => '1'}
+    route = {:controller => 'admin/posts', :action => 'edit', :id => '1'}
     assert_routing 'admin/posts/edit/1', route
     route = {:controller => 'admin/tags', :action => 'edit', :id => '1'}
     assert_routing 'admin/tags/edit/1', route

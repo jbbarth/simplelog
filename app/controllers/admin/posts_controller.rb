@@ -26,7 +26,7 @@ class Admin::PostsController < Admin::BaseController
   #
   
   # get a list of posts, paginated, with sorting
-  def post_list
+  def list
     # grab the sorter
     if Preference.get_setting('COMMENTING_ON') == 'yes'
     # comments are turned on, we need to include that in sorting
@@ -37,30 +37,30 @@ class Admin::PostsController < Admin::BaseController
     end
 
     # grab the paginator
-    @post_pages = Paginator.new self, Post.count, 20, params[:page]
+    @paginator = Paginator.new self, Post.count, 20, params[:page]
     if Preference.get_setting('COMMENTING_ON') == 'yes'
     # grab the posts (join on comments for count)
-      @posts = Post.find(:all, :select => 'posts.id, posts.created_at, posts.title, posts.body, posts.is_active, COUNT(comments.id) as comments_count', :joins => 'left outer join comments on comments.post_id = posts.id', :group => 'posts.id, posts.title, posts.body, posts.is_active, posts.created_at', :order => @sorter.to_sql, :limit => @post_pages.items_per_page, :offset => @post_pages.current.offset)
+      @posts = Post.find(:all, :select => 'posts.id, posts.created_at, posts.title, posts.body, posts.is_active, COUNT(comments.id) as comments_count', :joins => 'left outer join comments on comments.id = posts.id', :group => 'posts.id, posts.title, posts.body, posts.is_active, posts.created_at', :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     else
     # grab the posts (no comments)
-      @posts = Post.find(:all, :order => @sorter.to_sql, :limit => @post_pages.items_per_page, :offset => @post_pages.current.offset)
+      @posts = Post.find(:all, :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     end
     $admin_page_title = 'Listing posts'
-    render :template => 'admin/posts/post_list'
+    render :template => 'admin/posts/list'
   end
 
   # create a new post
-  def post_new
+  def new
     @post     = Post.new
     @tags     = Tag.find(:all, :order => 'name asc')
     @authors  = Author.find(:all, :order => 'name asc')
     $admin_page_title = 'New post'
-    @onload   = "document.forms['post_form'].elements['post[title]'].focus()"
-    render :template => 'admin/posts/post_new'
+    @onload   = "document.forms['form'].elements['post[title]'].focus()"
+    render :template => 'admin/posts/new'
   end
 
   # save a new post
-  def post_create
+  def create
     # let's create our new post
     @post = Post.new(params[:post])
     # set custom fields to empty string if they're not set
@@ -89,24 +89,24 @@ class Admin::PostsController < Admin::BaseController
       @preview  = (@post.body_raw ? @post.body_raw: '') + (@post.extended_raw ? @post.extended_raw : '')
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'post_new', :template => 'admin/posts/post_new'
+      render :action => 'new', :template => 'admin/posts/new'
     end
   end
 
   # load the post we're editing
-  def post_edit
+  def edit
     @post     = Post.find(params[:id])
     @plink    = Post.permalink(@post[0])
     @tags     = Tag.find(:all, :order => 'name asc')
     @authors  = Author.find(:all, :order => 'name asc')
     @preview  = (@post.body ? @post.body : '') + (@post.extended ? @post.extended : '')
     $admin_page_title = 'Editing post'
-    @onload   = "document.forms['post_form'].elements['post[title]'].focus()"
-    render :template => 'admin/posts/post_edit'
+    @onload   = "document.forms['form'].elements['post[title]'].focus()"
+    render :template => 'admin/posts/edit'
   end
 
   # update an existing post
-  def post_update
+  def update
     # find our post
     @post = Post.find(params[:id])
     # set custom fields to empty string if they're not set
@@ -132,12 +132,12 @@ class Admin::PostsController < Admin::BaseController
       @preview  = (@post.body_raw ? @post.body_raw: '') + (@post.extended_raw ? @post.extended_raw : '')
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'post_edit', :template => 'admin/posts/post_edit'
+      render :action => 'edit', :template => 'admin/posts/edit'
     end
   end
 
   # destroy an existing post! destroy! destroy! destory!
-  def post_destroy
+  def destroy
     Post.find(params[:id]).destroy
     flash[:notice] = 'Post was destroyed.'
     if session[:was_searching]
@@ -153,7 +153,7 @@ class Admin::PostsController < Admin::BaseController
   end
   
   # create a filter-passed preview of the post, checking for malformed XHTML
-  def post_preview
+  def preview
     # add the body if we've got it
     body = '' + (check_for_bad_xhtml(params[:post][:body_raw], 'post', params[:post][:text_filter]) if params[:post][:body_raw])
     # add the extended bits if we've got them
@@ -163,16 +163,16 @@ class Admin::PostsController < Admin::BaseController
   end
   
   # search for posts
-  def post_search
+  def search
     session[:was_searching] = 1
     session[:prev_search_string] = params[:q]
     @posts = Post.find_by_string(params[:q], 20, false)
     $admin_page_title = 'Search results'
-    render :template => 'admin/posts/post_search'
+    render :template => 'admin/posts/search'
   end
   
   # batch processing for comment settings
-  def post_batch_comments
+  def batch_comments
     if params[:comment_batch][:timeframe] and params[:comment_batch][:setting]
       timeframe = params[:comment_batch][:timeframe].to_i
       setting = params[:comment_batch][:setting].to_i

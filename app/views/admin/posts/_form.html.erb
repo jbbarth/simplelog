@@ -3,7 +3,7 @@
 <%
 tag_list = ''
 for tag in @tags
-	tag_list += link_to(tag.name, 'javascript://', :id => 'tag_' + tag.name, :class => 'tag_tag', :onclick => 'tag_swap(document.forms[\'post_form\'].elements[\'post_tag_list\'], \'' + tag.name + '\')') + ' '
+	tag_list += link_to(tag.name, 'javascript://', :id => 'tag_' + tag.name, :class => 'tag_tag', :onclick => 'tag_swap(document.forms[\'form\'].elements[\'tag_list\'], \'' + tag.name + '\')') + ' '
 end
 %>
 
@@ -11,15 +11,15 @@ end
 <!--[form:post]-->
 <tr class="breaker btop"><td colspan="2">Content</td></tr>
 
-<tr><td class="labels"><label for="post_title"><b>Title</b></label></td><td class="fields">
+<tr><td class="labels"><label for="title"><b>Title</b></label></td><td class="fields">
 <%= text_field 'post', 'title', :size => '58', :class => 'normal_i_width' %></td></tr>
 
-<tr><td><label for="post_body_raw"><b>Body</b></label></td><td>
+<tr><td><label for="body_raw"><b>Body</b></label></td><td>
   <%= text_area 'post', 'body_raw', :rows => '28', :cols => '59', :wrap => 'virtual', :class => 'normal_i_width' %><br/>
-  <%= syntax_link( params[:action] == 'post_new' ? get_pref('TEXT_FILTER') : @post.text_filter ) %>
+  <%= syntax_link( params[:action] == 'new' ? get_pref('TEXT_FILTER') : @post.text_filter ) %>
 </td></tr>
 
-<tr><td><label for="post_tag_list">Tags</label></td><td>
+<tr><td><label for="tag_list">Tags</label></td><td>
 <%= text_field 'post', 'tag_list', :size => '58', :class => 'normal_i_width', :onkeyup => 'highlight_tags(this)' %><br/>
 <span class="small gray">Enter tags separated by a space or click existing tags below.</span></td></tr>
 
@@ -30,26 +30,26 @@ end
 
 <tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('ex1');Element.toggle('ex2');<%= "Element.toggle('ex3');" if get_pref("CUSTOM_FIELD_1_ON") == "yes" %><%= "Element.toggle('ex4');" if get_pref("CUSTOM_FIELD_2_ON") == "yes" %><%= "Element.toggle('ex5');" if get_pref("CUSTOM_FIELD_3_ON") == "yes" %>Element.toggle('ex_i1');Element.toggle('ex_i2');">Extended Content&nbsp;&nbsp;<img id="ex_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="ex_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
 
-<tr id="ex1" style="display: none;"><td><label for="post_extended_raw">Extended</label></td><td>
+<tr id="ex1" style="display: none;"><td><label for="extended_raw">Extended</label></td><td>
 <%= text_area 'post', 'extended_raw', :rows => '20', :cols => '57', :wrap => 'virtual', :class => 'normal_i_width' %><br/><span class="small gray">Use this to optionally break large posts into two parts.</span></td></tr>
 
-<tr id="ex2" style="display: none;"><td><label for="post_summary">Summary</label></td><td>
+<tr id="ex2" style="display: none;"><td><label for="summary">Summary</label></td><td>
 <%= text_area 'post', 'summary', :rows => '6', :cols => '57', :wrap => 'virtual', :class => 'normal_i_width' %><br/><span class="small gray">Describe this post.</span></td></tr>
 
 <% if get_pref('CUSTOM_FIELD_1_ON') == 'yes' -%>
-<tr id="ex3" style="display: none;"><td><label for="post_custom_field_1"><%= get_pref('CUSTOM_FIELD_1') %></label></td><td>
+<tr id="ex3" style="display: none;"><td><label for="custom_field_1"><%= get_pref('CUSTOM_FIELD_1') %></label></td><td>
 <%= text_field 'post', 'custom_field_1', :size => '58', :class => 'normal_i_width' %><br/>
 <span class="small gray">Use this data in your views by yielding &lt;%= post.custom_field_1 %&gt;</span></td></tr>
 <% end -%>
 
 <% if get_pref('CUSTOM_FIELD_2_ON') == 'yes' -%>
-<tr id="ex4" style="display: none;"><td><label for="post_custom_field_2"><%= get_pref('CUSTOM_FIELD_2') %></label></td><td>
+<tr id="ex4" style="display: none;"><td><label for="custom_field_2"><%= get_pref('CUSTOM_FIELD_2') %></label></td><td>
 <%= text_field 'post', 'custom_field_2', :size => '58', :class => 'normal_i_width' %><br/>
 <span class="small gray">Use this data in your views by yielding &lt;%= post.custom_field_2 %&gt;</span></td></tr>
 <% end -%>
 
 <% if get_pref('CUSTOM_FIELD_3_ON') == 'yes' -%>
-<tr id="ex5" style="display: none;"><td><label for="post_custom_field_3"><%= get_pref('CUSTOM_FIELD_3') %></label></td><td>
+<tr id="ex5" style="display: none;"><td><label for="custom_field_3"><%= get_pref('CUSTOM_FIELD_3') %></label></td><td>
 <%= text_field 'post', 'custom_field_3', :size => '58', :class => 'normal_i_width' %><br/>
 <span class="small gray">Use this data in your views by yielding &lt;%= post.custom_field_3 %&gt;</span></td></tr>
 <% end -%>
@@ -58,14 +58,14 @@ end
 <% default_comment_setting = get_pref('COMMENT_DEFAULT') %>
 <tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('cs1');Element.toggle('cs2'); <%= "Element.toggle('cs3');" if @post.comments.length > 0 -%>Element.toggle('cs_i1');Element.toggle('cs_i2');">Comment Settings&nbsp;&nbsp;<img id="cs_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="cs_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
 
-<tr id="cs1" style="display: none;"><td><label for="post_comments"><b>Comment status</b></label></td><td>
-<%= create_comment_select('post[comment_status]', {0 => 'Off', 1 => 'Open', 2 => 'Closed'}, (params[:action] == 'post_new' ? (default_comment_setting == 'yes' ? 1 : 0) : @post['comment_status'])) %></td></tr>
+<tr id="cs1" style="display: none;"><td><label for="comments"><b>Comment status</b></label></td><td>
+<%= create_comment_select('post[comment_status]', {0 => 'Off', 1 => 'Open', 2 => 'Closed'}, (params[:action] == 'new' ? (default_comment_setting == 'yes' ? 1 : 0) : @post['comment_status'])) %></td></tr>
 
-<tr id="cs2" style="display: none;"><td><label for="post_comments_help">Status key</label></td><td>
+<tr id="cs2" style="display: none;"><td><label for="comments_help">Status key</label></td><td>
 <span class="small gray"><b>Off</b>: comments will not be shown, new comments will not be accepted.<br/><b>Open</b>: comments will be shown and new comments will be accepted.<br/><b>Closed</b>: comments will be shown but no new comments will be accepted.</span></label></td></tr>
 
     <% if @post.comments.length > 0 -%>
-    <tr id="cs3" style="display: none;"><td><label for="post_comments_link">Total comments</label></td><td>
+    <tr id="cs3" style="display: none;"><td><label for="comments_link">Total comments</label></td><td>
     <%= @post.comments.length %> (<%= link_to 'View comment' + (@post.comments.length != 1 ? 's' : ''), Site.full_url + '/admin/comments/bypost/' + @post.id.to_s %>)</td></tr>
     <% end -%>
 <% else -%>
@@ -74,20 +74,20 @@ end
     <% end %>
 <% end -%>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');<% if @authors.length > 1 %>Element.toggle('dt2');<% end %>Element.toggle('dt3');<% unless params[:action] == 'post_new' %>Element.toggle('dt4');<% end %>Element.toggle('dt5');Element.toggle('dt6');Element.toggle('dt7');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<img id="dt_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="dt_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');<% if @authors.length > 1 %>Element.toggle('dt2');<% end %>Element.toggle('dt3');<% unless params[:action] == 'new' %>Element.toggle('dt4');<% end %>Element.toggle('dt5');Element.toggle('dt6');Element.toggle('dt7');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<img id="dt_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="dt_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
 
-<tr id="dt1" style="display: none;"><td><label for="post_is_active">Is active?</label></td><td>
-<%= check_box 'post', 'is_active', :checked => (@post.is_active ? 'checked' : ''), :onchange => "setPingCheck(this, this.form.elements['ping'], '#{(get_pref('PING_BY_DEFAULT') == 'yes' ? '1' : '0')}');" %><label for="post_is_active" class="left">&nbsp;<span class="small gray">If the box is checked, the post appears on your site</span></label></td></tr>
+<tr id="dt1" style="display: none;"><td><label for="is_active">Is active?</label></td><td>
+<%= check_box 'post', 'is_active', :checked => (@post.is_active ? 'checked' : ''), :onchange => "setPingCheck(this, this.form.elements['ping'], '#{(get_pref('PING_BY_DEFAULT') == 'yes' ? '1' : '0')}');" %><label for="is_active" class="left">&nbsp;<span class="small gray">If the box is checked, the post appears on your site</span></label></td></tr>
 
 <% if @authors.length < 2 %>
 <%= hidden_field 'post', 'author_id', :value => @authors[0].id.to_s %>
 <% else %>
-<tr id="dt2" style="display: none;"><td><label for="post_author_id"><b>Author</b></label></td><td class="fields">
+<tr id="dt2" style="display: none;"><td><label for="author_id"><b>Author</b></label></td><td class="fields">
 <%= select_tag 'post[author_id]', create_author_select_options(@authors, (@post.author_id == 0 ? get_author_id(request.cookies[SL_CONFIG[:USER_EMAIL_COOKIE]]) : @post.author_id), false) %></td></tr>
 <% end %>
 
-<tr id="dt3" style="display: none;"><td><label for="post_created_at"><b>Created at</b></label></td><td>
-<% if params[:action] == 'post_new' %>
+<tr id="dt3" style="display: none;"><td><label for="created_at"><b>Created at</b></label></td><td>
+<% if params[:action] == 'new' %>
 <%= select_year(Time.sl_local, :prefix => 'post', :field_name => 'created_at(1i)') %>
 <%= select_month(Time.sl_local, :prefix => 'post', :field_name => 'created_at(2i)') %>
 <%= select_day(Time.sl_local, :prefix => 'post', :field_name => 'created_at(3i)') %> &mdash; 
@@ -102,8 +102,8 @@ end
 <% end %><br/><span class="small gray">Set this to a future date to have the post not show up on your site until then.</span>
 </td></tr>
 
-<% unless params[:action] == 'post_new' -%>
-<tr id="dt4" style="display: none;"><td><label for="post_modified_at"><b>Modified at</b></label></td><td>
+<% unless params[:action] == 'new' -%>
+<tr id="dt4" style="display: none;"><td><label for="modified_at"><b>Modified at</b></label></td><td>
 <%= select_year(Time.sl_local, :prefix => 'post', :field_name => 'modified_at(1i)') %>
 <%= select_month(Time.sl_local, :prefix => 'post', :field_name => 'modified_at(2i)') %>
 <%= select_day(Time.sl_local, :prefix => 'post', :field_name => 'modified_at(3i)') %> &mdash; 
@@ -112,10 +112,10 @@ end
 </td></tr>
 <% end -%>
 
-<tr id="dt5" style="display: none;"><td><label for="post_text_filter"><b>Text filter</b></label></td><td>
-<%= select_tag 'post[text_filter]', create_filter_select_options(['markdown', 'textile', 'convert line breaks', 'plain text'], (params[:action] == 'post_new' ? get_pref('TEXT_FILTER') : @post.text_filter)), :onchange => "if (this.options[this.selectedIndex].value == 'markdown') { Element.show('markdown_syntax_link');Element.hide('textile_syntax_link');Element.hide('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else if (this.options[this.selectedIndex].value == 'textile') { Element.hide('markdown_syntax_link');Element.show('textile_syntax_link');Element.hide('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else if (this.options[this.selectedIndex].value == 'convert line breaks') { Element.hide('markdown_syntax_link');Element.hide('textile_syntax_link');Element.show('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else { Element.hide('markdown_syntax_link');Element.hide('textile_syntax_link');Element.hide('clb_syntax_link');Element.show('plaintext_syntax_link'); }" %><br/><span class="small gray">Override your default text filter if you wish.</span></td></tr>
+<tr id="dt5" style="display: none;"><td><label for="text_filter"><b>Text filter</b></label></td><td>
+<%= select_tag 'post[text_filter]', create_filter_select_options(['markdown', 'textile', 'convert line breaks', 'plain text'], (params[:action] == 'new' ? get_pref('TEXT_FILTER') : @post.text_filter)), :onchange => "if (this.options[this.selectedIndex].value == 'markdown') { Element.show('markdown_syntax_link');Element.hide('textile_syntax_link');Element.hide('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else if (this.options[this.selectedIndex].value == 'textile') { Element.hide('markdown_syntax_link');Element.show('textile_syntax_link');Element.hide('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else if (this.options[this.selectedIndex].value == 'convert line breaks') { Element.hide('markdown_syntax_link');Element.hide('textile_syntax_link');Element.show('clb_syntax_link');Element.hide('plaintext_syntax_link'); } else { Element.hide('markdown_syntax_link');Element.hide('textile_syntax_link');Element.hide('clb_syntax_link');Element.show('plaintext_syntax_link'); }" %><br/><span class="small gray">Override your default text filter if you wish.</span></td></tr>
 
-<tr id="dt6" style="display: none;"><td><label for="post_permalink">Permalink</label></td><td>
+<tr id="dt6" style="display: none;"><td><label for="permalink">Permalink</label></td><td>
 <%= text_field 'post', 'permalink' %><br/><span class="small gray">Leave this blank to have it auto-generated.</span></td></tr>
 
 <tr id="dt7" style="display: none;"><td><label for="ping">Send ping</label></td><td>
