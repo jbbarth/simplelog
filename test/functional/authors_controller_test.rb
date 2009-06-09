@@ -20,40 +20,40 @@ class AuthorsControllerTest < Test::Unit::TestCase
   end
   
   def test_author_list
-    get :author_list
-    assert_template 'author_list'
+    get :list
+    assert_template 'list'
     assert(@response.has_template_object?('authors'))
   end
   
   def test_author_new
-    get :author_new
-    assert_template 'author_new'
+    get :new
+    assert_template 'new'
     assert(@response.has_template_object?('author'))
     assert_response :success
   end
   
   def test_author_create
     c = Author.count
-    post :author_create, :author => {:name => 'test', :email => 'test@test.com', :password => 'test'}
+    post :create, :author => {:name => 'test', :email => 'test@test.com', :password => 'test'}
     assert_redirected_to 'admin/authors'
     assert_equal c+1, Author.count
   end
   
   def test_author_edit
-    get :author_edit, :id => 1
-    assert_template 'author_edit'
+    get :edit, :id => 1
+    assert_template 'edit'
     assert(@response.has_template_object?('author'))
     assert(assigns('author').valid?)
     assert_response :success
   end
   
   def test_author_update
-    post :author_update, :id => 1
+    post :update, :id => 1
     assert_redirected_to 'admin/authors'
-    post :author_update, :id => 3, :author => {:is_active => '0'}
+    post :update, :id => 3, :author => {:is_active => '0'}
     assert_redirected_to 'admin/authors'
     assert_equal 1, Author.find(:all, :conditions => ['is_active = ?', true]).length
-    post :author_update, :id => 1, :author => {:is_active => '0'} # shouldn't able to
+    post :update, :id => 1, :author => {:is_active => '0'} # shouldn't able to
     assert_equal 1, Author.find(:all, :conditions => ['is_active = ?', true]).length
   end
   
@@ -62,18 +62,18 @@ class AuthorsControllerTest < Test::Unit::TestCase
     assert_not_nil author
     pc = author.posts.count
     assert_equal 3, pc
-    get :author_destroy, :id => 3
+    get :destroy, :id => 3
     assert_redirected_to 'admin/authors'
     assert_raise(ActiveRecord::RecordNotFound) { a = Author.find(3) }
     assert_equal 0, Post.find(:all, :conditions => 'author_id = 3').length
     # now we only have one active author, so we shouldn't be able to destroy another
     c = Author.count # 2
-    get :author_destroy, :id => 1
+    get :destroy, :id => 1
     assert_redirected_to 'admin/authors'
     assert_equal c, Author.count
     # now we set the inactive author active and we should be able to delete it
     assert Author.find(2).update_attribute('is_active', 1)
-    get :author_destroy, :id => 2
+    get :destroy, :id => 2
     assert_equal 1, Author.count
   end
   

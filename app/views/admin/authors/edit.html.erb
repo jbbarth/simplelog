@@ -5,8 +5,8 @@
 	<h2>Required fields in <b>bold</b>.</h2><br/>
 </div>
 
-<% form_tag(Site.full_url + '/admin/authors/update/' + @author.id.to_s, :id => 'author_form') do -%>
-  <%= render :partial => 'admin/authors/author_form' %>
+<% form_tag(Site.full_url + '/admin/authors/update/' + @author.id.to_s, :id => 'form') do -%>
+  <%= render :partial => 'admin/authors/form' %>
   <div class="submit_area"><%= submit_tag 'Update this author', :class => 'submit' %> or <%= link_to 'cancel and return to author list', Site.full_url + '/admin/authors' %></div>
 <% end -%>
 <br/>
