@@ -58,7 +58,7 @@ ActionController::Routing::Routes.draw do |map|
                 :year => /\d{4}/,
                 :archive_token => tokens
   # tags list
-  map.connect 'tags', :controller => 'post', :action => 'tags_list'
+  map.connect 'tags', :controller => 'post', :action => 'list'
   # comments
   map.connect 'comments/add', :controller => 'post', :action => 'add_comment'
   # search
@@ -85,8 +85,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'admin/blacklist/remote/add/:item', :controller => 'admin/blacklist', :action => 'blacklist_add_remote'
   map.connect 'admin/blacklist/remote/destroy/:item', :controller => 'admin/blacklist', :action => 'blacklist_destroy_remote'
   map.connect 'admin/blacklist/get/rules', :controller => 'admin/blacklist', :action => 'blacklist_get_remote'
-  # tags comments page post
-  %w(tag comment page post).each do |i|
+  # comments page post
+  %w(comment page post).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "#{i}_list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "#{i}_show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "#{i}_edit"
@@ -98,7 +98,7 @@ ActionController::Routing::Routes.draw do |map|
     map.connect "admin/#{i}s/preview", :controller => "admin/#{i}s", :action => "#{i}_preview"
   end
   # [NEW!] restful urls : authors
-  %w(author).each do |i|
+  %w(author tag).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "edit"

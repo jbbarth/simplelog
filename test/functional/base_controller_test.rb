@@ -35,9 +35,9 @@ class BaseControllerTest < Test::Unit::TestCase
   def test_some_routes
     route = {:controller => 'admin/posts', :action => 'post_edit', :id => '1'}
     assert_routing 'admin/posts/edit/1', route
-    route = {:controller => 'admin/tags', :action => 'tag_edit', :id => '1'}
+    route = {:controller => 'admin/tags', :action => 'edit', :id => '1'}
     assert_routing 'admin/tags/edit/1', route
-    route = {:controller => 'admin/authors', :action => 'author_update', :id => '1'}
+    route = {:controller => 'admin/authors', :action => 'update', :id => '1'}
     assert_routing 'admin/authors/update/1', route
     route = {:controller => 'admin/misc', :action => 'do_ping'}
     assert_routing 'admin/ping/do', route

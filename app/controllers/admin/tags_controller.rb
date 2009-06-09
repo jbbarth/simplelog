@@ -32,35 +32,35 @@ class Admin::TagsController < Admin::BaseController
   end
   
   # get a list of tags, paginated, with sorting
-  def tag_list
+  def list
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(name post_count), params[:sort], params[:order], 'name', 'ASC'
     # grab the paginator
-    @tag_pages = Paginator.new self, Tag.count, 20, params[:page]
+    @pages = Paginator.new self, Tag.count, 20, params[:page]
     # grab the tags and get posts counts as well for sorting
-    @tags =  Tag.find(:all, :select => 'tags.id, tags.name, count(taggings.tag_id) as post_count', :joins => 'left outer join taggings on tags.id = taggings.tag_id', :group => 'tags.id, tags.name', :order => @sorter.to_sql, :limit => @tag_pages.items_per_page, :offset => @tag_pages.current.offset)
+    @tags =  Tag.find(:all, :select => 'tags.id, tags.name, count(taggings.id) as post_count', :joins => 'left outer join taggings on tags.id = taggings.id', :group => 'tags.id, tags.name', :order => @sorter.to_sql, :limit => @pages.items_per_page, :offset => @pages.current.offset)
     $admin_page_title = 'Listing tags'
-    render :template => 'admin/tags/tag_list'
+    render :template => 'admin/tags/list'
   end
   
   # show posts tagged with this tag
-  def tag_show
+  def show
     @tag = Tag.find(params[:id])
     @posts = Post.find_by_tag(@tag.name, false)
     $admin_page_title = 'Showing posts tagged with "' + @tag.name + '"'
-    render :template => 'admin/tags/tag_show'
+    render :template => 'admin/tags/show'
   end
 
   # create a new tag
-  def tag_new
+  def new
     @tag = Tag.new
     $admin_page_title = 'New tag'
-    @onload = "document.forms['tag_form'].elements['tag[name]'].focus()"
-    render :template => 'admin/tags/tag_new'
+    @onload = "document.forms['form'].elements['tag[name]'].focus()"
+    render :template => 'admin/tags/new'
   end
   
   # save a new tag (no spaces)
-  def tag_create
+  def create
     # let's create our new tag
     @tag = Tag.new(params[:tag])
     @tag.name = clean_tag(@tag.name)
@@ -72,18 +72,18 @@ class Admin::TagsController < Admin::BaseController
     # whoops!
       # remember the update checking if it's there
       @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-      render :action => 'tag_new', :template => 'admin/tags/tag_new'
+      render :action => 'new', :template => 'admin/tags/new'
     end
   end
 
   # load the tag we're editing
-  def tag_edit
+  def edit
     @tag = Tag.find(params[:id])
     @posts = Post.find_by_tag(@tag.name, false)
     @old_name = @tag.name
     $admin_page_title = 'Editing tag'
-    @onload = "document.forms['tag_form'].elements['tag[name]'].focus()"
-    render :template => 'admin/tags/tag_edit'
+    @onload = "document.forms['form'].elements['tag[name]'].focus()"
+    render :template => 'admin/tags/edit'
   end
 
   # update an existing tag
@@ -92,7 +92,7 @@ class Admin::TagsController < Admin::BaseController
   # so if someone has two tags: (1) red (2) blue and they go into red and change
   # its name to blue, we'll take all the posts tagged with red and tag them blue
   # and then delete the red tag.
-  def tag_update
+  def update
     # let's check for a dup and merge if necessary
     @tags = Tag.find(:all)
     @temp = Tag.new(params[:tag])
@@ -132,13 +132,13 @@ class Admin::TagsController < Admin::BaseController
         @posts = Post.find_by_tag(params[:old_name], false)
         # remember the update checking if it's there
         @update_checker = session[:update_check_stored] if session[:update_check_stored] != nil
-        render :action => 'tag_edit', :template => 'admin/tags/tag_edit'
+        render :action => 'edit', :template => 'admin/tags/edit'
       end
     end
   end
 
   # destroy an existing tag! destroy! destroy! destory!
-  def tag_destroy
+  def destroy
     Tag.find(params[:id]).destroy
     flash[:notice] = 'Tag was destroyed.'
     if session[:was_searching]
@@ -154,12 +154,12 @@ class Admin::TagsController < Admin::BaseController
   end
   
   # search for tags
-  def tag_search
+  def search
     session[:was_searching] = 1
     session[:prev_search_string] = params[:q]
     @tags = Tag.find_by_string(params[:q], 20)
     $admin_page_title = 'Search results'
-    render :template => 'admin/tags/tag_search'
+    render :template => 'admin/tags/search'
   end
   
 end
