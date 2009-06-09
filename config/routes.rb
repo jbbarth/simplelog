@@ -21,6 +21,11 @@
 
 ActionController::Routing::Routes.draw do |map|
   
+  # real RESTful routes
+  map.namespace :admin do |admin|
+    admin.resources :pages, :collection => {:search => :post, :preview => :post}
+  end
+
   tokens = /archives|older|past/
 
   #????
@@ -85,8 +90,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'admin/blacklist/remote/add/:item', :controller => 'admin/blacklist', :action => 'blacklist_add_remote'
   map.connect 'admin/blacklist/remote/destroy/:item', :controller => 'admin/blacklist', :action => 'blacklist_destroy_remote'
   map.connect 'admin/blacklist/get/rules', :controller => 'admin/blacklist', :action => 'blacklist_get_remote'
-  # restful urls : authors tags comments pages posts
-  %w(author tag comment page post).each do |i|
+  # restful urls : authors tags comments posts
+  %w(author tag comment post).each do |i|
     map.connect "admin/#{i}s", :controller => "admin/#{i}s", :action => "list"
     map.connect "admin/#{i}s/show/:id", :controller => "admin/#{i}s", :action => "show"
     map.connect "admin/#{i}s/edit/:id", :controller => "admin/#{i}s", :action => "edit"

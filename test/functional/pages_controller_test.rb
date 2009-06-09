@@ -19,9 +19,9 @@ class PagesControllerTest < Test::Unit::TestCase
     @request.cookies[SL_CONFIG[:USER_HASH_COOKIE]] = CGI::Cookie.new(SL_CONFIG[:USER_HASH_COOKIE], authors(:garrett).hashed_pass)
   end
   
-  def test_page_list
-    get :list
-    assert_template 'list'
+  def test_page_index
+    get :index
+    assert_template 'index'
     assert(@response.has_template_object?('pages'))
   end
 
