@@ -20,8 +20,8 @@ class AuthorsControllerTest < Test::Unit::TestCase
   end
   
   def test_author_list
-    get :list
-    assert_template 'list'
+    get :index
+    assert_template 'index'
     assert(@response.has_template_object?('authors'))
   end
   

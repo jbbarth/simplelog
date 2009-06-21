@@ -23,12 +23,12 @@ end
 <%= text_field 'post', 'tag_list', :size => '58', :class => 'normal_i_width', :onkeyup => 'highlight_tags(this)' %><br/>
 <span class="small gray">Enter tags separated by a space or click existing tags below.</span></td></tr>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('et1');Element.toggle('et_i1');Element.toggle('et_i2');">Existing Tags&nbsp;&nbsp;<img id="et_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""<% if get_pref('ALL_TAGS_BY_DEFAULT') == 'yes' %> style="display: none;"<% end %>/><img id="et_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt=""<% if get_pref('ALL_TAGS_BY_DEFAULT') != 'yes' %> style="display: none;"<% end %>/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('et1');Element.toggle('et_i1');Element.toggle('et_i2');">Existing Tags&nbsp;&nbsp;<%= image_tag "admin/arrow_right.gif", :id => "et_i1", :border => 0, :alt => "", :style => (get_pref('ALL_TAGS_BY_DEFAULT') == 'yes' ? "display: none;" : nil) %><%= image_tag "admin/arrow_down.gif", :id => "et_i2", :border => 0, :alt => "", :style => (get_pref('ALL_TAGS_BY_DEFAULT') != 'yes' ? "display: none;" : nil) %></a></td></tr>
 
 <tr id="et1"<% if get_pref('ALL_TAGS_BY_DEFAULT') != 'yes' %> style="display: none;"<% end %>><td><label for="tags_list_existing">All existing tags</label></td><td valign="top" class="wrap">
 <%= tag_list %></span></td></tr>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('ex1');Element.toggle('ex2');<%= "Element.toggle('ex3');" if get_pref("CUSTOM_FIELD_1_ON") == "yes" %><%= "Element.toggle('ex4');" if get_pref("CUSTOM_FIELD_2_ON") == "yes" %><%= "Element.toggle('ex5');" if get_pref("CUSTOM_FIELD_3_ON") == "yes" %>Element.toggle('ex_i1');Element.toggle('ex_i2');">Extended Content&nbsp;&nbsp;<img id="ex_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="ex_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('ex1');Element.toggle('ex2');<%= "Element.toggle('ex3');" if get_pref("CUSTOM_FIELD_1_ON") == "yes" %><%= "Element.toggle('ex4');" if get_pref("CUSTOM_FIELD_2_ON") == "yes" %><%= "Element.toggle('ex5');" if get_pref("CUSTOM_FIELD_3_ON") == "yes" %>Element.toggle('ex_i1');Element.toggle('ex_i2');">Extended Content&nbsp;&nbsp;<%= image_tag "admin/arrow_right.gif", :id => "ex_i1", :border => 0, :alt => "" %><%= image_tag "admin/arrow_down.gif", :id => "ex_i2", :border => 0, :alt => "", :style => "display: none;" %></a></td></tr>
 
 <tr id="ex1" style="display: none;"><td><label for="extended_raw">Extended</label></td><td>
 <%= text_area 'post', 'extended_raw', :rows => '20', :cols => '57', :wrap => 'virtual', :class => 'normal_i_width' %><br/><span class="small gray">Use this to optionally break large posts into two parts.</span></td></tr>
@@ -56,7 +56,7 @@ end
 
 <% if get_pref('COMMENTING_ON') == 'yes' -%>
 <% default_comment_setting = get_pref('COMMENT_DEFAULT') %>
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('cs1');Element.toggle('cs2'); <%= "Element.toggle('cs3');" if @post.comments.length > 0 -%>Element.toggle('cs_i1');Element.toggle('cs_i2');">Comment Settings&nbsp;&nbsp;<img id="cs_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="cs_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('cs1');Element.toggle('cs2'); <%= "Element.toggle('cs3');" if @post.comments.length > 0 -%>Element.toggle('cs_i1');Element.toggle('cs_i2');">Comment Settings&nbsp;&nbsp;<% image_tag "admin/arrow_right.gif", :id => "cs_i1", :border => 0, :alt => "" %><%= image_tag "admin/arrow_down.gif", :id => "cs_i2", :border => 0, :alt => "", :style => "display: none;" %></a></td></tr>
 
 <tr id="cs1" style="display: none;"><td><label for="comments"><b>Comment status</b></label></td><td>
 <%= create_comment_select('post[comment_status]', {0 => 'Off', 1 => 'Open', 2 => 'Closed'}, (params[:action] == 'new' ? (default_comment_setting == 'yes' ? 1 : 0) : @post['comment_status'])) %></td></tr>
@@ -74,7 +74,7 @@ end
     <% end %>
 <% end -%>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');<% if @authors.length > 1 %>Element.toggle('dt2');<% end %>Element.toggle('dt3');<% unless params[:action] == 'new' %>Element.toggle('dt4');<% end %>Element.toggle('dt5');Element.toggle('dt6');Element.toggle('dt7');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<img id="dt_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="dt_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');<% if @authors.length > 1 %>Element.toggle('dt2');<% end %>Element.toggle('dt3');<% unless params[:action] == 'new' %>Element.toggle('dt4');<% end %>Element.toggle('dt5');Element.toggle('dt6');Element.toggle('dt7');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<%= image_tag "admin/arrow_right.gif", :id => "dt_i1", :border => 0, :alt => "" %><% image_tag "admin/arrow_down.gif", :id => "dt_i2", :border => 0, :alt => "", :style => "display: none;" %></a></td></tr>
 
 <tr id="dt1" style="display: none;"><td><label for="is_active">Is active?</label></td><td>
 <%= check_box 'post', 'is_active', :checked => (@post.is_active ? 'checked' : ''), :onchange => "setPingCheck(this, this.form.elements['ping'], '#{(get_pref('PING_BY_DEFAULT') == 'yes' ? '1' : '0')}');" %><label for="is_active" class="left">&nbsp;<span class="small gray">If the box is checked, the post appears on your site</span></label></td></tr>

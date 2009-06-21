@@ -42,7 +42,7 @@ ip_listed = true if bl_values.index(@comment.ip)
     :complete => "Element.hide('bl_name_i'); Element.show('bl_name_add');",
     :confirm => "Are you sure you wish to remove this item from the blacklist?\n\nYou can always add it back later."
 }) -%></span><!--
---><span id="bl_name_i" style="display: none;"><img src="<%= Site.full_url %>/images/admin/indicator.gif" alt="Working" border="0"/> Working...</span><!--
+--><span id="bl_name_i" style="display: none;"><%= image_tag("admin/indicator.gif", :alt => "Working", :border => "0" %> Working...</span><!--
 --></span><% end %></td></tr>
 
 <tr><td class="labels"><label for="email"><b>Email</b></label></td><td class="fields">
@@ -63,7 +63,7 @@ ip_listed = true if bl_values.index(@comment.ip)
     :complete => "Element.hide('bl_email_i'); Element.show('bl_email_add');",
     :confirm => "Are you sure you wish to remove this item from the blacklist?\n\nYou can always add it back later."
 }) -%></span><!--
---><span id="bl_email_i" style="display: none;"><img src="<%= Site.full_url %>/images/admin/indicator.gif" alt="Working" border="0"/> Working...</span><!--
+--><span id="bl_email_i" style="display: none;"><%= image_tag("admin/indicator.gif", :alt => "Working", :border => "0" %> Working...</span><!--
 --></span><% end %></td></tr>
 
 <tr><td class="labels"><label for="url">URL</label></td><td class="fields">
@@ -84,7 +84,7 @@ ip_listed = true if bl_values.index(@comment.ip)
     :complete => "Element.hide('bl_url_i'); Element.show('bl_url_add');",
     :confirm => "Are you sure you wish to remove this item from the blacklist?\n\nYou can always add it back later."
 }) -%></span><!--
---><span id="bl_url_i" style="display: none;"><img src="<%= Site.full_url %>/images/admin/indicator.gif" alt="Working" border="0"/> Working...</span><!--
+--><span id="bl_url_i" style="display: none;"><%= image_tag("admin/indicator.gif", :alt => "Working", :border => "0" %> Working...</span><!--
 --></span><% end %></td></tr>
 
 <tr class="breaker"><td colspan="2">Content</td></tr>
@@ -105,10 +105,10 @@ ip_listed = true if bl_values.index(@comment.ip)
 <% end -%>
 </td></tr>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');Element.toggle('dt2');Element.toggle('dt3');Element.toggle('dt4');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<img id="dt_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="dt_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');Element.toggle('dt2');Element.toggle('dt3');Element.toggle('dt4');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<%= image_tag "admin/arrow_right.gif", :id => "dt_i1", :border => "0", :alt => "" %><%= image_tag "admin/arrow_down.gif, :id => "dt_i2", :border => "0", :alt => "", :style => "display: none;" %></a></td></tr>
 
 <tr id="dt1" style="display: none;"><td class="labels"><label for="post">Post</label></td><td class="fields">
-<%= link_to((post.title == '' ? '[Untitled]' : post.title), Site.full_url + '/admin/posts/edit/' + post.id.to_s, :title => 'Edit this post') %></td></tr>
+<%= link_to((post.title == '' ? '[Untitled]' : post.title), edit_admin_post(post), :title => 'Edit this post') %></td></tr>
 
 <tr id="dt2" style="display: none;"><td class="labels"><label for="ip">IP address</label></td><td class="fields">
 <%= @comment.ip %>&nbsp;&nbsp;<span class="small gray"><!--
@@ -128,7 +128,7 @@ ip_listed = true if bl_values.index(@comment.ip)
     :complete => "Element.hide('bl_ip_i'); Element.show('bl_ip_add');",
     :confirm => "Are you sure you wish to remove this item from the blacklist?\n\nYou can always add it back later."
 }) -%></span><!--
---><span id="bl_ip_i" style="display: none;"><img src="<%= Site.full_url %>/images/admin/indicator.gif" alt="Working" border="0"/> Working...</span><!--
+--><span id="bl_ip_i" style="display: none;"><%= image_tag "admin/indicator.gif", :alt => "Working", :border => "0" %> Working...</span><!--
 --></span></td></tr>
 
 <tr id="dt3" style="display: none;"><td class="labels"><label for="created_at"><b>Created at</b></label></td><td class="fields">

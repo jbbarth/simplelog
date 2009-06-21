@@ -25,7 +25,7 @@
 
 <span id="plaintext_syntax_link" class="small gray"<%= ' style="display: none;"' unless (params[:action] == 'new' and get_pref('TEXT_FILTER') == 'plain text') or (params[:action] != 'new' and @page.text_filter == 'plain text') %>><b>Plain text</b> mode enabled.</span></td></tr>
 
-<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');Element.toggle('dt2');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<img id="dt_i1" src="<%= Site.full_url %>/images/admin/arrow_right.gif" border="0" alt=""/><img id="dt_i2" src="<%= Site.full_url %>/images/admin/arrow_down.gif" border="0" alt="" style="display: none;"/></a></td></tr>
+<tr class="breaker"><td colspan="2"><a class="section_toggler" href="javascript://" onclick="Element.toggle('dt1');Element.toggle('dt2');Element.toggle('dt_i1');Element.toggle('dt_i2');">Details&nbsp;&nbsp;<%= image_tag "admin/arrow_right.gif", :id => "dt_i1", :border => 0, :alt => "" %><%= image_tag "admin/arrow_down.gif", :id => "dt_i2", :border => 0, :alt => "", :style => "display: none;" %></a></td></tr>
 
 <tr id="dt1" style="display: none;"><td class="labels"><label for="is_active">Is active?</label></td><td class="fields">
 <%= check_box 'page', 'is_active', :checked => (@page.is_active ? 'checked' : '') %><label for="is_active" class="left">&nbsp;<span class="small gray">If the box is checked, the page is available on your site</span></label></td></tr>

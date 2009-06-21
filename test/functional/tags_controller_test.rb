@@ -20,8 +20,8 @@ class TagsControllerTest < Test::Unit::TestCase
   end
   
   def test_tag_list
-    get :list
-    assert_template 'list'
+    get :index
+    assert_template 'index'
     assert(@response.has_template_object?('tags'))
   end
   

@@ -5,7 +5,7 @@
             You're creating a new post.
         </div>
         <div class="sn_right">
-            <%= link_to '&larr; Return to the posts list', Site.full_url + '/admin/posts' %>
+            <%= link_to '&larr; Return to the posts list', admin_posts_path %>
         </div><br/>
     </div>
     
@@ -20,7 +20,7 @@
             <% end %>
         </div>
         <div class="sn_right">
-            <%= link_to '&larr; Return to the posts list', Site.full_url + '/admin/posts' %>
+            <%= link_to '&larr; Return to the posts list', admin_posts_path %>
         </div><br/>
     </div>
 
@@ -28,8 +28,8 @@
     
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <% form_tag(Site.full_url + '/admin/posts/search', :id => 'search_form') do %>
-            <%= link_to '<b>Create a new post</b>', Site.full_url + '/admin/posts/new' %> or search them:&nbsp;<%= text_field_tag('q', (params[:q] != '' ? params[:q] : ''), :id => 'sf') %>
+            <% form_tag(search_admin_posts_path, :id => 'search_form') do %>
+            <%= link_to '<b>Create a new post</b>', new_admin_post_path %> or search them:&nbsp;<%= text_field_tag('q', (params[:q] != '' ? params[:q] : ''), :id => 'sf') %>
             <% end -%>
         </div>
         <div class="sn_right">

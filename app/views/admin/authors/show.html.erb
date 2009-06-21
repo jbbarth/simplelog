@@ -13,7 +13,7 @@
 <%
 post_list = ''
 for post in @author.posts
-	post_list += (post_list != '' ? ', ' : '') + link_to(post.title, Site.full_url + '/admin/posts/edit/' + post.id.to_s, :title => 'Edit this post')
+	post_list += (post_list != '' ? ', ' : '') + link_to(post.title, edit_admin_post_path(post), :title => 'Edit this post')
 end -%>
 <%= post_list == '' ? 'None.' : post_list %></td></tr>
 </table>

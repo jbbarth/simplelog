@@ -26,7 +26,7 @@ class Admin::PostsController < Admin::BaseController
   #
   
   # get a list of posts, paginated, with sorting
-  def list
+  def index
     # grab the sorter
     if Preference.get_setting('COMMENTING_ON') == 'yes'
     # comments are turned on, we need to include that in sorting
@@ -46,7 +46,7 @@ class Admin::PostsController < Admin::BaseController
       @posts = Post.find(:all, :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     end
     $admin_page_title = 'Listing posts'
-    render :template => 'admin/posts/list'
+    render :template => 'admin/posts/index'
   end
 
   # create a new post

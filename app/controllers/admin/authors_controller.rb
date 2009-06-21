@@ -26,7 +26,7 @@ class Admin::AuthorsController < Admin::BaseController
   #
   
   # get a list of authors, paginated, with sorting
-  def list
+  def index
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(created_at name email total_posts is_active), params[:sort], params[:order], 'name', 'ASC'
     # grab the paginator
@@ -34,7 +34,7 @@ class Admin::AuthorsController < Admin::BaseController
     # grab the authors, join to the posts table so that we can sort on the post count as well
     @authors = Author.find(:all, :select => 'authors.id, authors.created_at, authors.email, authors.name, authors.is_active, count(posts.id) as total_posts', :joins => 'left outer join posts on authors.id = posts.id', :group => 'authors.id, authors.created_at, authors.email, authors.name, authors.is_active', :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     $admin_page_title = 'Listing authors'
-    render :template => 'admin/authors/list'
+    render :template => 'admin/authors/index'
   end
   
   # show a author's info and the posts they've written

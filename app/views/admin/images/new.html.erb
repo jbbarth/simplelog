@@ -7,11 +7,11 @@
 
 <%= error_messages_for :mugshot %>
 
-<% form_tag(Site.full_url + '/admin/images/create', :multipart => true) do %>
+<% form_tag(admin_images_path, :multipart => true) do %>
   <%= render :partial => 'admin/images/form' %>
   <div class="submit_area">
     <%= submit_tag 'Upload the file', :class => 'submit' %> or
-    <%= link_to 'cancel and return to file list', Site.full_url + '/admin/images' %>
+    <%= link_to 'cancel and return to file list', admin_images_path %>
   </div>
 <% end -%>
 

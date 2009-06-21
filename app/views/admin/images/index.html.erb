@@ -25,7 +25,7 @@
         Filename: <%= link_to image.filename, image.public_filename %><br />
         Uploaded at: <%= image.created_at.strftime('%d %b, %Y') %><br />
       </td>
-      <td class="del_col"><%= link_to 'X', Site.full_url + '/admin/images/destroy/' + image.id.to_s, :confirm => "You are about to delete this image (#{image.filename}). This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
+      <td class="del_col"><%= link_to 'X', admin_image_path(image), :confirm => "You are about to delete this image (#{image.filename}). This is permanent.\n\nAre you ABSOLUTELY sure?", :method => :delete %></td>
     <%= "</tr>" if f % 2 == 0 %>
     <% f += 1 -%>
   <% end -%>

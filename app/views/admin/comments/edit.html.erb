@@ -9,15 +9,15 @@
 <table class="super" cellspacing="0" cellpadding="0">
 	<tr>
 		<td class="super_left" valign="top" class="no_pad">
-			<% form_tag(Site.full_url + '/admin/comments/update/' + @comment.id.to_s, :id => 'form') do -%>
+			<% form_tag(admin_comment_path(@comment), :id => 'form', :method => :put) do -%>
 			  <%= render :partial => 'admin/comments/form' %>
-			  <div class="submit_area"><%= submit_tag 'Update this comment', :class => 'submit' %> or <%= link_to 'cancel and return to comment list', Site.full_url + '/admin/comments' %></div>
+			  <div class="submit_area"><%= submit_tag 'Update this comment', :class => 'submit' %> or <%= link_to 'cancel and return to comment list', admin_comments_path %></div>
 			<% end -%>
 			
 			<%= observe_form 'form',
 					:frequency => 2.5,
 					:update => 'preview',
-					:url => Site.full_url + '/admin/comments/preview' %>
+					:url => preview_admin_comments_path %>
 		</td>
 		<td class="super_right" valign="top">
 			

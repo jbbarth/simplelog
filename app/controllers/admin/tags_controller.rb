@@ -32,7 +32,7 @@ class Admin::TagsController < Admin::BaseController
   end
   
   # get a list of tags, paginated, with sorting
-  def list
+  def index
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(name post_count), params[:sort], params[:order], 'name', 'ASC'
     # grab the paginator
@@ -40,7 +40,7 @@ class Admin::TagsController < Admin::BaseController
     # grab the tags and get posts counts as well for sorting
     @tags =  Tag.find(:all, :select => 'tags.id, tags.name, count(taggings.id) as post_count', :joins => 'left outer join taggings on tags.id = taggings.id', :group => 'tags.id, tags.name', :order => @sorter.to_sql, :limit => @paginator.items_per_page, :offset => @paginator.current.offset)
     $admin_page_title = 'Listing tags'
-    render :template => 'admin/tags/list'
+    render :template => 'admin/tags/index'
   end
   
   # show posts tagged with this tag

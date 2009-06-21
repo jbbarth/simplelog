@@ -5,7 +5,7 @@
             You're creating a new author.
         </div>
         <div class="sn_right">
-            <%= link_to '&larr; Return to the authors list', Site.full_url + '/admin/authors' %>
+            <%= link_to '&larr; Return to the authors list', admin_authors_path %>
         </div><br/>
     </div>
     
@@ -16,11 +16,11 @@
             <% if @posts.length < 1 %>
                There are no posts written by this author.
             <% else %>
-                <%= link_to '<b>View a list</b>', Site.full_url + '/admin/authors/show/' + @author.id.to_s %> of posts written by this author (currently: <%= @posts.length.to_s %>)
+                <%= link_to '<b>View a list</b>', admin_author_path(@author) %> of posts written by this author (currently: <%= @posts.length.to_s %>)
             <% end %>
         </div>
         <div class="sn_right">
-            <%= link_to '&larr; Return to the authors list', Site.full_url + '/admin/authors' %>
+            <%= link_to '&larr; Return to the authors list', admin_authors_path %>
         </div><br/>
     </div>
     
@@ -28,10 +28,10 @@
 
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <%= link_to '<b>Go back to this author</b>', Site.full_url + '/admin/authors/edit/' + @author.id.to_s %> to continue editing.
+            <%= link_to '<b>Go back to this author</b>', edit_admin_author_path(@author) %> to continue editing.
         </div>
         <div class="sn_right">
-            <%= link_to '&larr; Return to the authors list', Site.full_url + '/admin/authors' %>
+            <%= link_to '&larr; Return to the authors list', admin_authors_path %>
         </div><br/>
     </div>
 
@@ -39,7 +39,7 @@
     
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <%= link_to '<b>Create a new author</b>', Site.full_url + '/admin/authors/new' %>
+            <%= link_to '<b>Create a new author</b>', new_admin_author_path %>
         </div>
         <div class="sn_right">
             Remember: Active Authors have the right to log in and modify things

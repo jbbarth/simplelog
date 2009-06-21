@@ -21,10 +21,10 @@
 	<% for author in @authors -%>
 		<tr class="<% if !author.is_active %>inactive <% end %><%= (c%2 == 0 ? 'alt_row ' : '') %><%= (f == 1 ? 'first_row' : '') %>">
 			<td class="first_col"><%= author.created_at.strftime('%d %b, %Y') %></td>
-			<td><%= link_to author.name, Site.full_url + '/admin/authors/edit/' + author.id.to_s %></td>
+			<td><%= link_to author.name, admin_author_path(author) %></td>
 			<td><%= author.email %></td>
 			<td class="small_col"><%= author.total_posts %></td>
-			<td class="del_col"><%= link_to 'X', Site.full_url + '/admin/authors/destroy/' + author.id.to_s, :confirm => "WARNING:\n\nDeleting this author will also delete ALL POSTS written by this author.\n\nIf you wish to keep the author\'s posts but remove their admin access, simply hit cancel and mark them inactive.\n\nYou are about to delete this author and all of their posts. This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
+			<td class="del_col"><%= link_to 'X', admin_author_path(author), :confirm => "WARNING:\n\nDeleting this author will also delete ALL POSTS written by this author.\n\nIf you wish to keep the author\'s posts but remove their admin access, simply hit cancel and mark them inactive.\n\nYou are about to delete this author and all of their posts. This is permanent.\n\nAre you ABSOLUTELY sure?", :method => :delete %></td>
 		</tr>
 		<% c = (c == 1 ? c+1 : c = 1) -%>
 		<% f = f+1 -%>

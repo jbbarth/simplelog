@@ -20,8 +20,8 @@ class CommentsControllerTest < Test::Unit::TestCase
   end
   
   def test_comment_list
-    get :list
-    assert_template 'list'
+    get :index
+    assert_template 'index'
     assert(@response.has_template_object?('comments'))
   end
   

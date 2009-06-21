@@ -26,7 +26,7 @@ class Admin::CommentsController < Admin::BaseController
   #
     
   # get a list of comments, paginated, with sorting
-  def list
+  def index
     # grab the sorter
     @sorter = SortingHelper::Sorter.new self, %w(comments.created_at comments.name comments.title comments.is_approved), params[:sort], (params[:order] ? "comments."+params[:order] : 'DESC'), 'comments.created_at', 'ASC'
     # grab the paginator
@@ -36,7 +36,7 @@ class Admin::CommentsController < Admin::BaseController
     #@comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql, :limit => @paginator.current.to_sql)
     @comments = Comment.find(:all, :select => 'comments.*, posts.title', :joins => 'left outer join posts on comments.post_id = posts.id', :order => @sorter.to_sql)
     $admin_page_title = 'Listing comments'
-    render :template => 'admin/comments/list'
+    render :template => 'admin/comments/index'
   end
   
   # get a list of comments by the post they're associated with
@@ -73,7 +73,7 @@ class Admin::CommentsController < Admin::BaseController
       if Preference.get_setting('RETURN_TO_COMMENT') == 'yes'
       # if they have a pref set as such, return them to the comment,
       # rather than the list
-        redirect_to Site.full_url + '/admin/comments/edit/' + @comment.id.to_s
+        redirect_to Site.full_url + '/admin/comments/' + @comment.id.to_s + '/edit'
       else
         redirect_to Site.full_url + '/admin/comments'
       end
