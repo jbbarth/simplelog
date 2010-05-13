@@ -88,7 +88,7 @@ module ActiveRecord
         condition_list << build_text_condition(fields, text)
       end
       if options[:conditions]
-        condition_list << "#{options[:conditions]}"
+        condition_list << sanitize_sql_for_conditions(options[:conditions])
       end
       conditions = condition_list.join " AND " 
 
