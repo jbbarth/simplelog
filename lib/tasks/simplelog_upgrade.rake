@@ -29,7 +29,7 @@
 namespace :simplelog do
   
 require 'find'
-require 'environment.rb'
+require 'config/environment'
 
 desc "Upgrade SimpleLog (BACK UP YOUR SITE FIRST!)"
 task :upgrade => :environment do
