@@ -26,11 +26,14 @@ class XmlrpcController < ApplicationController
   # with a weblogging client, see README for instructions
   #
   
-  web_service_dispatching_mode :layered
-  web_service :metaWeblog,  MetaWeblogService.new
-  web_service :mt,          MovableTypeService.new
-  web_service :blogger,     BloggerService.new
+  #NOT WORKING WITH RAILS 2.3/3
+  #TODO: migrate to a REST webservice
   
-  alias xmlrpc api
+  #web_service_dispatching_mode :layered
+  #web_service :metaWeblog,  MetaWeblogService.new
+  #web_service :mt,          MovableTypeService.new
+  #web_service :blogger,     BloggerService.new
+  
+  #alias xmlrpc api
   
 end
