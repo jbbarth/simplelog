@@ -1,6 +1,11 @@
 This theme_support version has been updated by Damien Le Berrigaud for Rails 2.0
 http://www.webdrivenblog.com/
 
+It was then forked for Rails 2.2 (and later 2.3) support by James Stewart - http://jystewart.net/process/
+
+Some notes on the integration of Rails 2.3 support can be found at:
+http://jystewart.net/process/tag/theme_support/
+
 = Theme Support for Rails Applications
 
 This plugin provides support for themes to the rails application environment. 
@@ -8,6 +13,22 @@ It supports theme specific images, stylesheets, javascripts, and views. The
 views can be in ERb (rhtml) or liquid formats. Optionally, you can configure 
 the theme system to ignore any templates except liquid ones.
 
+== Tests
+
+A test application with a range of cucumber-based tests is available separately at:
+
+http://github.com/jystewart/theme_support_test_app
+
+
+== Changes from the original version
+
+ * Rake tasks are now namespaced, eg: "rake themes:cache:create" instead of "rake theme_create_cache"
+ * Layouts now live within themes/[theme_name]/views/layouts to match up with Rails conventions
+
+== Known Issues
+
+Liquid template handling is not tested in 2.2 or 2.3
+The various asset methods (theme_stylesheet_link_tag etc.) don't work in 2.2
 
 == Usage
 
@@ -20,11 +41,12 @@ It expects the following theme folder structure.
   $app_root
     themes/
       [theme_name]
-        layouts/         <- layout .rhtml or .liquid templates
+        
         images/
         stylesheets/
         javascripts/
         views/           <- you can override application views
+          layouts/         <- layout .rhtml or .liquid templates
         about.markdown
         preview.png
 

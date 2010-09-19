@@ -1,19 +1,19 @@
 # The controller for serving/cacheing theme content...
 #
 class ThemeController < ActionController::Base
-  
+
   after_filter :cache_theme_files
   
   def stylesheets
-    render_theme_item(:stylesheets, params[:filename].join("/"), params[:theme], 'text/css')
+    render_theme_item(:stylesheets, joined_filename, params[:theme], 'text/css')
   end
 
   def javascript
-    render_theme_item(:javascripts, params[:filename].join("/"), params[:theme], 'text/javascript')
+    render_theme_item(:javascript, joined_filename, params[:theme], 'text/javascript')
   end
 
   def images
-    render_theme_item(:images, params[:filename].join("/"), params[:theme])
+    render_theme_item(:images, joined_filename, params[:theme])
   end
 
   def error
@@ -23,8 +23,17 @@ class ThemeController < ActionController::Base
   private
   
   def render_theme_item(type, file, theme, mime = mime_for(file))
-    render :text => "Not Found", :status => 404 and return if file.split(%r{[\\/]}).include?("..")
-    send_file "#{Theme.path_to_theme(theme)}/#{type}/#{file}", :type => mime, :disposition => 'inline', :stream => false
+    file_path = "#{Theme.path_to_theme(theme)}/#{type}/#{file}"
+    if file.split(%r{[\\/]}).include?("..") || !File.exists?(file_path) || file.blank?
+      render :text => "Not Found", :status => 404
+      return
+    else
+      send_file file_path, :type => mime, :disposition => 'inline', :stream => false
+    end
+  end
+  
+  def joined_filename
+    params[:filename].join '/'
   end
 
   def cache_theme_files
@@ -36,7 +45,6 @@ class ThemeController < ActionController::Base
     end
   end
 
-    
   def mime_for(filename)
     case filename.downcase
     when /\.js$/

@@ -16,20 +16,17 @@ module ActionView::Helpers::AssetTagHelper
    end
 
    # returns the path to a theme javascript
-   def theme_javascripts_path( source, theme=nil )
+   def theme_javascript_path( source, theme=nil )
       theme = theme || controller.current_theme
-      compute_public_path(source, "themes/#{theme}/javascripts", 'js')
+      compute_public_path(source, "themes/#{theme}/javascript", 'js')
    end
-   
 
    # This tag it will automatially include theme specific css files
    def theme_stylesheet_link_tag(*sources)
       sources.uniq!
       options = sources.last.is_a?(Hash) ? sources.pop.stringify_keys : { }
-      sources.collect { |source|
-         source = theme_stylesheet_path(source)
-         tag("link", { "rel" => "Stylesheet", "type" => "text/css", "media" => "screen", "href" => source }.merge(options))
-      }.join("\n")
+      themed_sources = sources.collect { |source| theme_stylesheet_path(source) }
+      stylesheet_link_tag(themed_sources)
    end
    
    # This tag will return a theme-specific IMG
@@ -37,7 +34,6 @@ module ActionView::Helpers::AssetTagHelper
      options.symbolize_keys
 
      options[:src] = theme_image_path(source)
-     
      options[:alt] ||= File.basename(options[:src], '.*').split('.').first.capitalize
 
      if options[:size]
@@ -48,20 +44,21 @@ module ActionView::Helpers::AssetTagHelper
      tag("img", options)
    end
    
-   # This tag can be used to return theme-specific javscripts
+   # This tag can be used to return theme specific javascript files
    def theme_javascript_include_tag(*sources)
      options = sources.last.is_a?(Hash) ? sources.pop.stringify_keys : { }
+
      if sources.include?(:defaults)        
-       sources = sources[0..(sources.index(:defaults))] + 
-         @@javascript_default_sources.dup + 
-         sources[(sources.index(:defaults) + 1)..sources.length]
+       pre_default_sources = sources[0..(sources.index(:defaults))]
+       post_default_sources = sources[(sources.index(:defaults) + 1)..sources.length]
+       sources = pre_default_sources + @@javascript_default_sources.dup + post_default_sources
        sources.delete(:defaults) 
-       sources << "application" if defined?(RAILS_ROOT) && File.exists?("#{RAILS_ROOT}/public/javascripts/application.js") 
+       
+       sources << "application" if defined?(Rails.root) && File.exists?("#{Rails.root}/public/javascripts/application.js") 
      end
-     sources.collect { |source|
-       source = theme_javascripts_path(source)        
-       content_tag("script", "", { "type" => "text/javascript", "src" => source }.merge(options))
-     }.join("\n")
+
+     themed_sources = sources.collect { |source| theme_javascript_path(source) }
+     javascript_include_tag(themed_sources)
    end
 
 end

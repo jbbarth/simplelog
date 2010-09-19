@@ -16,12 +16,6 @@ class Theme
     end
     @description_html
   end
-
-  def written_by
-    text = File.read("#{path}/author.markdown") rescue ""
-    splitted = text.split("\n")
-    return (splitted.length > 1 ? splitted[0] : text)
-  end
   
   def has_preview?
     File.exists?( File.join( Theme.path_to_theme(name), 'images', 'preview.png' ) ) rescue false
