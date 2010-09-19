@@ -6,7 +6,7 @@ require 'admin/authors_controller'
 # Re-raise errors caught by the controller.
 class Admin::AuthorsController; def rescue_action(e) raise e end; end
 
-class AuthorsControllerTest < Test::Unit::TestCase
+class AuthorsControllerTest < ActiveSupport::TestCase
   
   fixtures :authors, :posts
   

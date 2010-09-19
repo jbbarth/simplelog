@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UpdateTest < Test::Unit::TestCase
+class UpdateTest < ActiveSupport::TestCase
   
   fixtures :updates
 

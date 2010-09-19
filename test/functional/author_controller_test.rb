@@ -7,7 +7,7 @@ $page_title = 'test' # for testing purposes
 # Re-raise errors caught by the controller.
 class AuthorController; def rescue_action(e) raise e end; end
 
-class AuthorControllerTest < Test::Unit::TestCase
+class AuthorControllerTest < ActiveSupport::TestCase
   
   fixtures :authors
   

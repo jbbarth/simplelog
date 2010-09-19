@@ -6,7 +6,7 @@ require 'page_controller'
 # Re-raise errors caught by the controller.
 class PageController; def rescue_action(e) raise e end; end
 
-class PageControllerTest < Test::Unit::TestCase
+class PageControllerTest < ActiveSupport::TestCase
   def setup
     @controller = PageController.new
     @request    = ActionController::TestRequest.new

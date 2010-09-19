@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AuthorTest < Test::Unit::TestCase
+class AuthorTest < ActiveSupport::TestCase
   
   fixtures :authors
   

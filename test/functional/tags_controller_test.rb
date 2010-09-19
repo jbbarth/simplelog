@@ -6,7 +6,7 @@ require 'admin/tags_controller'
 # Re-raise errors caught by the controller.
 class Admin::TagsController; def rescue_action(e) raise e end; end
 
-class TagsControllerTest < Test::Unit::TestCase
+class TagsControllerTest < ActiveSupport::TestCase
   
   fixtures :authors, :posts, :tags
   

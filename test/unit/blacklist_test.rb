@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class BlacklistTest < Test::Unit::TestCase
+class BlacklistTest < ActiveSupport::TestCase
   
   fixtures :blacklist
   

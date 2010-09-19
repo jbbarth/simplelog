@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TagTest < Test::Unit::TestCase
+class TagTest < ActiveSupport::TestCase
   
   fixtures :tags
   

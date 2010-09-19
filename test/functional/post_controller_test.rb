@@ -7,7 +7,7 @@ $page_title = 'test' # for testing purposes
 # Re-raise errors caught by the controller.
 class PostController; def rescue_action(e) raise e end; end
 
-class PostControllerTest < Test::Unit::TestCase
+class PostControllerTest < ActiveSupport::TestCase
   
   fixtures :tags, :posts, :taggings
 
