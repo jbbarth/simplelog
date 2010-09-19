@@ -358,14 +358,14 @@ class Post < ActiveRecord::Base
   # find all posts in the db that contain string
   def self.find_by_string(str, limit = Preference.get_setting('SEARCH_RESULTS'), active_only = true)
     # use the search lib to run this search
-    results = self.search(str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
+    results = self.search(str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit, :order => 'id desc'})
     if (results.length > 1) or (str.downcase.index(' and '))
     # if the first search returned something or there was an AND operator
       return results
     else
     # first search didn't find anthing, let's try it with the OR operator
       simple_str = str.gsub(' ',' OR ')
-      return self.search(simple_str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit})
+      return self.search(simple_str, {:conditions => (active_only ? ["is_active = ? and created_at <= '#{Time.sl_local_db}'", true] : nil), :limit => limit, :order => 'id desc'})
     end
   end
   def self.find_by_string_full(str, limit = Preference.get_setting('SEARCH_RESULTS_FULL'))
