@@ -59,7 +59,7 @@ end
   TagList.delimiter = " "
 
   # we load our site's config now
-  require 'server.rb'
+  require 'config/server'
 
   # Some required stuff (there are additional requires in the environment sub files)
   require 'htmlentities'  # useful string extension
