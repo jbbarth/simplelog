@@ -1,6 +1,6 @@
 development:
   adapter: sqlite3
-  dbfile: db/simplelog.db
+  database: db/simplelog.db
   pool: 5
   timeout: 5000
 
@@ -10,7 +10,7 @@ development:
 # DO NOT SET THIS DB TO THE SAME AS DEVELOPMENT OR PRODUCTION!
 test:
   adapter: sqlite3
-  dbfile: db/test.db
+  database: db/test.db
   pool: 5
   timeout: 5000
 
