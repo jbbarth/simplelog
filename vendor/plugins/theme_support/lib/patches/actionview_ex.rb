@@ -4,10 +4,7 @@ module ActionView
    
    # Extending <tt>ActionView::Base</tt> to support rendering themes
    class Base
-      alias_method :theme_support_old_render_file, :render_file
-
       # Overrides the default <tt>Base#render_file</tt> to allow theme-specific views
-
       def render_file(template_path, use_full_path = false, local_assigns = {})
         search_path = [
           "#{RAILS_ROOT}/themes/#{controller.current_theme}/views",       # for components
@@ -15,7 +12,7 @@ module ActionView
         ]
         @finder.prepend_view_path(search_path)
         local_assigns['active_theme'] = get_current_theme(local_assigns)
-        theme_support_old_render_file(template_path, use_full_path, local_assigns)
+        render :file => template_path, :locals => local_assigns
       end
 
       def _render_file(template_path, use_full_path = true, local_assigns = {})
@@ -44,7 +41,7 @@ module ActionView
                   
                   local_assigns['active_theme'] = get_current_theme(local_assigns)
                   
-                  rendered_template = theme_support_old_render_file(theme_path, use_full_path, local_assigns)
+                  rendered_template = render(:file => theme_path, :locals => local_assigns)
                rescue ActionView::TemplateError => err
                   raise err
                rescue ActionView::ActionViewError => err
