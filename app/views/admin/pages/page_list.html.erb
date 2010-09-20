@@ -22,7 +22,7 @@
 		<tr class="<% if !page.is_active %>inactive <% end %><%= (c%2 == 0 ? 'alt_row ' : '') %><%= (f == 1 ? 'first_row' : '') %>">
 			<td class="first_col"><%= page.created_at.strftime('%d %b, %Y') %></td>
 			<td><%= link_to (page.title == '' ? '[Untitled]' : page.title), Site.full_url + '/admin/pages/edit/' + page.id.to_s %></td>
-			<td><%= truncate(Post.strip_html(page.body), 50) %></td>
+			<td><%= truncate(Post.strip_html(page.body), :length => 50) %></td>
 			<td><%= page.permalink %></td>
 			<td class="del_col"><%= link_to 'X', Site.full_url + '/admin/pages/destroy/' + page.id.to_s, :confirm => "You are about to delete this page. This is permanent.\n\nAre you ABSOLUTELY sure?" %></td>
 		</tr>
