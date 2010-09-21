@@ -128,9 +128,9 @@ module PostHelper
   #TODO: globalize it
   def comment_info_fr(post)
     if post.comment_status != 0
-      return "<a href=\"#{Post.permalink(post)}\#comments\" title=\"Commentaire sur cet article\">#{post.comments.length.to_s}#{(post.comment_status == 2 ? ' (commentaires fermés)' : ' commentaire'+(post.comments.count >= 2 ? 's' : ''))}</a>"
+      return "<a href=\"#{Post.permalink(post)}\#comments\" title=\"Commentaire sur cet article\">#{post.comments.length.to_s}#{(post.comment_status == 2 ? ' (commentaires ferm&eacute;s)' : ' commentaire'+(post.comments.count >= 2 ? 's' : ''))}</a>"
     else
-      return '(désactivés)'
+      return '(d&eacute;sactiv&eacute;s)'
     end
   end
 
