@@ -113,6 +113,7 @@ module ActiveRecord #:nodoc:
         end
         
         def find_options_for_tag_counts(options = {})
+          return [] #TODO: FIX IT!!!!!
           options = options.dup
           scope = scope(:find)
           
