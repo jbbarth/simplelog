@@ -38,7 +38,7 @@ namespace :simplelog do
       Preference.set_setting('domain', new_val)
       puts "Done! Clearing cache..."
       # clear the theme cache
-      FileUtils.rm_r "#{RAILS_ROOT}/public/themes", :force => true
+      FileUtils.rm_r "#{Rails.root}/public/themes", :force => true
       # unset the theme
       @@gm_curr_theme = nil
       # unset prefs hash

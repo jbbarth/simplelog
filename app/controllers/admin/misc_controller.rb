@@ -119,7 +119,7 @@ class Admin::MiscController < Admin::BaseController
     # clear the stored session
     session[:update_check_stored] = nil
     # clear the theme cache
-    FileUtils.rm_r "#{RAILS_ROOT}/public/themes", :force => true
+    FileUtils.rm_r "#{Rails.root}/public/themes", :force => true
     # unset the theme
     @@gm_curr_theme = nil
     # unset prefs hash

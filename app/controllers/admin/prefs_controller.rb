@@ -151,7 +151,7 @@ class Admin::PrefsController < Admin::BaseController
     end
     
     # clear the theme cache
-    FileUtils.rm_r "#{RAILS_ROOT}/public/themes", :force => true
+    FileUtils.rm_r "#{Rails.root}/public/themes", :force => true
     # unset the theme
     @@gm_curr_theme = nil
     # unset prefs hash
@@ -179,7 +179,7 @@ class Admin::PrefsController < Admin::BaseController
   # clear the theme cache from a link
   def prefs_clear_cache
     # clear the theme cache
-    FileUtils.rm_r "#{RAILS_ROOT}/public/themes", :force => true
+    FileUtils.rm_r "#{Rails.root}/public/themes", :force => true
     # unset the theme
     @@gm_curr_theme = nil
     # unset prefs hash

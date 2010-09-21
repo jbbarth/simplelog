@@ -29,7 +29,7 @@ class RailsFCGIHandler
   # (default nil for normal GC behavior.)  Optionally, pass a block which
   # takes this instance as an argument for further configuration.
   def initialize(log_file_path = nil, gc_request_period = nil)
-    self.log_file_path = log_file_path || "#{RAILS_ROOT}/log/fastcgi.crash.log"
+    self.log_file_path = log_file_path || "#{Rails.root}/log/fastcgi.crash.log"
     self.gc_request_period = gc_request_period
 
     # Yield for additional configuration.
