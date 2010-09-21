@@ -29,6 +29,9 @@ class ApplicationController < ActionController::Base
   # done on the application layer (which isn't much in this case).
   #
   
+  # rails 3 protect against XSRF
+  protect_from_forgery
+  
   # nearly everything should use the post layout, except the admin section (which we'll deal with later)
   layout 'site'
   theme :get_theme
