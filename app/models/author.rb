@@ -32,6 +32,11 @@ class Author < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_format_of :email, :with => /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/i, :message => 'must be a valid email address', :if => Proc.new { |author| author.email != '' }
   validates_uniqueness_of :email
+
+  # callbacks
+  before_create :set_defaults
+  before_update :check_url
+  after_save :nullify_password
   
   # prepends HTTP to a URL if necessary
   def self.prepend_http(url = '')
@@ -53,7 +58,7 @@ class Author < ActiveRecord::Base
     end
   end
   
-  def before_create
+  def set_defaults
     # hash the pass before creating a author
     self.hashed_pass = Author.do_password_hash(self.password)
     # check the URL
@@ -62,16 +67,13 @@ class Author < ActiveRecord::Base
     self.modified_at = Time.sl_local
   end
   
-  def before_update
+  def check_url
     # check the URL
     self.url = Author.prepend_http(url)
   end
   
   # once we're done creating or updating, we need to trash our password accessor
-  def after_create
-    @password = nil
-  end
-  def after_update
+  def nullify_password
     @password = nil
   end
   

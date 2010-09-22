@@ -30,9 +30,12 @@ class Blacklist < ActiveRecord::Base
   
   # validations
   validates_presence_of :item
-  
+ 
+  # callbacks 
+  before_create :set_created_at
+
   # before we create, let's set the creation date
-  def before_create
+  def set_created_at
     # set the time
     self.created_at = Time.sl_local
   end

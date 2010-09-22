@@ -43,6 +43,10 @@ class Post < ActiveRecord::Base
   end
   validates_presence_of :permalink, :if => :test_for_permalink # check for presence of permalink
   
+  # callbacks
+  before_create :set_defaults
+  before_update :check_comment_status
+
   # this tests for a permalink if the body exists and is valid
   def test_for_permalink
     test_body = ''
@@ -271,14 +275,14 @@ class Post < ActiveRecord::Base
   end
   
   # before a post is created, set its modification date to now and check comment status
-  def before_create
+  def set_defaults
     self.modified_at = Time.sl_local
     # check comment status
     self.comment_status = 0 if !self.comment_status or self.comment_status == ''
   end
   
   # just check the comment status and set it correctly if necessary
-  def before_update
+  def check_comment_status
     # check comment status
     self.comment_status = 0 if !self.comment_status or self.comment_status == ''
   end

@@ -33,6 +33,9 @@ class Comment < ActiveRecord::Base
   # validations
   validates_presence_of :post_id, :email, :body_raw
   validates_format_of :email, :with => /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/i, :message => 'must be a valid email address', :if => Proc.new { |comment| comment.email != '' }
+
+  # callbacks
+  before_create :set_defaults
   
   # absolutely destroys any tags and any remaining < and >
   def self.kill_tags(input, force = false)
@@ -135,7 +138,7 @@ class Comment < ActiveRecord::Base
   end
   
   # before a comment is created, set its modification date to now
-  def before_create
+  def set_defaults
     # if we approve by default, let's do that
     self.is_approved = (Preference.get_setting('COMMENTS_APPROVED') == 'yes' ? true : false)
     # set modification date

@@ -35,6 +35,10 @@ class Page < ActiveRecord::Base
   # this tests the content first... makes sure we don't have malformed XHTML (which won't save!)
     Post.create_clean_content(value) rescue record.errors.add(attr, 'contains malformed XHTML')
   end
+
+  # callbacks
+  before_create :set_defaults
+  before_update :set_modified_at
   
   # convert text using our filter and clean up dashes
   # we can return on errors when cleaning content because we've got a
@@ -52,13 +56,13 @@ class Page < ActiveRecord::Base
   end
   
   # before a page is created, set its modification date to now
-  def before_create
+  def set_defaults
     temp_time = Time.sl_local
     self.created_at = temp_time
     self.modified_at = temp_time
   end
   
-  def before_update
+  def set_modified_at
     self.modified_at = Time.sl_local
   end
   
