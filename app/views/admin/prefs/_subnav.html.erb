@@ -2,7 +2,7 @@
     
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <%= link_to '<b>Clear the theme cache</b>', Site.full_url + '/admin/prefs/cache/clear' %>
+          <%= link_to_action 'Clear the theme cache', Site.full_url + '/admin/prefs/cache/clear' %>
         </div>
         <div class="sn_right">
             The theme cache is auto-cleared on save.

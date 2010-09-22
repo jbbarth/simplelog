@@ -16,7 +16,7 @@
             <% if @posts.length < 1 %>
                There are no posts written by this author.
             <% else %>
-                <%= link_to '<b>View a list</b>', Site.full_url + '/admin/authors/show/' + @author.id.to_s %> of posts written by this author (currently: <%= @posts.length.to_s %>)
+                <%= link_to_action 'View a list', Site.full_url + '/admin/authors/show/' + @author.id.to_s %> of posts written by this author (currently: <%= @posts.length.to_s %>)
             <% end %>
         </div>
         <div class="sn_right">
@@ -28,7 +28,7 @@
 
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <%= link_to '<b>Go back to this author</b>', Site.full_url + '/admin/authors/edit/' + @author.id.to_s %> to continue editing.
+            <%= link_to_action 'Go back to this author', Site.full_url + '/admin/authors/edit/' + @author.id.to_s %> to continue editing.
         </div>
         <div class="sn_right">
             <%= link_to '&larr; Return to the authors list', Site.full_url + '/admin/authors' %>
@@ -39,7 +39,7 @@
     
     <div id="admin_sub_nav">
         <div class="sn_left">
-            <%= link_to '<b>Create a new author</b>', Site.full_url + '/admin/authors/new' %>
+            <%= link_to_action 'Create a new author', Site.full_url + '/admin/authors/new' %>
         </div>
         <div class="sn_right">
             Remember: Active Authors have the right to log in and modify things

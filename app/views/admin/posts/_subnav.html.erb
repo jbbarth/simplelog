@@ -29,7 +29,7 @@
     <div id="admin_sub_nav">
         <div class="sn_left">
             <% form_tag(Site.full_url + '/admin/posts/search', :id => 'post_search_form') do %>
-            <%= link_to '<b>Create a new post</b>', Site.full_url + '/admin/posts/new' %> or search them:&nbsp;<%= text_field_tag('q', (params[:q] != '' ? params[:q] : ''), :id => 'sf') %>
+              <%= link_to_action 'Create a new post', Site.full_url + '/admin/posts/new' %> or search them:&nbsp;<%= text_field_tag('q', (params[:q] != '' ? params[:q] : ''), :id => 'sf') %>
             <% end -%>
         </div>
         <div class="sn_right">

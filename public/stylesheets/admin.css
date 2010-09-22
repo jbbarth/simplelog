@@ -397,6 +397,7 @@ a.tag_tag:hover { background-color: #e3e3e3; color: #333; }
 .tag_selected { background-color: #c0c0c0; color: #333; }
 .section_toggler, .section_toggler:hover { width: 100%; display: block; text-decoration: none; background: none; color: #666; }
 a.no_bg:hover { background-color: transparent; }
+a.action { font-weight:bold; }
 
 /**
 	=ERRORS ***************************

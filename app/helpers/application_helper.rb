@@ -245,4 +245,8 @@ module ApplicationHelper
   def tag_links_for(tags)
     (tags.count >= 1 ? tags.map{ |t| link_to t.name, "/tags/#{t.name}" }.join(", ") : "No tag")
   end
+
+  def link_to_action(title, url, options = {})
+    link_to title, url, {:class => "action"}.merge(options)
+  end
 end
