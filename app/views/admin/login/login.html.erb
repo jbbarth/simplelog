@@ -1,6 +1,6 @@
 <div class="red"><% if flash[:notice] %><strong>Error:</strong> <%= flash[:notice] %><% else %>&nbsp;<% end %></div><br/>
 
-<% form_tag(Site.full_url + '/login/do', :id => 'login_form') do -%>
+<%= form_tag(Site.full_url + '/login/do', :id => 'login_form') do -%>
   <table class="form thin" cellpadding="0" cellspacing="0">
   <!--[form:post]-->
   <tr class="breaker btop"><td colspan="2">Please log in</td></tr>

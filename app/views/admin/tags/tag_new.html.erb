@@ -5,7 +5,7 @@
 	<h2>Required fields in <b>bold</b>.</h2><br/>
 </div>
 
-<% form_tag(Site.full_url + '/admin/tags/create', :id => 'tag_form') do %>
+<%= form_tag(Site.full_url + '/admin/tags/create', :id => 'tag_form') do %>
   <%= render :partial => 'admin/tags/tag_form' %>
   <div class="submit_area"><%= submit_tag 'Create new tag', :class => 'submit' %> or <%= link_to 'cancel and return to tag list', Site.full_url + '/admin/tags' %></div>
 <% end -%>

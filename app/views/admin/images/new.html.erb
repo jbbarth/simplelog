@@ -7,7 +7,7 @@
 
 <%= error_messages_for :mugshot %>
 
-<% form_tag(Site.full_url + '/admin/images/create', :multipart => true) do %>
+<%= form_tag(Site.full_url + '/admin/images/create', :multipart => true) do %>
   <%= render :partial => 'admin/images/form' %>
   <div class="submit_area">
     <%= submit_tag 'Upload the file', :class => 'submit' %> or

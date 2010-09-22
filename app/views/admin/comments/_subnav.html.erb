@@ -13,7 +13,7 @@
     
     <div id="admin_sub_nav">
         <div class="sn_left wider">
-            <% form_tag(Site.full_url + '/admin/comments/search', :id => 'comment_search_form') do -%>
+            <%= form_tag(Site.full_url + '/admin/comments/search', :id => 'comment_search_form') do -%>
             <%= link_to_action 'View the blacklist', Site.full_url + '/admin/blacklist' %> or search comments:&nbsp;<%= text_field_tag('q', (params[:q] != '' ? params[:q] : ''), :id => 'sf') %>
             <% end -%>
         </div>

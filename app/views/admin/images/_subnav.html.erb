@@ -3,7 +3,7 @@
     <% if na %>
       You're creating a new image.
     <% else %>
-      <% form_tag(Site.full_url + '/admin/posts/search', :id => 'post_search_form') do %>
+      <%= form_tag(Site.full_url + '/admin/posts/search', :id => 'post_search_form') do %>
         <%= link_to_action 'Upload a new file', Site.full_url + '/admin/images/new' %>
       <% end -%>
     <% end %>

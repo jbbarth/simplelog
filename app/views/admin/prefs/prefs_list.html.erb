@@ -6,7 +6,7 @@
 	<% if flash[:notice] %><div class="green flash"><%= flash[:notice] %></div><% end %>
 </div>
 
-<% form_tag(Site.full_url + '/admin/prefs/save', :id => 'prefs_form') do %>
+<%= form_tag(Site.full_url + '/admin/prefs/save', :id => 'prefs_form') do %>
     <%= hidden_field_tag 'current_tab', 'site_details' %>
     <% fields = [] %>
     <% if @write_errors and @errors_list %>

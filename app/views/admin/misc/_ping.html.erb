@@ -3,7 +3,7 @@
 
 <p>Send a ping to notify common engines your site has been updated. This may take a few moments, please be patient.</p>
 			
-<% form_tag(:html => {:id => 'ping_form'},
+<%= form_tag(:html => {:id => 'ping_form'},
           :remote => true,
 					:update => '',
 					:complete => 'ping_done(\'pbutton\', \'ping_status\');',

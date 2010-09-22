@@ -9,7 +9,7 @@
 <table class="super" cellspacing="0" cellpadding="0">
 	<tr>
 		<td class="super_left" valign="top" class="no_pad">
-			<% form_tag(Site.full_url + '/admin/comments/update/' + @comment.id.to_s, :id => 'comment_form') do -%>
+			<%= form_tag(Site.full_url + '/admin/comments/update/' + @comment.id.to_s, :id => 'comment_form') do -%>
 			  <%= render :partial => 'admin/comments/comment_form' %>
 			  <div class="submit_area"><%= submit_tag 'Update this comment', :class => 'submit' %> or <%= link_to 'cancel and return to comment list', Site.full_url + '/admin/comments' %></div>
 			<% end -%>

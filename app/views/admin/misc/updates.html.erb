@@ -11,7 +11,7 @@
 		<td class="no_pad">
 			<p>Want to stay up to date? Check for updates to SimpleLog so you're always running the newest version. None of your personal information will be sent. This may take a few moments, please be patient.</p>
 			
-			<% form_tag(:html => {:id => 'update_form'},
+			<%= form_tag(:html => {:id => 'update_form'},
                 :remote => true,
 								:update => 'update_detail',
 								:complete => 'update_done(\'ubutton\', \'update_status\');',
