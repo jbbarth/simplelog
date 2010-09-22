@@ -9,10 +9,10 @@
 <table class="list" cellspacing="0" cellpadding="0">
 	
 	<tr>
-		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= @sorter.di('created_at') %></th>
-		<th><%= link_to 'Title', @sorter.to_link('title') %><%= @sorter.di('title') %></th>
+		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= raw @sorter.di('created_at') %></th>
+		<th><%= link_to 'Title', @sorter.to_link('title') %><%= raw @sorter.di('title') %></th>
 		<th>Excerpt</th>
-		<th><%= link_to 'Link', @sorter.to_link('permalink') %><%= @sorter.di('permalink') %></th>
+		<th><%= link_to 'Link', @sorter.to_link('permalink') %><%= raw @sorter.di('permalink') %></th>
 		<th class="del_col">X</th>
 	</tr>
 	

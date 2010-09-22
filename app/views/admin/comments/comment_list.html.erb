@@ -9,11 +9,11 @@
 <table class="list" cellspacing="0" cellpadding="0">
 	
 	<tr>
-		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= @sorter.di('created_at') %></th>
-		<th><%= link_to 'Commenter', @sorter.to_link('name') %><%= @sorter.di('name') %></th>
+		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= raw @sorter.di('created_at') %></th>
+		<th><%= link_to 'Commenter', @sorter.to_link('name') %><%= raw @sorter.di('name') %></th>
 		<th>Excerpt</th>
-		<th class="small_col"><%= link_to 'Post', @sorter.to_link('title') %><%= @sorter.di('title') %></th>
-		<th class="approved_col"><%= link_to '<img class="gray_check' + (@sorter.this_col('is_approved') ? ' with_light_bottom' : '') + '" src="' + Site.full_url + '/images/admin/t.gif"/>', @sorter.to_link('is_approved'), :class => 'no_bg' %><%= @sorter.di('is_approved', false) %></th>
+		<th class="small_col"><%= link_to 'Post', @sorter.to_link('title') %><%= raw @sorter.di('title') %></th>
+		<th class="approved_col"><%= link_to '<img class="gray_check' + (@sorter.this_col('is_approved') ? ' with_light_bottom' : '') + '" src="' + Site.full_url + '/images/admin/t.gif"/>', @sorter.to_link('is_approved'), :class => 'no_bg' %><%= raw @sorter.di('is_approved', false) %></th>
 		<th class="del_col">X</th>
 	</tr>
 	

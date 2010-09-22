@@ -10,10 +10,10 @@
 <table class="list" cellspacing="0" cellpadding="0">
 	
 	<tr>
-		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= @sorter.di('created_at') %></th>
-		<th><%= link_to 'Title', @sorter.to_link('title') %><%= @sorter.di('title') %></th>
+		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= raw @sorter.di('created_at') %></th>
+		<th><%= link_to 'Title', @sorter.to_link('title') %><%= raw @sorter.di('title') %></th>
 		<th>Excerpt</th>
-		<% if comments_on == 'yes' %><th class="small_col"><%= link_to 'Comments', @sorter.to_link('comments_count') %><%= @sorter.di('comments_count') %></th><% end %>
+		<% if comments_on == 'yes' %><th class="small_col"><%= link_to 'Comments', @sorter.to_link('comments_count') %><%= raw @sorter.di('comments_count') %></th><% end %>
 		<th class="del_col">X</th>
 	</tr>
 	

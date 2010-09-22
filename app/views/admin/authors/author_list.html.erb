@@ -9,11 +9,11 @@
 <table class="list" cellspacing="0" cellpadding="0">
 
 	<tr>
-		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= @sorter.di('created_at') %></th>
-		<th><%= link_to 'Name', @sorter.to_link('name') %><%= @sorter.di('name') %></th>
-		<th><%= link_to 'Email', @sorter.to_link('email') %><%= @sorter.di('email') %></th>
-		<th class="small_col"><%= link_to 'Posts', @sorter.to_link('total_posts') %><%= @sorter.di('total_posts') %></th>
-		<th class="del_col">X</th>
+		<th class="first_col"><%= link_to 'Created', @sorter.to_link('created_at') %><%= raw @sorter.di('created_at') %></th>
+    <th><%= link_to 'Name', @sorter.to_link('name') %><%= raw @sorter.di('name') %></th>
+    <th><%= link_to 'Email', @sorter.to_link('email') %><%= raw @sorter.di('email') %></th>
+    <th class="small_col"><%= link_to 'Posts', @sorter.to_link('total_posts') %><%= raw @sorter.di('total_posts') %></th>
+    <th class="del_col">X</th>
 	</tr>
 	
 	<% c = 1 -%>

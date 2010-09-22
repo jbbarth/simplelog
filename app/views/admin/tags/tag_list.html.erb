@@ -9,8 +9,8 @@
 <table class="list" cellspacing="0" cellpadding="0">
 
 	<tr>
-		<th class="first_col"><%= link_to 'Name', @sorter.to_link('name') %><%= @sorter.di('name') %></th>
-		<th class="small_col"><%= link_to 'Posts tagged', @sorter.to_link('post_count') %><%= @sorter.di('post_count') %></th>
+		<th class="first_col"><%= link_to 'Name', @sorter.to_link('name') %><%= raw @sorter.di('name') %></th>
+		<th class="small_col"><%= link_to 'Posts tagged', @sorter.to_link('post_count') %><%= raw @sorter.di('post_count') %></th>
 		<th class="del_col">X</th>
 	</tr>
 	
