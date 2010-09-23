@@ -1,6 +1,6 @@
 # $Id: post_controller_test.rb 296 2007-01-30 22:31:51Z garrett $
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 require 'post_controller'
 $page_title = 'test' # for testing purposes
 

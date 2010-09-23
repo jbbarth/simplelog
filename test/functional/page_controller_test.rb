@@ -1,6 +1,6 @@
 # $Id: page_controller_test.rb 300 2007-02-01 23:01:00Z garrett $
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 require 'page_controller'
 
 # Re-raise errors caught by the controller.

@@ -1,6 +1,6 @@
 # $Id: authors_controller_test.rb 296 2007-01-30 22:31:51Z garrett $
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 require 'admin/authors_controller'
 
 # Re-raise errors caught by the controller.
