@@ -1,6 +1,6 @@
 # $Id: author_test.rb 50 2006-05-04 19:04:18Z garrett $
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class AuthorTest < ActiveSupport::TestCase
   

@@ -1,6 +1,6 @@
 # $Id: update_test.rb 229 2006-08-23 18:02:08Z garrett $
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class UpdateTest < ActiveSupport::TestCase
   
