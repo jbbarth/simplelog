@@ -23,12 +23,12 @@ module Technoweenie # :nodoc:
         # The optional thumbnail argument will output the thumbnail's filename.
         def full_filename(thumbnail = nil)
           file_system_path = (thumbnail ? thumbnail_class : self).attachment_options[:path_prefix].to_s
-          File.join(RAILS_ROOT, file_system_path, *partitioned_path(thumbnail_name_for(thumbnail)))
+          File.join(Rails.root.to_s, file_system_path, *partitioned_path(thumbnail_name_for(thumbnail)))
         end
       
         # Used as the base path that #public_filename strips off full_filename to create the public path
         def base_path
-          @base_path ||= File.join(RAILS_ROOT, 'public')
+          @base_path ||= File.join(Rails.root.to_s, 'public')
         end
       
         # The attachment ID used in the full path of a file
