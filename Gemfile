@@ -31,3 +31,4 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 
 # simplelog specific gems
 gem "theme_support", ">= 3.0.6"
+gem "BlueCloth", ">= 1.0.1"
