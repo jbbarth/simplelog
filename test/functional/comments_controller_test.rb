@@ -35,7 +35,7 @@ class CommentsControllerTest < ActionController::TestCase
   
   def test_comment_update
     post :comment_update, :id => 1, :comment => {:is_approved => false}
-    assert_redirected_to 'admin/comments'
+    assert_redirected_to '/admin/comments'
     assert_equal 1, Comment.find(:all, :conditions => ['is_approved = ?', false]).length
     post :comment_update, :id => 1, :comment => {:is_approved => true}
   end
@@ -44,7 +44,7 @@ class CommentsControllerTest < ActionController::TestCase
     comment = Comment.find(1)
     assert_not_nil comment
     get :comment_destroy, :id => 1
-    assert_redirected_to 'admin/comments'
+    assert_redirected_to '/admin/comments'
     assert_raise(ActiveRecord::RecordNotFound) { a = Comment.find(1) }
   end
   

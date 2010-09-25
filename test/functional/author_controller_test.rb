@@ -37,7 +37,7 @@ class AuthorControllerTest < ActionController::TestCase
   
   def test_logout
     get :logout
-    assert_redirected_to '/'
+    assert_redirected_to ''
   end
   
 end

@@ -35,7 +35,7 @@ class PagesControllerTest < ActionController::TestCase
 
   # def test_page_update
   #   post :page_update, :id => 1, :page => {:is_active => false}
-  #   assert_redirected_to 'admin/pages'
+  #   assert_redirected_to '/admin/pages'
   #   assert_equal 1, Page.find(:all, :conditions => ['is_active = ?', false]).length
   #   post :page_update, :id => 1, :page => {:is_active => true}
   # end
@@ -44,7 +44,7 @@ class PagesControllerTest < ActionController::TestCase
     page = Page.find(1)
     assert_not_nil page
     get :page_destroy, :id => 1
-    assert_redirected_to 'admin/pages'
+    assert_redirected_to '/admin/pages'
     assert_raise(ActiveRecord::RecordNotFound) { a = Page.find(1) }
   end
   

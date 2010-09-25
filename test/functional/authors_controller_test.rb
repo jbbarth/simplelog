@@ -35,7 +35,7 @@ class AuthorsControllerTest < ActionController::TestCase
   def test_author_create
     c = Author.count
     post :author_create, :author => {:name => 'test', :email => 'test@test.com', :password => 'test'}
-    assert_redirected_to 'admin/authors'
+    assert_redirected_to '/admin/authors'
     assert_equal c+1, Author.count
   end
   
@@ -49,9 +49,9 @@ class AuthorsControllerTest < ActionController::TestCase
   
   def test_author_update
     post :author_update, :id => 1
-    assert_redirected_to 'admin/authors'
+    assert_redirected_to '/admin/authors'
     post :author_update, :id => 3, :author => {:is_active => '0'}
-    assert_redirected_to 'admin/authors'
+    assert_redirected_to '/admin/authors'
     assert_equal 1, Author.find(:all, :conditions => ['is_active = ?', true]).length
     post :author_update, :id => 1, :author => {:is_active => '0'} # shouldn't able to
     assert_equal 1, Author.find(:all, :conditions => ['is_active = ?', true]).length
@@ -63,13 +63,13 @@ class AuthorsControllerTest < ActionController::TestCase
     pc = author.posts.count
     assert_equal 3, pc
     get :author_destroy, :id => 3
-    assert_redirected_to 'admin/authors'
+    assert_redirected_to '/admin/authors'
     assert_raise(ActiveRecord::RecordNotFound) { a = Author.find(3) }
     assert_equal 0, Post.find(:all, :conditions => 'author_id = 3').length
     # now we only have one active author, so we shouldn't be able to destroy another
     c = Author.count # 2
     get :author_destroy, :id => 1
-    assert_redirected_to 'admin/authors'
+    assert_redirected_to '/admin/authors'
     assert_equal c, Author.count
     # now we set the inactive author active and we should be able to delete it
     assert Author.find(2).update_attribute('is_active', 1)
