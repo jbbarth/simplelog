@@ -103,7 +103,7 @@ class Comment < ActiveRecord::Base
           # we might as well stop now
           break
         # if we didn't find a blacklist IP, check the body now
-        elsif self.body.index(/#{i.item}/)
+        elsif self.body && self.body.index(/#{i.item}/)
         # found it!
           spam = true
           logger.warn("[Blacklist #{Time.sl_local.strftime('%m-%d-%Y %H%:%M:%S')}]: Body contained blacklisted item: \"#{i.item}\", blocking comment.")
