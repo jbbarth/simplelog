@@ -6,7 +6,7 @@ require 'admin/posts_controller'
 # Re-raise errors caught by the controller.
 class Admin::PostsController; def rescue_action(e) raise e end; end
 
-class PostsControllerTest < ActiveSupport::TestCase
+class PostsControllerTest < ActionController::TestCase
   
   fixtures :authors, :posts, :tags
   

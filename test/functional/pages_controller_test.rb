@@ -6,7 +6,7 @@ require 'admin/pages_controller'
 # Re-raise errors caught by the controller.
 class Admin::PagesController; def rescue_action(e) raise e end; end
 
-class PagesControllerTest < ActiveSupport::TestCase
+class PagesControllerTest < ActionController::TestCase
   
   fixtures :authors, :pages
   

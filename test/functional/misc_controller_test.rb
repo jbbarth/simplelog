@@ -6,7 +6,7 @@ require 'admin/misc_controller'
 # Re-raise errors caught by the controller.
 class Admin::MiscController; def rescue_action(e) raise e end; end
 
-class MiscControllerTest < ActiveSupport::TestCase
+class MiscControllerTest < ActionController::TestCase
   
   fixtures :authors
   

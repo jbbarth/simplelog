@@ -6,7 +6,7 @@ require 'admin/comments_controller'
 # Re-raise errors caught by the controller.
 class Admin::CommentsController; def rescue_action(e) raise e end; end
 
-class CommentsControllerTest < ActiveSupport::TestCase
+class CommentsControllerTest < ActionController::TestCase
   
   fixtures :authors, :posts, :comments
   

@@ -6,7 +6,7 @@ require 'admin/base_controller'
 # Re-raise errors caught by the controller.
 class Admin::BaseController; def rescue_action(e) raise e end; end
 
-class BaseControllerTest < ActiveSupport::TestCase
+class BaseControllerTest < ActionController::TestCase
   
   fixtures :authors, :comments, :tags, :posts, :taggings
   
