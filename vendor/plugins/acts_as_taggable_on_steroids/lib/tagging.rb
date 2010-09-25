@@ -2,7 +2,9 @@ class Tagging < ActiveRecord::Base #:nodoc:
   belongs_to :tag
   belongs_to :taggable, :polymorphic => true
   
-  def after_destroy
+  after_destroy :destroy_unused_tag
+  
+  def destroy_unused_tag
     if Tag.destroy_unused
       if tag.taggings.count.zero?
         tag.destroy
