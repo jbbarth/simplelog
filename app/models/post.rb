@@ -46,6 +46,7 @@ class Post < ActiveRecord::Base
   # callbacks
   before_create :set_defaults
   before_update :check_comment_status
+  before_validation :convert_and_clean
 
   # this tests for a permalink if the body exists and is valid
   def test_for_permalink
@@ -250,7 +251,7 @@ class Post < ActiveRecord::Base
   # we can return on errors when cleaning content because we've got a
   # validator which checks to make sure that content works... if it doesn't
   # we'll get an error anyway, so we don't need to continue doing this stuff
-  def before_validation_on_create
+  def convert_and_clean
     self.body = Post.create_clean_content(self.body_raw, self.text_filter) rescue return
     self.body_searchable = Post.strip_html(self.body, [], true, true) rescue return
     if self.extended_raw and self.extended_raw != ''
@@ -266,12 +267,6 @@ class Post < ActiveRecord::Base
     end
     # create a syndication title
     self.synd_title = (Preference.get_setting('SIMPLE_TITLES') ? Post.to_synd_title(self.body) : self.title)
-  end
-
-  # convert text using our filter and clean up dashes
-  # see above for info on the rescue returns
-  def before_validation_on_update
-    before_validation_on_create
   end
   
   # before a post is created, set its modification date to now and check comment status

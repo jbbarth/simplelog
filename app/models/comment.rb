@@ -37,6 +37,7 @@ class Comment < ActiveRecord::Base
 
   # callbacks
   before_create :set_defaults
+  before_validation :convert_and_clean
   
   # absolutely destroys any tags and any remaining < and >
   def self.kill_tags(input, force = false)
@@ -60,7 +61,7 @@ class Comment < ActiveRecord::Base
   # we can return on errors when cleaning content because we've got a
   # validator which checks to make sure that content works... if it doesn't
   # we'll get an error anyway, so we don't need to continue doing this stuff
-  def before_validation_on_create
+  def convert_and_clean
     self.body = Post.create_clean_content(Comment.kill_tags(self.body_raw)) rescue return
     self.body_searchable = Post.strip_html(Comment.kill_tags(self.body), [], true, true) rescue return
     # check the name and email and url
@@ -75,12 +76,6 @@ class Comment < ActiveRecord::Base
     # we either don't allow subjects or there isn't one, let's use a short version of the body
       self.synd_title = Post.to_synd_title(self.body)
     end
-  end
-
-  # convert text using our filter and clean up dashes
-  # see above for info on the rescue returns
-  def before_validation_on_update
-    before_validation_on_create
   end
   
   # check for spam on create
