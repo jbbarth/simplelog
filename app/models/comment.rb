@@ -131,7 +131,7 @@ class Comment < ActiveRecord::Base
       end
     end
     if spam
-      errors.add_to_base('Your comment either contains spam or your IP address has been blocked. If you feel this is in error, please contact the site\'s author.')
+      errors.add(:base, 'Your comment either contains spam or your IP address has been blocked. If you feel this is in error, please contact the site\'s author.')
       return false
     else
       return true
