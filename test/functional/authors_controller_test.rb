@@ -28,7 +28,7 @@ class AuthorsControllerTest < ActionController::TestCase
   def test_author_new
     get :author_new
     assert_template 'author_new'
-    assert assigns('authors')
+    assert assigns('author')
     assert_response :success
   end
   
