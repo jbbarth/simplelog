@@ -5,7 +5,7 @@ pref_1:
   nice_name: ''
   description: ''
   name: domain
-  value: 'dev.simplelog.net'
+  value: 'test.host'
 
 pref_2:
   id: 2
