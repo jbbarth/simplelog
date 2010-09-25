@@ -32,6 +32,7 @@ class Author < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_format_of :email, :with => /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/i, :message => 'must be a valid email address', :if => Proc.new { |author| author.email != '' }
   validates_uniqueness_of :email
+  validate :check_password, :on => :update
 
   # callbacks
   before_create :set_defaults
@@ -51,7 +52,7 @@ class Author < ActiveRecord::Base
     Digest::SHA1.hexdigest(password) if password
   end
   
-  def validate_on_update
+  def check_password
     if self.password and self.password != ''
     # update the password if a new one was specified
       self.hashed_pass = Author.do_password_hash(self.password)

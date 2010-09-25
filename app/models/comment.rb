@@ -33,6 +33,7 @@ class Comment < ActiveRecord::Base
   # validations
   validates_presence_of :post_id, :email, :body_raw
   validates_format_of :email, :with => /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/i, :message => 'must be a valid email address', :if => Proc.new { |comment| comment.email != '' }
+  validate :check_spam, :on => :create
 
   # callbacks
   before_create :set_defaults
@@ -83,7 +84,7 @@ class Comment < ActiveRecord::Base
   end
   
   # check for spam on create
-  def validate_on_create
+  def check_spam
     if (!self.post_id or !self.email or !self.body_raw)
       return false
     end
