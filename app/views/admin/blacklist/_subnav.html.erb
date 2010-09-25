@@ -1,7 +1,8 @@
     <div id="admin_sub_nav">
         <div class="sn_left wider">
-            <span id="get_rules"><%= link_to_remote('<b>Import blacklist rules</b>',
+            <span id="get_rules"><%= link_to '<b>Import blacklist rules</b>',
             {
+                :remote => true,
                 :url => Site.full_url + '/admin/blacklist/get/rules',
                 :loading => "Element.hide('get_rules'); Element.show('working_img');",
                 :complete => "Element.hide('working_img');",

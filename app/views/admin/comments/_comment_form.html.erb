@@ -27,16 +27,18 @@ ip_listed = true if bl_values.index(@comment.ip)
 <tr><td class="labels"><label for="comment_name">Name</label></td><td class="fields">
 <%= text_field 'comment', 'name', :size => '58', :class => 'normal_ic_width' %><% if @comment.name and @comment.name != '' %>&nbsp;&nbsp;<span class="small gray"><!--
 --><span id="bl_name_add"<%= ' style="display: none;"' if name_listed %>><!--
---><%= link_to_remote('Add to blacklist?',
+--><%= link_to('Add to blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/add/' + CGI::escape(@comment.name),
     :loading => "Element.hide('bl_name_add'); Element.show('bl_name_i');",
     :complete => "Element.hide('bl_name_i'); Element.show('bl_name_remove');",
     :confirm => "Are you sure you wish to blacklist this name?\n\nYou can undo this at any time."
 }) -%></span><!--
 --><span id="bl_name_remove"<%= ' style="display: none;"' if !name_listed %>><!--
---><%= link_to_remote('Remove from blacklist?',
+--><%= link_to('Remove from blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/destroy/' + CGI::escape(@comment.name),
     :loading => "Element.hide('bl_name_remove'); Element.show('bl_name_i');",
     :complete => "Element.hide('bl_name_i'); Element.show('bl_name_add');",
@@ -48,16 +50,18 @@ ip_listed = true if bl_values.index(@comment.ip)
 <tr><td class="labels"><label for="comment_email"><b>Email</b></label></td><td class="fields">
 <%= text_field 'comment', 'email', :size => '58', :class => 'normal_ic_width' %><% if @comment.email and @comment.email != '' %>&nbsp;&nbsp;<span class="small gray"><!--
 --><span id="bl_email_add"<%= ' style="display: none;"' if email_listed %>><!--
---><%= link_to_remote('Add to blacklist?',
+--><%= link_to('Add to blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/add/' + CGI::escape(@comment.email),
     :loading => "Element.hide('bl_email_add'); Element.show('bl_email_i');",
     :complete => "Element.hide('bl_email_i'); Element.show('bl_email_remove');",
     :confirm => "Are you sure you wish to blacklist this email?\n\nYou can undo this at any time."
 }) -%></span><!--
 --><span id="bl_email_remove"<%= ' style="display: none;"' if !email_listed %>><!--
---><%= link_to_remote('Remove from blacklist?',
+--><%= link_to('Remove from blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/destroy/' + CGI::escape(@comment.email),
     :loading => "Element.hide('bl_email_remove'); Element.show('bl_email_i');",
     :complete => "Element.hide('bl_email_i'); Element.show('bl_email_add');",
@@ -69,16 +73,18 @@ ip_listed = true if bl_values.index(@comment.ip)
 <tr><td class="labels"><label for="comment_url">URL</label></td><td class="fields">
 <%= text_field 'comment', 'url', :size => '58', :class => 'normal_ic_width' %><% if @comment.url and @comment.url != '' %>&nbsp;&nbsp;<span class="small gray"><!--
 --><span id="bl_url_add"<%= ' style="display: none;"' if url_listed %>><!--
---><%= link_to_remote('Add to blacklist?',
+--><%= link_to('Add to blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/add/' + CGI::escape(@comment.url),
     :loading => "Element.hide('bl_url_add'); Element.show('bl_url_i');",
     :complete => "Element.hide('bl_url_i'); Element.show('bl_url_remove');",
     :confirm => "Are you sure you wish to blacklist this URL?\n\nYou can undo this at any time."
 }) -%></span><!--
 --><span id="bl_url_remove"<%= ' style="display: none;"' if !url_listed %>><!--
---><%= link_to_remote('Remove from blacklist?',
+--><%= link_to('Remove from blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/destroy/' + CGI::escape(@comment.url),
     :loading => "Element.hide('bl_url_remove'); Element.show('bl_url_i');",
     :complete => "Element.hide('bl_url_i'); Element.show('bl_url_add');",
@@ -113,16 +119,18 @@ ip_listed = true if bl_values.index(@comment.ip)
 <tr id="dt2" style="display: none;"><td class="labels"><label for="comment_ip">IP address</label></td><td class="fields">
 <%= @comment.ip %>&nbsp;&nbsp;<span class="small gray"><!--
 --><span id="bl_ip_add"<%= ' style="display: none;"' if ip_listed %>><!--
---><%= link_to_remote('Add to blacklist?',
+--><%= link_to('Add to blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/add/' + CGI::escape(@comment.ip),
     :loading => "Element.hide('bl_ip_add'); Element.show('bl_ip_i');",
     :complete => "Element.hide('bl_ip_i'); Element.show('bl_ip_remove');",
     :confirm => "Are you sure you wish to blacklist this IP address?\n\nYou can undo this at any time."
 }) -%></span><!--
 --><span id="bl_ip_remove"<%= ' style="display: none;"' if !ip_listed %>><!--
---><%= link_to_remote('Remove from blacklist?',
+--><%= link_to('Remove from blacklist?',
 {
+    :remote => true,
     :url => Site.full_url + '/admin/blacklist/remote/destroy/' + CGI::escape(@comment.ip),
     :loading => "Element.hide('bl_ip_remove'); Element.show('bl_ip_i');",
     :complete => "Element.hide('bl_ip_i'); Element.show('bl_ip_add');",

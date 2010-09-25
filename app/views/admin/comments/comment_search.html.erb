@@ -28,9 +28,10 @@
 			<td><%= (comment_post.title == '' ? '[Untitled]' : comment_post.title) %></td>
 			<td class="approved_col"><!--
                 --><span id="yca<%= comment.id.to_s %>"<% if !comment.is_approved %> style="display: none;"<% end %>><!--
-                --><%= link_to_remote(
+                --><%= link_to(
 			    '<img id="ca' + comment.id.to_s + '" class="green_check" src="' + Site.full_url + '/images/admin/t.gif" title="This comment has been approved, click icon to unapprove"/>',
 			    {
+              :remote => true,
 			        :url => Site.full_url + '/admin/comments/approve/' + comment.id.to_s + '/toggle',
 			        :loading => "Element.toggle('pca#{comment.id.to_s}'); Element.hide('yca#{comment.id.to_s}'); Element.hide('nca#{comment.id.to_s}');",
 			        :complete => "Element.hide('pca#{comment.id.to_s}'); Element.hide('yca#{comment.id.to_s}'); Element.show('nca#{comment.id.to_s}'); Element.addClassName('tca#{comment.id.to_s}', 'inactive')"
@@ -38,9 +39,10 @@
 			    :class => 'no_bg'
 			    ) %></span><!--
 			    --><span id="nca<%= comment.id.to_s %>"<% if comment.is_approved %> style="display: none;"<% end %>><!--
-			    --><%= link_to_remote(
+			    --><%= link_to(
 			    '<img id="ca' + comment.id.to_s + '" class="light_check" src="' + Site.full_url + '/images/admin/t.gif" title="This comment has been not been approved, click icon to approve"/>',
 			    {
+              :remote => true,
 			        :url => Site.full_url + '/admin/comments/approve/' + comment.id.to_s + '/toggle',
 			        :loading => "Element.toggle('pca#{comment.id.to_s}'); Element.hide('yca#{comment.id.to_s}'); Element.hide('nca#{comment.id.to_s}');",
 			        :complete => "Element.hide('pca#{comment.id.to_s}'); Element.show('yca#{comment.id.to_s}'); Element.hide('nca#{comment.id.to_s}'); Element.removeClassName('tca#{comment.id.to_s}', 'inactive')"
