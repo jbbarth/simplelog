@@ -22,13 +22,13 @@ class PagesControllerTest < ActionController::TestCase
   def test_page_list
     get :page_list
     assert_template 'page_list'
-    assert(@response.has_template_object?('pages'))
+    assert assigns('pages')
   end
 
   # def test_page_edit
   #   get :page_edit, :id => 1
   #   assert_template 'page_edit'
-  #   assert(@response.has_template_object?('page'))
+  #   assert assigns('page')
   #   assert(assigns('page').valid?)
   #   assert_response :success
   # end

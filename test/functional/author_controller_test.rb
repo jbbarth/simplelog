@@ -20,8 +20,8 @@ class AuthorControllerTest < ActionController::TestCase
   def test_login
     get :login
     assert_template 'login'
-    assert(@response.has_template_object?('author'))
-    assert(@response.has_template_object?('tags'))
+    assert assigns('author')
+    assert assigns('tags')
     assert_response :success
   end
   

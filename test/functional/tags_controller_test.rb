@@ -22,13 +22,13 @@ class TagsControllerTest < ActionController::TestCase
   def test_tag_list
     get :tag_list
     assert_template 'tag_list'
-    assert(@response.has_template_object?('tags'))
+    assert assigns('tags')
   end
   
   def test_tag_new
     get :tag_new
     assert_template 'tag_new'
-    assert(@response.has_template_object?('tag'))
+    assert assigns('tag')
     assert_response :success
   end
   
@@ -42,7 +42,7 @@ class TagsControllerTest < ActionController::TestCase
   def test_tag_edit
     get :tag_edit, :id => 1
     assert_template 'tag_edit'
-    assert(@response.has_template_object?('tag'))
+    assert assigns('tag')
     assert(assigns('tag').valid?)
     assert_response :success
   end

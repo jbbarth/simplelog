@@ -22,13 +22,13 @@ class AuthorsControllerTest < ActionController::TestCase
   def test_author_list
     get :author_list
     assert_template 'author_list'
-    assert(@response.has_template_object?('authors'))
+    assert assigns('authors')
   end
   
   def test_author_new
     get :author_new
     assert_template 'author_new'
-    assert(@response.has_template_object?('author'))
+    assert assigns('authors')
     assert_response :success
   end
   
@@ -42,7 +42,7 @@ class AuthorsControllerTest < ActionController::TestCase
   def test_author_edit
     get :author_edit, :id => 1
     assert_template 'author_edit'
-    assert(@response.has_template_object?('author'))
+    assert assigns('author')
     assert(assigns('author').valid?)
     assert_response :success
   end

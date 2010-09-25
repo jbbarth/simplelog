@@ -22,13 +22,13 @@ class PostsControllerTest < ActionController::TestCase
   def test_post_list
     get :post_list
     assert_template 'post_list'
-    assert(@response.has_template_object?('posts'))
+    assert assigns('posts')
   end
   
   def test_post_new
     get :post_new
     assert_template 'post_new'
-    assert(@response.has_template_object?('post'))
+    assert assigns('post')
     assert_response :success
   end
   
@@ -42,7 +42,7 @@ class PostsControllerTest < ActionController::TestCase
   def test_post_edit
     get :post_edit, :id => 1
     assert_template 'post_edit'
-    assert(@response.has_template_object?('post'))
+    assert assigns('post')
     assert(assigns('post').valid?)
     assert_response :success
   end

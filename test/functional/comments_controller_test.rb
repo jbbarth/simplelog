@@ -22,13 +22,13 @@ class CommentsControllerTest < ActionController::TestCase
   def test_comment_list
     get :comment_list
     assert_template 'comment_list'
-    assert(@response.has_template_object?('comments'))
+    assert assigns('comments')
   end
   
   def test_comment_edit
     get :comment_edit, :id => 1
     assert_template 'comment_edit'
-    assert(@response.has_template_object?('comment'))
+    assert assigns('comment')
     assert(assigns('comment').valid?)
     assert_response :success
   end

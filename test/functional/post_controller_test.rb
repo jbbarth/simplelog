@@ -124,16 +124,16 @@ class PostControllerTest < ActionController::TestCase
     get :list
     assert_response :success
     assert_template 'index'
-    assert(@response.has_template_object?('tags'))
-    assert(@response.has_template_object?('posts'))
+    assert assigns('tags')
+    assert assigns('posts')
   end
   
   def test_tag_archive
     get :tagged, :tag => tags(:tag_1).name
     assert_response :success
     assert_template 'by_tag'
-    assert(@response.has_template_object?('tags'))
-    assert(@response.has_template_object?('posts'))
+    assert assigns('tags')
+    assert assigns('posts')
     get :tagged, :tag => 'asdfsdfsdf' # doesn't exist
     assert_redirected_to '/'
   end
@@ -142,8 +142,8 @@ class PostControllerTest < ActionController::TestCase
     get :by_author, :id => 1
     assert_response :success
     assert_template 'by_author'
-    assert(@response.has_template_object?('tags'))
-    assert(@response.has_template_object?('posts'))
+    assert assigns('tags')
+    assert assigns('posts')
     get :by_author, :id => 12092 # doesn't exist
     assert_redirected_to '/'
   end
@@ -160,7 +160,7 @@ class PostControllerTest < ActionController::TestCase
     get :feed_all_rss
     assert_response :success
     assert_template 'posts.rss.builder'
-    assert(@response.has_template_object?('posts'))
+    assert assigns('posts')
   end
   
   def test_search
