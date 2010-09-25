@@ -33,3 +33,4 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem "theme_support", ">= 3.0.6"
 gem "BlueCloth", ">= 1.0.1"
 gem "RedCloth", ">= 4.2.3"
+gem "rmagick", ">= 2.13.1"
