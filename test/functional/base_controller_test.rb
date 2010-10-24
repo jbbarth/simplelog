@@ -22,9 +22,10 @@ class BaseControllerTest < ActionController::TestCase
   def test_filter
     @request.cookies[SL_CONFIG[:USER_EMAIL_COOKIE]] = nil
     @request.cookies[SL_CONFIG[:USER_HASH_COOKIE]] = nil
+    @controller = Admin::AuthorsController.new
     get :author_edit, :id => 1
     assert_response 302
-    assert_redirected_to 'login'
+    assert_redirected_to '/login'
   end
   
   def test_user_auth
