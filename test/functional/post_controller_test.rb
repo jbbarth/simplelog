@@ -159,7 +159,8 @@ class PostControllerTest < ActionController::TestCase
   def test_feed_all
     get :feed_all_rss
     assert_response :success
-    assert_template 'posts.rss.builder'
+    #TODO: check template extension
+    assert_template 'feeds/posts'
     assert assigns('posts')
   end
   
